@@ -1,5 +1,3 @@
-
-
 #1. Feladat: adatok beolvasasa
 autok = []
 
@@ -16,12 +14,10 @@ with open('/home/ivan/Programming/PythonProjects/ceges_2018_maj/autok.txt') as f
         }
         autok.append(auto)
 
-
 for auto in reversed(autok):
     if auto['ki']:
         print(f'2. Feladat\n{auto["nap"]}. nap rendszám: {auto["rendszam"]}')
         break
-
 
 print("3. feladat")
 try:
@@ -34,7 +30,6 @@ print(f'Forgalom a(z) {nap}. napon:')
 for auto in autok:
     if auto['nap'] == nap:
         print(f'{auto["oraperc"]} {auto["rendszam"]} {auto["azonosito"]} {"ki" if auto["ki"] else "be"}')
-
 
 kint_van = set()
 for auto in autok:
@@ -66,8 +61,17 @@ for index, auto in enumerate(autok):
         else:
             megtett[rendszam] = megtett_km
 
-
 for key, value in sorted(megtett.items()):
     print(f'{key} {value} km')
 
 print(f'6. feladat\nLeghosszabb út: {leghosszabb} km, személy: {szemely}')
+
+rendszam = input("7. feladat\nRendszám: ")
+with open(rendszam + '_menetlevel.txt', 'w') as file:
+    for auto in autok:
+        if auto["rendszam"] == rendszam and auto["ki"]:
+            print(f'{auto["azonosito"]}\t{auto["oraperc"]}\t{auto["km"]} km', file = file, end = '')
+        if auto["rendszam"] == rendszam and auto["ki"]:
+            print(f'{auto["oraperc"]}\t{auto["km"]} km', file = file)
+
+print('Menetlevél kész.')
