@@ -3,7 +3,7 @@
 #1. Feladat: adatok beolvasasa
 autok = []
 
-with open('autok.txt') as file:
+with open('/home/ivan/Programming/PythonProjects/ceges_2018_maj/autok.txt') as file:
     for line in file:
         line = line.strip().split(" ")
         auto = {
@@ -44,3 +44,23 @@ for auto in autok:
         kint_van.remove(auto['rendszam'])
 
 print(f'4. feladat\nA hónap végén {len(kint_van)} autót nem hoztak vissza.')
+
+megtett = {}
+
+for index, auto in enumerate(autok):
+    if not auto['ki']:
+        rendszam = auto['rendszam']
+        vissza = index - 1
+
+        while autok[vissza]["rendszam"] != rendszam and index != 0:
+            vissza -= 1
+
+        megtett_km = auto['km'] - autok[vissza]["km"]
+
+        if megtett.get(rendszam):
+            megtett[rendszam] += megtett_km
+        else:
+            megtett[rendszam] = megtett_km
+
+for key, value in sorted(megtett.items()):
+    print(f'{key} {value} km')
