@@ -1,0 +1,560 @@
+id	nev	orszag	nem	szulev	urido
+1	Stuart Roosa	USA	F	1933	T009:00:01
+2	Gennady Padalka	RUS	F	1958	T878:11:29
+3	Valery Korzun	RUS	F	1953	T381:15:41
+4	Scott Carpenter	USA	F	1925	T000:04:56
+5	Vladislav Volkov	URS	F	1935	T028:20:02
+6	Umberto Guidoni	ITA	F	1954	T027:15:11
+7	Nicole Marie Passonno Stott	USA	N	1962	T026:15:58
+8	Donald McMonagle	USA	F	1952	T025:05:34
+9	Daniel Bursch	USA	F	1957	T226:22:15
+10	Oleg Skripochka	RUS	F	1969	T331:12:29
+11	Yi So-yeon	KOR	N	1978	T010:21:13
+12	Julie Payette	CAN	N	1963	T025:07:58
+13	Linda Godwin	USA	N	1952	T038:06:15
+14	Alan G. Poindexter	USA	F	1961	T027:21:09
+15	Daniel Tani	USA	F	1961	T131:18:05
+16	Evgeny Tarelkin	RUS	F	1974	T143:16:19
+17	Jeffrey Williams	USA	F	1958	T534:02:47
+18	Chris Hadfield	CAN	F	1959	T165:16:20
+19	Lee Morin	USA	F	1952	T010:19:42
+20	Thomas Pesquet	FRA	F	1978	T196:17:53
+21	Klaus-Dietrich Flade	GER	F	1952	T175:02:51
+22	James "Ox" van Hoften	USA	F	1944	T014:01:57
+23	David M. Brown	USA	F	1956	T015:22:20
+24	Martin J. Fettman	USA	F	1956	T014:00:12
+25	Liu Yang	CHN	N	1978	T012:15:23
+26	Mario Runco, Jr.	USA	F	1952	T022:23:07
+27	Anousheh Ansari	IRI	N	1966	T010:21:05
+28	Virgil I. "Gus" Grissom	USA	F	1926	T000:05:08
+29	John D. Olivas	USA	F	1966	T027:17:05
+30	Vladimir Dzhanibekov	URS	F	1942	T145:15:58
+31	Carlos I. Noriega	PER	F	1959	T020:00:17
+32	Dominic Gorie	USA	F	1957	T048:15:23
+33	Eugene Trinh	USA	F	1950	T013:19:30
+34	Robert Overmyer	USA	F	1936	T012:02:23
+35	Aleksandr Laveykin	URS	F	1951	T174:03:25
+36	James Buchli	USA	F	1945	T020:10:24
+37	Viktor Gorbatko	URS	F	1934	T030:12:49
+38	Richard R. Arnold	USA	F	1963	T208:13:30
+39	Stephen Frick	USA	F	1964	T023:14:04
+40	David M. Walker	USA	F	1944	T030:04:30
+41	James M. Kelly	USA	F	1964	T026:17:23
+42	Hans Schlegel	GER	F	1951	T022:18:02
+43	Serena Auñón-Chancellor	USA	N	1976	T196:20:07
+44	James P. Bagian	USA	F	1952	T014:01:53
+45	Garrett Reisman	USA	F	1968	T107:03:16
+46	Laurel B. Clark	USA	N	1961	T015:22:20
+47	Stephanie Wilson	USA	N	1966	T042:23:47
+48	Leroy Chiao	USA	F	1960	T229:08:40
+49	K. Megan McArthur	USA	N	1971	T012:21:37
+50	Harrison Schmitt	USA	F	1935	T012:13:51
+51	Kathryn Hire	USA	N	1959	T029:15:58
+52	Mark Shuttleworth	RSA	F	1973	T009:21:25
+53	Walter Schirra	USA	F	1923	T012:07:13
+54	Bryan O'Connor	USA	F	1946	T015:23:19
+55	Boris Yegorov	URS	F	1937	T001:00:17
+56	Stephen Robinson	USA	F	1955	T048:09:51
+57	Michael J. Smith	USA	F	1945	T000:00:01
+58	Mark Kelly	USA	F	1964	T054:02:05
+59	Jon McBride	USA	F	1943	T008:05:23
+60	Barbara Morgan	USA	N	1951	T012:17:56
+61	Marsha Ivins	USA	N	1951	T055:21:49
+62	Bjarni Tryggvason	CAN	F	1945	T011:20:27
+63	Yelena Kondakova	RUS	N	1957	T178:09:41
+64	Edwin J. Garn	USA	F	1932	T006:23:55
+65	Kalpana Chawla	USA	N	1962	T031:14:54
+66	Pavel Popovich	URS	F	1930	T018:16:26
+67	Michael J. Bloomfield	USA	F	1959	T033:11:01
+68	Aleksandr Samokutyayev	RUS	F	1970	T331:11:23
+69	Leonid Popov	URS	F	1945	T200:14:45
+70	Mark Brown	USA	F	1951	T010:09:27
+71	Richard Linnehan	USA	F	1957	T059:12:02
+72	Aleksandr Serebrov	URS	F	1944	T372:22:53
+73	Roberto Vittori	ITA	F	1964	T035:12:25
+74	Georgi Grechko	URS	F	1931	T134:20:32
+75	José Hernández	USA	F	1962	T013:20:54
+76	Yuri Shargin	RUS	F	1960	T009:21:29
+77	Jean-Jacques Favier	FRA	F	1949	T016:21:48
+78	Frank Borman	USA	F	1928	T019:21:35
+79	Anatoly Filipchenko	URS	F	1928	T010:21:03
+80	James Irwin	USA	F	1930	T012:07:11
+81	Scott Parazynski	USA	F	1961	T058:15:33
+82	Anatoli Levchenko	URS	F	1941	T007:21:58
+83	Charles "Pete" Conrad	USA	F	1930	T049:03:38
+84	Charles Gemar	USA	F	1955	T024:05:39
+85	Richard Gordon	USA	F	1929	T013:03:53
+86	Liu Wang	CHN	F	1969	T012:15:23
+87	Karen Nyberg	USA	N	1969	T180:00:30
+88	Dennis Tito	USA	F	1940	T007:22:04
+89	Michael Fossum	USA	F	1957	T193:19:03
+90	Fyodor Yurchikhin	RUS	F	1959	T672:20:40
+91	Oleg Atkov	URS	F	1949	T236:22:49
+92	Vladimir Vasyutin	URS	F	1952	T064:21:52
+93	Walter Cunningham	USA	F	1932	T010:20:09
+94	Claudie Haigneré	FRA	N	1957	T025:14:24
+95	Terry Virts	USA	F	1967	T213:10:50
+96	Edward Gibson	USA	F	1936	T084:01:15
+97	Jerry L. Ross	USA	F	1948	T058:00:53
+98	Ronald Grabe	USA	F	1945	T026:03:40
+99	Aleksey Ovchinin	RUS	F	1971	T172:03:46
+100	Michael S. Hopkins	USA	F	1968	T166:06:25
+101	Mikhail Korniyenko	RUS	F	1960	T516:10:01
+102	Gregory Chamitoff	USA	F	1962	T198:18:01
+103	Steven MacLean	CAN	F	1954	T021:14:06
+104	Phạm Tuân	VIE	F	1947	T007:20:41
+105	Lisa Nowak	USA	N	1963	T012:18:36
+106	Pavel Vinogradov	RUS	F	1953	T546:22:32
+107	Jerome Apt	USA	F	1949	T035:07:11
+108	Valery Ryumin	URS	F	1939	T371:17:25
+109	William Pogue	USA	F	1930	T084:01:15
+110	Michael Baker	USA	F	1953	T040:03:04
+111	Scott Horowitz	USA	F	1957	T047:10:38
+112	John-David F. Bartoe	USA	F	1944	T007:22:45
+113	John Phillips	USA	F	1951	T203:17:23
+114	James Pawelczyk	USA	F	1960	T015:21:50
+115	Robert Springer	USA	F	1942	T009:21:33
+116	Vitali Sevastyanov	URS	F	1935	T080:16:19
+117	Reinhard Furrer	GER	F	1940	T007:00:44
+118	Owen Garriott	USA	F	1930	T069:17:56
+119	Janet L. Kavandi	USA	N	1959	T033:20:07
+120	Frederick Sturckow	USA	F	1961	T051:09:35
+121	Andreas Mogensen	DEN	F	1976	T181:23:47
+122	Oleg Kononenko	RUS	F	1964	T549:23:25
+123	Robert S. Kimbrough	USA	F	1967	T188:23:45
+124	Vitaliy Zholobov	URS	F	1937	T049:06:23
+125	Dirk Frimout	BEL	F	1941	T008:22:09
+126	Karol Bobko	USA	F	1937	T016:02:03
+127	Valentina Tereshkova	URS	N	1937	T002:22:50
+128	Douglas Wheelock	USA	F	1960	T178:09:33
+129	Sultan bin Salman bin Abdulaziz Al Saud	KSA	F	1956	T007:01:38
+130	Robert Crippen	USA	F	1937	T023:13:48
+131	Lev Dyomin	URS	F	1926	T002:00:12
+132	James Adamson	USA	F	1946	T013:22:21
+133	Don Lind	USA	F	1930	T007:00:08
+134	Alan Shepard	USA	F	1923	T009:00:17
+135	Christopher Ferguson	USA	F	1961	T040:10:04
+136	Tamara E. Jernigan	USA	N	1959	T062:19:29
+137	Musa Manarov	URS	F	1951	T541:00:29
+138	Ronald McNair	USA	F	1950	T007:23:15
+139	Charles Fullerton	USA	F	1936	T015:22:50
+140	Terry Hart	USA	F	1946	T006:23:40
+141	Buzz Aldrin	USA	F	1930	T012:01:53
+142	L. Gordon Cooper, Jr.	USA	F	1927	T009:09:15
+143	Salizhan Sharipov	RUS	F	1964	T201:14:49
+144	Aleksandr Misurkin	RUS	F	1977	T333:11:28
+145	James F. Reilly	USA	F	1954	T035:10:33
+146	Dale Gardner	USA	F	1948	T014:00:53
+147	Steven Hawley	USA	F	1951	T032:02:42
+148	Scott Altman	USA	F	1959	T050:12:48
+149	Sigmund Jähn	GDR	F	1937	T007:20:49
+150	Robert Thirsk	CAN	F	1953	T204:18:30
+151	Michael Gernhardt	USA	F	1956	T043:07:01
+152	Ellison Onizuka	USA	F	1946	T003:01:33
+153	Duane G. Carey	USA	F	1957	T010:22:11
+154	Toktar Aubakirov	URS	F	1946	T007:22:12
+155	Sergei Treshchov	RUS	F	1958	T184:22:15
+156	Sunita "Suni" Williams	USA	N	1965	T321:17:15
+157	Kevin Kregel	USA	F	1956	T052:18:22
+158	Michael Foale	GBR	F	1957	T374:17:17
+159	Michael R. Clifford	USA	F	1952	T027:18:25
+160	Steven Swanson	USA	F	1960	T195:20:47
+161	Michael Fincke	USA	F	1967	T381:15:09
+162	Eileen Collins	USA	N	1956	T036:07:10
+163	John Blaha	USA	F	1942	T161:02:48
+164	Viktor Afanasyev	RUS	F	1948	T555:18:34
+165	Michael J. McCulley	USA	F	1943	T004:23:39
+166	Gary Payton	USA	F	1948	T003:01:33
+167	B. Alvin Drew	USA	F	1962	T025:13:01
+169	Jean-Pierre Haigneré	FRA	F	1948	T209:12:25
+170	Valery Bykovsky	URS	F	1934	T020:17:48
+171	Peter Wisoff	USA	F	1958	T044:08:10
+172	Nikolai Budarin	RUS	F	1953	T445:01:26
+173	Daniel Burbank	USA	F	1961	T187:21:47
+174	Muhammed Faris	SYR	F	1951	T007:23:04
+175	Sonny Carter	USA	F	1947	T005:00:06
+176	Helen Sharman	GBR	F	1963	T007:21:13
+177	Yury Usachov	RUS	F	1957	T552:22:24
+178	Randolph Bresnik	USA	F	1967	T149:12:13
+179	Piers Sellers	USA	F	1955	T035:09:04
+180	Brian Duffy	USA	F	1953	T040:17:37
+181	Sidney Gutierrez	USA	F	1951	T020:08:04
+182	Joe Edwards	USA	F	1958	T008:19:47
+183	Andriyan Nikolayev	URS	F	1929	T021:15:26
+184	Peggy Whitson	USA	N	1960	T665:22:27
+185	Kenneth Bowersox	USA	F	1956	T212:14:12
+186	Reinhold Ewald	GER	F	1956	T019:16:34
+187	Thomas Reiter	GER	F	1958	T350:05:35
+188	Vasili Tsibliyev	RUS	F	1954	T381:15:53
+189	Georgi Dobrovolski	URS	F	1928	T023:21:21
+190	Gregory C. Johnson	USA	F	1954	T012:21:37
+191	Anatoly Solovyev	RUS	F	1948	T651:00:03
+192	John "Jack" Swigert	USA	F	1931	T005:22:54
+193	Donald Peterson	USA	F	1933	T005:00:23
+194	Carl Meade	USA	F	1950	T029:16:14
+195	Fei Junlong	CHN	F	1965	T004:19:32
+196	Jack Lousma	USA	F	1936	T067:11:13
+197	Dumitru Prunariu	ROU	F	1952	T007:20:41
+198	Albert Sacco	USA	F	1949	T015:21:52
+199	Christopher Cassidy	USA	F	1970	T181:22:59
+200	Joseph M. Acaba	USA	F	1967	T305:00:35
+201	Maurizio Cheli	ITA	F	1959	T015:17:40
+202	Jean-Loup Chrétien	FRA	F	1938	T044:11:18
+203	Charles Simonyi	HUN	F	1948	T026:14:26
+204	Anatoly Artsebarsky	URS	F	1956	T144:15:21
+205	David Griggs	USA	F	1939	T006:23:55
+206	Charles Bolden	USA	F	1946	T028:08:38
+207	Michael Foreman	USA	F	1957	T026:13:28
+208	Scott D. Tingle	USA	F	1965	T168:05:18
+209	William Anders	USA	F	1933	T006:03:00
+210	Brent W. Jett, Jr.	USA	F	1958	T041:18:01
+211	Shannon Walker	USA	N	1965	T163:07:11
+212	William Shepherd	USA	F	1949	T159:05:55
+213	Miroslaw Hermaszewski	POL	F	1941	T007:22:02
+214	Anatoli Berezovoy	URS	F	1942	T211:09:04
+215	Mark Vande Hei	USA	F	1966	T167:05:13
+216	Donald Thomas	USA	F	1955	T043:08:13
+217	Alexander Volkov	URS	F	1948	T391:11:52
+218	Terence Henricks	USA	F	1952	T042:18:38
+219	David Leestma	USA	F	1949	T022:04:33
+220	Susan Still Kilrain	USA	N	1961	T019:15:57
+221	Roy Bridges	USA	F	1943	T007:22:45
+222	Rhea Seddon	USA	N	1947	T030:02:22
+223	Koichi Wakata	JPN	F	1963	T347:08:32
+224	Patrick Forrester	USA	F	1957	T039:14:18
+225	Gregory H. Johnson	USA	F	1962	T031:11:50
+226	Chen Dong	CHN	F	1978	T032:06:29
+227	Guy Laliberté	CAN	F	1959	T010:21:17
+228	Sergei Avdeyev	RUS	F	1956	T367:23:23
+229	Robert Stewart	USA	F	1942	T012:01:00
+230	Bernard A. Harris, Jr.	USA	F	1956	T018:06:08
+231	Charles D. Walker	USA	F	1948	T019:21:56
+232	Kenneth Reightler	USA	F	1951	T013:15:37
+233	Richard Mastracchio	USA	F	1960	T226:13:37
+234	Alan Bean	USA	F	1932	T069:15:45
+235	Thomas Akers	USA	F	1951	T034:00:44
+236	Charles Hobaugh	USA	F	1961	T035:09:26
+237	Rodolfo Neri Vela	MEX	F	1952	T006:21:04
+238	Michael Coats	USA	F	1946	T019:07:57
+239	Michael Massimino	USA	F	1962	T023:19:48
+240	Michael Collins	USA	F	1930	T011:02:05
+241	Yuri Lonchakov	RUS	F	1965	T200:18:39
+242	Valentin Lebedev	URS	F	1942	T219:06:00
+243	Vladimir Titov	URS	F	1947	T388:00:45
+244	Joan Higginbotham	USA	N	1964	T012:20:44
+245	Nikolay Rukavishnikov	URS	F	1932	T009:21:10
+246	Eric A. Boe	USA	F	1964	T028:15:34
+247	Tracy Caldwell Dyson	USA	N	1969	T188:19:15
+248	Robert L. Behnken	USA	F	1970	T029:12:20
+249	Judith Resnik	USA	N	1949	T006:00:57
+250	Sergei Zalyotin	RUS	F	1962	T083:16:35
+251	Franco Malerba	ITA	F	1946	T007:23:15
+252	Nancy J. Currie	USA	N	1958	T041:15:33
+253	Thomas Marshburn	USA	F	1960	T161:07:03
+254	Vladimir Lyakhov	URS	F	1941	T333:07:48
+255	Sergei Krikalev	RUS	F	1958	T803:09:39
+256	Jeffrey Ashby	USA	F	1954	T027:16:19
+257	Douglas G. Hurley	USA	F	1966	T028:11:13
+258	Edgar Mitchell	USA	F	1930	T009:00:01
+259	Vladimir N. Dezhurov	RUS	F	1962	T115:08:43
+260	Andrew M. Allen	USA	F	1955	T037:16:13
+261	Kathryn Thornton	USA	N	1952	T040:17:15
+262	Rusty Schweickart	USA	F	1935	T010:01:00
+263	Andrew Thomas	USA	F	1951	T177:09:14
+264	Takao Doi	JPN	F	1954	T031:10:46
+265	Gregory Olsen	USA	F	1945	T009:21:14
+266	Samuel T. Durrance	USA	F	1943	T025:14:13
+267	Franklin Chang-Diaz	USA	F	1950	T066:18:17
+268	Nicholas Patrick	USA	F	1964	T026:14:52
+269	Richard Searfoss	USA	F	1956	T039:03:18
+270	Norishige Kanai	JPN	F	1976	T168:05:18
+271	Valery Rozhdestvensky	URS	F	1939	T002:00:06
+272	Petr Klimuk	URS	F	1942	T078:18:18
+273	Loren Shriver	USA	F	1944	T016:02:04
+274	Claude Nicollier	SUI	F	1944	T043:12:05
+275	Ronald Sega	USA	F	1952	T017:12:25
+276	S. Christa McAuliffe	USA	N	1948	T000:00:01
+277	John Young	USA	F	1930	T034:18:41
+278	Svetlana Savitskaya	URS	N	1948	T019:17:07
+279	Donn F. Eisele	USA	F	1930	T010:20:09
+280	Story Musgrave	USA	F	1935	T053:09:57
+281	Anna Lee Fisher	USA	N	1949	T007:23:44
+282	Philippe Perrin	FRA	F	1963	T013:20:35
+283	Valeri Kubasov	URS	F	1935	T018:17:58
+284	William C. McCool	USA	F	1961	T015:22:20
+285	Yevgeny Khrunov	URS	F	1933	T001:23:45
+286	Alexander Gerst	GER	F	1976	T362:04:07
+287	Rakesh Sharma	IND	F	1949	T007:21:40
+288	Terrence Wilcutt	USA	F	1949	T041:00:02
+289	Thomas Hennen	USA	F	1952	T006:22:50
+290	Winston Scott	USA	F	1950	T024:14:34
+291	Donald Pettit	USA	F	1955	T370:16:42
+292	Gregory Harbaugh	USA	F	1956	T034:02:00
+293	George Nelson	USA	F	1950	T017:02:44
+294	Ronald Evans	USA	F	1933	T012:13:51
+295	Gregory B. Jarvis	USA	F	1944	T000:00:01
+296	Ernst Messerschmid	GER	F	1945	T007:00:44
+297	Jügderdemidiin Gürragchaa	MGL	F	1947	T007:20:42
+298	John Fabian	USA	F	1939	T013:04:02
+299	Soichi Noguchi	JPN	F	1965	T177:03:05
+300	Frank De Winne	BEL	F	1961	T198:17:35
+301	Edward Lu	USA	F	1963	T204:22:16
+302	Donald "Deke" Slayton	USA	F	1924	T009:01:28
+303	Steven Smith	USA	F	1958	T041:00:17
+304	Richard Truly	USA	F	1937	T008:07:21
+305	Catherine Coleman	USA	N	1960	T180:03:59
+306	Marc Garneau	CAN	F	1949	T029:02:00
+307	Vasili Lazarev	URS	F	1928	T001:23:36
+308	Charles Duke	USA	F	1935	T011:01:51
+309	Franz Viehböck	AUT	F	1960	T007:22:12
+310	Wubbo Ockels	NED	F	1946	T007:00:44
+311	Talgat Musabayev	KAZ	F	1951	T341:09:48
+312	Kent Rominger	USA	F	1956	T066:22:56
+313	Joseph P. Allen	USA	F	1937	T013:01:59
+314	Edward White	USA	F	1930	T004:01:56
+315	Vladimir Shatalov	URS	F	1927	T009:21:57
+316	Valery Tokarev	RUS	F	1952	T199:11:06
+317	Richard Mullane	USA	F	1945	T014:20:20
+318	Vladimir Aksyonov	URS	F	1935	T011:20:11
+319	Taylor Wang	USA	F	1940	T007:00:08
+320	Gennadi Manakov	RUS	F	1950	T309:21:19
+321	Gherman Titov	URS	F	1935	T001:01:18
+322	Abdul Ahad Mohmand	AFG	F	1959	T008:20:26
+323	Millie Hughes-Fulford	USA	N	1945	T009:02:14
+324	Sheikh Muszaphar Shukor	MAS	F	1972	T010:21:13
+325	Andrei Borisenko	RUS	F	1964	T337:08:56
+326	Karl Henize	USA	F	1926	T007:22:45
+327	William S. McArthur	USA	F	1951	T224:22:19
+328	Paul Lockhart	USA	F	1956	T028:15:24
+329	Rick Husband	USA	F	1957	T025:13:33
+331	Stephen G. Bowen	USA	F	1964	T040:10:04
+332	Sherwood Spring	USA	F	1944	T006:21:04
+333	Robert D. Cabana	USA	F	1949	T037:22:41
+334	Luca Parmitano	ITA	F	1976	T166:06:17
+335	Sally Ride	USA	N	1951	T014:07:47
+336	Pavel Belyayev	URS	F	1925	T001:02:02
+337	Clayton Anderson	USA	F	1959	T166:21:10
+338	Andrew J. Feustel	USA	F	1965	T224:09:15
+339	Carl Walz	USA	F	1955	T230:13:03
+340	Boris Morukov	RUS	F	1950	T010:19:10
+341	Lodewijk van den Berg	USA	F	1932	T007:00:08
+342	Igor Volk	URS	F	1937	T011:19:14
+343	David Scott	USA	F	1932	T022:18:54
+344	James H. Newman	USA	F	1956	T043:10:09
+345	Janice Voss	USA	N	1956	T049:03:51
+346	Frederick Gregory	USA	F	1941	T018:23:05
+347	William Pailes	USA	F	1952	T004:01:44
+348	Michael P. Anderson	USA	F	1959	T024:18:08
+349	Ellen S. Baker	USA	N	1953	T028:14:32
+350	Rex Walheim	USA	F	1962	T036:08:32
+351	Frank L. Culbertson, Jr.	USA	F	1949	T143:14:51
+352	Jay C. Buckey	USA	F	1956	T015:21:50
+353	Jack D. Fischer	USA	F	1974	T135:18:08
+354	Mary Ellen Weber	USA	N	1962	T018:18:29
+355	Charles Camarda	USA	F	1952	T013:21:32
+356	Paul W. Richards	USA	F	1964	T012:19:51
+357	William B. Lenoir	USA	F	1939	T005:02:14
+358	Sergei Revin	RUS	F	1966	T124:23:51
+359	Anton Shkaplerov	RUS	F	1972	T533:05:31
+360	Scott Kelly	USA	F	1964	T521:10:33
+361	Ulf Merbold	GER	F	1941	T049:20:38
+362	Heidemarie Stefanyshyn-Piper	USA	N	1963	T027:15:36
+363	Richard O. Covey	USA	F	1946	T026:21:10
+364	Takuya Onishi	JPN	F	1975	T115:02:22
+365	Vladimir Kovalyonok	URS	F	1942	T216:09:09
+366	Kenneth Ham	USA	F	1964	T025:12:42
+367	Yuri Onufrienko	RUS	F	1961	T389:14:46
+368	William Frederick Fisher	USA	F	1946	T007:02:17
+369	Nancy Jan Davis	USA	N	1953	T028:02:06
+370	Jing Haipeng	CHN	F	1966	T047:18:19
+371	Stephen Oswald	USA	F	1951	T033:22:31
+372	John Casper	USA	F	1943	T034:09:53
+373	Joseph A. Walker	USA	F	1921	T000:00:22
+374	Viktor Patsayev	URS	F	1933	T023:21:21
+375	Kevin A. Ford	USA	F	1960	T157:13:13
+376	Joseph Tanner	USA	F	1950	T043:13:15
+377	Bruce McCandless II	USA	F	1937	T013:00:32
+378	Patrick Baudry	FRA	F	1946	T007:01:38
+379	John Grunsfeld	USA	F	1958	T059:15:05
+380	Mary L. Cleave	USA	N	1947	T010:22:01
+381	Leonid Kizim	URS	F	1941	T374:17:58
+382	Naoko Yamazaki	JPN	N	1970	T015:02:47
+383	Ellen Ochoa	USA	N	1958	T040:15:38
+384	Paul Scully-Power	USA	F	1944	T008:05:23
+385	Zhai Zhigang	CHN	F	1966	T002:20:26
+386	Mamoru Mohri	JPN	F	1948	T019:04:10
+387	Frederick W. Leslie	USA	F	1951	T015:21:52
+388	Bonnie J. Dunbar	USA	N	1949	T050:08:26
+389	Joe H. Engle	USA	F	1932	T009:08:30
+390	Yuri Baturin	RUS	F	1949	T019:17:45
+391	Ilan Ramon	ISR	F	1954	T015:22:20
+392	Oleg Novitskiy	RUS	F	1971	T340:10:12
+393	Vladimir Solovyov	URS	F	1946	T361:22:50
+394	Michael T. Good	USA	F	1962	T024:16:06
+395	James Voss	USA	F	1949	T202:05:29
+396	Yuri Glazkov	URS	F	1939	T017:17:27
+397	Georgi Ivanov	BUL	F	1940	T001:23:01
+398	William Gregory	USA	F	1957	T016:15:08
+399	Charles Veach	USA	F	1944	T018:02:22
+400	Wendy Lawrence	USA	N	1959	T052:03:55
+401	Satoshi Furukawa	JPN	F	1964	T167:06:14
+402	William E. Thornton	USA	F	1929	T013:01:17
+403	Michel Tognini	FRA	F	1949	T018:17:45
+404	Yuri Malyshev	URS	F	1941	T011:20:00
+405	Timothy Peake	GBR	F	1972	T185:22:11
+406	Michael Lopez-Alegria	USA	F	1958	T258:22:46
+407	Loren Acton	USA	F	1936	T007:22:45
+408	Arnaldo Tamayo Méndez	CUB	F	1942	T007:20:43
+409	Marcos Pontes	BRA	F	1963	T009:21:18
+410	Richard Garriott	USA	F	1961	T011:20:36
+411	Daniel Barry	USA	F	1953	T030:10:26
+412	Oleg Kotov	RUS	F	1965	T526:05:03
+413	Roman Romanenko	RUS	F	1971	T333:11:00
+414	Jerry Linenger	USA	F	1955	T143:02:50
+415	Wang Yaping	CHN	F	1978	T014:14:28
+416	Alfred Worden	USA	F	1932	T012:07:11
+417	Robert Curbeam	USA	F	1962	T037:14:31
+418	Aleksandr Balandin	URS	F	1953	T179:01:17
+419	Dmitri Kondratyev	RUS	F	1969	T159:07:18
+420	Lawrence J. DeLucas	USA	F	1950	T013:19:30
+421	Aleksei Gubarev	URS	F	1931	T037:11:35
+422	Gennadi Sarafanov	URS	F	1942	T002:00:12
+423	Pamela Melroy	USA	N	1961	T038:20:04
+424	Kenneth D. Cameron	USA	F	1949	T023:10:11
+425	Curtis Brown	USA	F	1956	T058:15:06
+426	Neil Armstrong	USA	F	1930	T008:14:00
+427	David Wolf	USA	F	1956	T169:08:58
+428	André Kuipers	NED	F	1958	T203:15:50
+429	Henry Hartsfield	USA	F	1933	T020:02:50
+430	Robert Parker	USA	F	1936	T019:05:52
+431	Eugene Cernan	USA	F	1934	T023:14:16
+432	Barry Wilmore	USA	F	1962	T178:00:58
+433	Michael Melvill	USA	F	1940	T000:00:49
+434	Bertalan Farkas	HUN	F	1949	T007:20:45
+435	Norman Thagard	USA	F	1943	T140:13:27
+436	Guy Gardner	USA	F	1948	T013:08:10
+437	Dorothy M. Metcalf-Lindenburger	USA	N	1975	T015:02:47
+438	Yuri Gidzenko	RUS	F	1962	T329:22:47
+439	Georgi Beregovoi	URS	F	1921	T003:22:50
+440	Kjell N. Lindgren	USA	F	1973	T141:16:09
+441	James McDivitt	USA	F	1929	T014:02:57
+442	Jim Lovell	USA	F	1928	T029:19:04
+443	Ulrich Walter	GER	F	1954	T009:23:40
+444	Alexander Kaleri	RUS	F	1956	T769:06:35
+445	Vance Brand	USA	F	1931	T031:02:03
+446	Mae Jemison	USA	N	1956	T007:22:30
+447	Niè Hǎishèng	CHN	F	1964	T019:10:01
+448	Fred Haise	USA	F	1933	T005:22:54
+449	Byron Lichtenberg	USA	F	1948	T019:04:56
+450	Anatoli Ivanishin	RUS	F	1969	T280:09:52
+451	Léopold Eyharts	FRA	F	1957	T068:21:32
+452	Richard N. Richards	USA	F	1946	T033:21:30
+453	Shannon Lucid	USA	N	1943	T223:02:52
+454	Ronald A. Parise	USA	F	1951	T025:14:13
+455	Maksim Surayev	RUS	F	1972	T334:12:09
+456	Yuri Romanenko	URS	F	1944	T430:18:21
+457	Aydyn Aimbetov	KAZ	F	1972	T181:23:47
+458	Roberta Bondar	CAN	N	1945	T008:01:14
+459	Ivan Bella	SVK	F	1964	T007:21:56
+460	Dominic A. Antonelli	USA	F	1967	T024:13:59
+461	Sergei Ryazanski	RUS	F	1974	T304:23:22
+462	Frederick Hauck	USA	F	1941	T018:03:09
+463	Kathryn Sullivan	USA	N	1951	T022:04:49
+464	Leland D. Melvin	USA	F	1964	T023:13:38
+465	Jeffrey Hoffman	USA	F	1944	T050:11:54
+466	Timothy L. Kopra	USA	F	1963	T244:01:01
+467	Yuri Artyukhin	URS	F	1930	T015:17:30
+468	Thomas Patten Stafford	USA	F	1930	T021:03:43
+469	Stanley G. Love	USA	F	1965	T012:18:22
+470	John Glenn	USA	F	1921	T009:02:39
+471	Steven Lindsey	USA	F	1960	T062:22:34
+472	Brewster Shaw	USA	F	1945	T022:04:52
+473	Ronald Garan	USA	F	1961	T177:23:54
+474	Sandra Magnus	USA	N	1964	T157:08:44
+475	Gennady Strekalov	URS	F	1940	T268:22:26
+476	Joseph Kerwin	USA	F	1932	T028:00:49
+477	Anthony W. England	USA	F	1942	T007:22:45
+478	Michael R. Barratt	USA	F	1959	T211:11:47
+479	Oleg Makarov	URS	F	1933	T020:17:43
+480	Sergey Prokopyev	RUS	F	1975	T196:20:07
+481	John Lounge	USA	F	1946	T020:02:23
+482	Christer Fuglesang	SWE	F	1957	T026:17:38
+483	Alexander Viktorenko	URS	F	1947	T489:01:35
+484	Aleksei Yeliseyev	URS	F	1934	T008:22:22
+485	David Hilmers	USA	F	1950	T020:14:17
+486	Mark C. Lee	USA	F	1952	T032:21:53
+487	G. David Low	USA	F	1956	T029:18:07
+488	Vladimír Remek	TCH	F	1948	T007:22:16
+489	Charles E. Brady, Jr.	USA	F	1951	T016:21:48
+490	Lee Archambault	USA	F	1960	T026:15:41
+491	Aleksandr Skvortsov	RUS	F	1966	T345:06:24
+492	Kenneth Cockrell	USA	F	1950	T064:12:27
+493	Yuri Malenchenko	RUS	F	1961	T826:09:22
+494	Chiaki Mukai	JPN	N	1952	T023:15:39
+495	Dafydd Williams	CAN	F	1954	T028:15:46
+496	Robert Satcher	USA	F	1965	T010:19:16
+497	Aleksei Leonov	URS	F	1934	T007:00:32
+498	William Readdy	USA	F	1952	T028:00:44
+499	William Oefelein	USA	F	1965	T012:20:44
+500	Yang Liwei	CHN	F	1965	T000:21:22
+501	Mark Polansky	USA	F	1956	T041:10:49
+502	Pedro Duque	ESP	F	1963	T018:18:46
+503	Daniel Brandenstein	USA	F	1943	T032:23:05
+504	Vyacheslav Zudov	URS	F	1942	T002:00:06
+505	Gerhard Thiele	GER	F	1953	T011:05:40
+506	Donald Williams	USA	F	1942	T011:23:34
+507	James Wetherbee	USA	F	1952	T068:08:29
+508	Gerald P. Carr	USA	F	1932	T084:01:15
+509	Guion Bluford	USA	F	1942	T028:16:35
+510	Aleksandar Panayotov Aleksandrov	BUL	F	1951	T091:10:46
+511	F. Drew Gaffney	USA	F	1946	T009:02:14
+512	Roger K. Crouch	USA	F	1940	T019:15:57
+513	Lloyd Hammond	USA	F	1952	T019:06:12
+514	George D. Zamka	USA	F	1962	T028:20:31
+515	Pierre Thuot	USA	F	1955	T027:08:53
+516	Charles Precourt	USA	F	1955	T038:19:16
+517	Akihiko Hoshide	JPN	F	1968	T140:17:26
+518	Gregory Linteris	USA	F	1957	T019:15:57
+519	Aleksandr Pavlovich Aleksandrov	URS	F	1943	T309:18:02
+520	James Dutton	USA	F	1968	T015:02:47
+521	Brian Binnie	USA	F	1953	T000:00:24
+522	Sergey Volkov	RUS	F	1973	T547:22:22
+523	John Herrington	USA	F	1958	T014:18:48
+524	Paolo A. Nespoli	ITA	F	1957	T313:02:37
+525	Kimiya Yui	JPN	F	1970	T141:16:09
+526	Konstantin Kozeyev	RUS	F	1967	T009:20:00
+527	Bruce Melnick	USA	F	1949	T013:01:27
+528	Vladimir Komarov	URS	F	1927	T002:03:04
+529	Mikhail Tyurin	RUS	F	1960	T532:02:52
+530	Jean-François Clervoy	FRA	F	1958	T029:02:05
+531	Aleksandr Ivanchenkov	URS	F	1940	T139:14:47
+532	Thomas Kenneth "Ken" Mattingly II	USA	F	1936	T021:04:33
+533	Dick Scobee	USA	F	1939	T006:23:40
+534	Steven R. Nagel	USA	F	1946	T030:01:36
+535	Samantha Cristoforetti	ITA	N	1977	T199:16:42
+536	Richard Hieb	USA	F	1955	T032:00:35
+537	Kathleen Rubins	USA	N	1978	T115:02:22
+538	Aleksandr Lazutkin	RUS	F	1957	T184:22:07
+539	Timothy Creamer	USA	F	1959	T163:05:33
+540	Yelena Serova	RUS	N	1976	T167:05:42
+541	Leonid Kadeniuk	UKR	F	1951	T015:16:34
+542	Valeri Polyakov	RUS	F	1942	T678:16:33
+543	Robert L. Gibson	USA	F	1946	T036:04:18
+544	Yuri Gagarin	URS	F	1934	T000:01:48
+545	John O. Creighton	USA	F	1943	T016:20:24
+546	Thomas D. Jones	USA	F	1955	T053:00:49
+547	Konstantin Feoktistov	URS	F	1926	T001:00:17
+548	Kevin P. Chilton	USA	F	1954	T029:10:23
+549	Paul Weitz	USA	F	1932	T033:01:13
+550	Boris Volynov	URS	F	1934	T052:07:17
+551	Sergey Nikolayevich Ryzhikov	RUS	F	1974	T173:03:15
+552	Georgi Shonin	URS	F	1935	T004:22:42
+553	Zhang Xiaoguang	CHN	F	1966	T014:14:28
+554	Gregory R. Wiseman	USA	F	1975	T165:08:00
+555	Viktor Savinykh	URS	F	1940	T242:21:28
+556	Liu Boming	CHN	F	1966	T002:20:26
+557	Oleg Artemyev	RUS	F	1970	T364:23:05
+558	Susan Helms	USA	N	1958	T210:23:07
+559	Robert J. Cenker	USA	F	1948	T006:02:03
+560	James Halsell	USA	F	1956	T052:10:32
+561	Alexander Poleshchuk	RUS	F	1953	T179:00:43

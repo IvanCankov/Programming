@@ -1,0 +1,43 @@
+﻿body {
+	font-size: 11pt;
+	margin: 0px;
+	padding: 0px;
+}
+
+p{
+	
+}
+
+hr {
+	
+}
+
+h1, h2 {
+	
+}
+
+h2 {
+	
+}
+
+#tartalom {
+	margin: 0 auto 0 auto;
+	text-align: left;
+	
+}
+
+#nev{
+	font-size: 16px;
+	font-style:italic;
+}
+
+
+.kep {
+	
+	margin-left: 5px;
+}
+
+a:link {
+
+}
+

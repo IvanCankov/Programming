@@ -1,0 +1,54 @@
+﻿Országkód	Ország	Városok száma	Utasok száma
+AFG	Afganisztán				Éves utasszám:
+ALB	Albánia				Legnépszerűbb ország:
+AUT	Ausztria
+AZE	Azerbajdzsán
+BEL	Belgium
+BIH	Bosznia-Hercegovina
+BGR	Bulgária
+CYP	Ciprus
+CZE	Csehország
+DNK	Dánia
+ARE	Egyesült Arab Emírségek
+GBR	Egyesült Királyság
+EGY	Egyiptom
+EST	Észtország
+BLR	Fehéroroszország
+FIN	Finnország
+FRA	Franciaország
+GRC	Görögország
+GEO	Grúzia
+NLD	Hollandia
+HRV	Horvátország
+IRL	Írország
+ISL	Izland
+ISR	Izrael
+JPN	Japán
+JOR	Jordánia
+CAN	Kanada
+QAT	Katar
+KAZ	Kazahsztán
+CHN	Kína
+XKX	Koszovó
+POL	Lengyelország
+LVA	Lettország
+LUX	Luxemburg
+MKD	Macedónia
+MLT	Málta
+MAR	Marokkó
+MNE	Montenegró
+DEU	Németország
+NOR	Norvégia
+ITA	Olaszország
+RUS	Oroszország
+PRT	Portugália
+ROU	Románia
+ESP	Spanyolország
+CHE	Svájc
+SWE	Svédország
+SRB	Szerbia
+SVK	Szlovákia
+SVN	Szlovénia
+TUR	Törökország
+TUN	Tunézia
+UKR	Ukrajna
