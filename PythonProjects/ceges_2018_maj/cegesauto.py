@@ -24,7 +24,11 @@ for auto in reversed(autok):
 
 
 print("3. feladat")
-nap = int(input("Nap: "))
+try:
+    nap = int(input("Nap: "))
+except ValueError:
+    print("Helytelen ertek")
+    
 print(f'Forgalom a(z) {nap}. napon:')
 
 for auto in autok:
