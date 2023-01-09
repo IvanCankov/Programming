@@ -46,6 +46,7 @@ for auto in autok:
 print(f'4. feladat\nA hónap végén {len(kint_van)} autót nem hoztak vissza.')
 
 megtett = {}
+leghosszabb = 0
 
 for index, auto in enumerate(autok):
     if not auto['ki']:
@@ -56,11 +57,17 @@ for index, auto in enumerate(autok):
             vissza -= 1
 
         megtett_km = auto['km'] - autok[vissza]["km"]
+        if megtett_km > leghosszabb:
+            leghosszabb = megtett_km
+            szemely = auto['azonosito']
 
         if megtett.get(rendszam):
             megtett[rendszam] += megtett_km
         else:
             megtett[rendszam] = megtett_km
 
+
 for key, value in sorted(megtett.items()):
     print(f'{key} {value} km')
+
+print(f'6. feladat\nLeghosszabb út: {leghosszabb} km, személy: {szemely}')
