@@ -53,25 +53,26 @@ def main():
 
     try:
         azonosito = int(input('6. feladat\nAdja meg a személy azonosítóját! '))
+
+        print('7. feladat')
+        osszesen_bent_toltott_perc = 0
+        for atkeles in atkelesek:
+            if atkeles['azonosito'] == azonosito and atkeles['be']:
+                print(f'{atkeles["ora"]}:{atkeles["perc"]}', end = ' - ')
+                kezdo_perc = (atkeles["ora"] * 60) + atkeles["perc"]
+
+            elif atkeles['azonosito'] == azonosito and not atkeles['be']:
+                print(f'{atkeles["ora"]}:{atkeles["perc"]}')
+                vegzo_perc = (atkeles["ora"] * 60) + atkeles["perc"]
+                osszesen_bent_toltott_perc += vegzo_perc - kezdo_perc
+            
+        if azonosito in bent_maradtak:
+            osszesen_bent_toltott_perc += 900 - kezdo_perc
+
+        print(f'\n8. feladat\nA(z) {azonosito}. személy összesen {osszesen_bent_toltott_perc} percet volt bent, a megfigyelés\nvégén a társalgóban volt.')
     except ValueError:
         print("Helytelen ertek")
 
-    print('7. feladat')
-    osszesen_bent_toltott_perc = 0
-    for atkeles in atkelesek:
-        if atkeles['azonosito'] == azonosito and atkeles['be']:
-            print(f'{atkeles["ora"]}:{atkeles["perc"]}', end = ' - ')
-            kezdo_perc = (atkeles["ora"] * 60) + atkeles["perc"]
-
-        elif atkeles['azonosito'] == azonosito and not atkeles['be']:
-            print(f'{atkeles["ora"]}:{atkeles["perc"]}')
-            vegzo_perc = (atkeles["ora"] * 60) + atkeles["perc"]
-            osszesen_bent_toltott_perc += vegzo_perc - kezdo_perc
-        
-    if azonosito in bent_maradtak:
-        osszesen_bent_toltott_perc += 900 - kezdo_perc
-
-    print(f'\n8. feladat\nA(z) {azonosito}. személy összesen {osszesen_bent_toltott_perc} percet volt bent, a megfigyelés\nvégén a társalgóban volt.')
-
+    
 if __name__ == '__main__':
     main()

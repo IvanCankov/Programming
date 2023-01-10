@@ -22,14 +22,16 @@ def main():    #1. Feladat: adatok beolvasasa
     print("3. feladat")
     try:
         nap = int(input("Nap: "))
+        print(f'Forgalom a(z) {nap}. napon:')
+
+        for auto in autok:
+            if auto['nap'] == nap:
+                print(f'{auto["oraperc"]} {auto["rendszam"]} {auto["azonosito"]} {"ki" if auto["ki"] else "be"}')
+                
     except ValueError:
         print("Helytelen ertek")
         
-    print(f'Forgalom a(z) {nap}. napon:')
-
-    for auto in autok:
-        if auto['nap'] == nap:
-            print(f'{auto["oraperc"]} {auto["rendszam"]} {auto["azonosito"]} {"ki" if auto["ki"] else "be"}')
+    
 
     kint_van = set()
     for auto in autok:
