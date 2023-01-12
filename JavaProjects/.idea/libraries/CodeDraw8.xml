@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="CodeDraw8">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Ueben3/lib/CodeDraw.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

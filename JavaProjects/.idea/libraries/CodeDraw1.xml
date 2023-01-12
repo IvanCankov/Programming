@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="CodeDraw1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Aufgabenblatt5/lib/CodeDraw.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

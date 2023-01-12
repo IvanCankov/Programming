@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Aufgabenblatt1/Aufgabenblatt1.iml" filepath="$PROJECT_DIR$/Aufgabenblatt1/Aufgabenblatt1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Aufgabenblatt2/Aufgabenblatt2.iml" filepath="$PROJECT_DIR$/Aufgabenblatt2/Aufgabenblatt2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Aufgabenblatt3/Aufgabenblatt3.iml" filepath="$PROJECT_DIR$/Aufgabenblatt3/Aufgabenblatt3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Aufgabenblatt4/Aufgabenblatt4.iml" filepath="$PROJECT_DIR$/Aufgabenblatt4/Aufgabenblatt4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Aufgabenblatt5/Aufgabenblatt5.iml" filepath="$PROJECT_DIR$/Aufgabenblatt5/Aufgabenblatt5.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/JavaProjects.iml" filepath="$PROJECT_DIR$/.idea/JavaProjects.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Ueben1/Ueben1.iml" filepath="$PROJECT_DIR$/Ueben1/Ueben1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Ueben2/Ueben2.iml" filepath="$PROJECT_DIR$/Ueben2/Ueben2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Ueben3/Ueben3.iml" filepath="$PROJECT_DIR$/Ueben3/Ueben3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Ueben4/Ueben4.iml" filepath="$PROJECT_DIR$/Ueben4/Ueben4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Ueben5/Ueben5.iml" filepath="$PROJECT_DIR$/Ueben5/Ueben5.iml" />
+    </modules>
+  </component>
+</project>
