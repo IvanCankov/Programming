@@ -102,7 +102,7 @@ public class Aufgabe1 {
 
         return false;
     }
-    
+
     public static void main(String[] args) {
 
         // canvas settings
@@ -145,15 +145,11 @@ public class Aufgabe1 {
                 int mouseX = currentClick.getX() / 50;
                 int mouseY = currentClick.getY() / 50;
 
-                System.out.println(mouseX);
-                for (int i = 0; i < myGameBoard.length; i++) {
-                    for (int j = 0; j < myGameBoard[0].length; j++) {
-                        System.out.print(myGameBoard[i][j] + " ");
-                    }
-                    System.out.println();
+                if (!isMovePossible(myGameBoard, mouseX)) {
+                    myDrawObj.drawText(width / 2.0, height / 2.0, "Column Full");
+                    mouseX = currentClick.getX() / 50;
                 }
-
-                if (isMovePossible(myGameBoard, mouseX)) {
+                else {
                     makeMove(myGameBoard, player % 2 + 1, mouseX);
                     drawGameBoard(myDrawObj, myGameBoard, oneSquareSize);
                     player++;
@@ -167,6 +163,7 @@ public class Aufgabe1 {
                 if(existsWinner(myGameBoard, 1) || existsWinner(myGameBoard, 2)) {
                     break;
                 }
+                myDrawObj.show();
             }
             else {
                 myEventSC.nextEvent();
