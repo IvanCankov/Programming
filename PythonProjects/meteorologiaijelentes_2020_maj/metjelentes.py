@@ -9,7 +9,7 @@ with open('/home/ivan/Programming/PythonProjects/meteorologiaijelentes_2020_maj/
             'ora' : line[1][:2],
             'perc' : line[1][2:],
             'irany' : line[2][:3],
-            'erosseg' : int(line[2][3:]),
+            'erosseg' : line[2][3:],
             'homerseklet' : int(line[3])
         }
         jelentesek.append(jelentes)
@@ -30,3 +30,7 @@ for index, jelentes in enumerate(jelentesek):
         legmagasabb_index = index
 
 print(f'3. feladat\nA legalacsonyabb hőmérséklet: {jelentesek[legalacsonyabb_index]["varos"]} {jelentesek[legalacsonyabb_index]["ora"]}:{jelentesek[legalacsonyabb_index]["perc"]} {jelentesek[legalacsonyabb_index]["homerseklet"]} fok.\nA legmagasabb hőmérséklet: {jelentesek[legmagasabb_index]["varos"]} {jelentesek[legmagasabb_index]["ora"]}:{jelentesek[legmagasabb_index]["perc"]} {jelentesek[legmagasabb_index]["homerseklet"]} fok.')
+print('4. feladat')
+for index, jelentes in enumerate(jelentesek):
+    if jelentes['irany'] == '000' and jelentes['erosseg'] == '00':
+        print(f'{jelentes["varos"]} {jelentes["ora"]}:{jelentes["perc"]}')
