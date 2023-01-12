@@ -99,15 +99,14 @@ public class Aufgabe1 {
                 }
             }
         }
-
         return false;
     }
 
     public static void main(String[] args) {
 
         // canvas settings
-        int rowsGameBoard = 6;
-        int colsGameBoard = 7;
+        int rowsGameBoard = 10;
+        int colsGameBoard = 10;
         int oneSquareSize = 50;
         int width = oneSquareSize * colsGameBoard;
         int height = oneSquareSize * rowsGameBoard;
@@ -175,11 +174,11 @@ public class Aufgabe1 {
                 if(existsWinner(myGameBoard, 2)) {
                     myDrawObj.drawText(width / 2.0, height / 2.0, "RED WINS");
                     myDrawObj.show();
-                    myEventSC.hasMouseClickEvent();
                     myGameBoard = genGameBoard(rowsGameBoard, colsGameBoard);
                     player = 1;
                     fieldsUsed = 0;
                 }
+                
                 myDrawObj.show();
             }
             else {
