@@ -128,13 +128,12 @@ public class Aufgabe1 {
         font.setBold(true);
         myDrawObj.setTextFormat(font);
 
-        // initial draw of the game board
+        //initial draw of the game board
         drawGameBoard(myDrawObj, myGameBoard, oneSquareSize);
-
-        // game play starts
         System.out.println("Player " + player + (player == 1 ? " (RED)" : " (YELLOW)") + " has to make a move!");
-        while (!myDrawObj.isClosed() && gameActive){
 
+        // gameplay starts
+        while (!myDrawObj.isClosed() && gameActive){
             if(myEventSC.hasKeyPressEvent()){
                 if(myEventSC.nextKeyPressEvent().getChar() == 'q'){
                     gameActive = false;
@@ -154,14 +153,32 @@ public class Aufgabe1 {
                     drawGameBoard(myDrawObj, myGameBoard, oneSquareSize);
                     player++;
                     fieldsUsed++;
+                    System.out.println("Player " + (player % 2 == 1 ? "1" : "2") + (player % 2 == 1 ? " (RED)" : " (YELLOW)") + " has to make a move!");
                 }
-
                 if (fieldsUsed >= rowsGameBoard * colsGameBoard){
-                    break;
+                    myDrawObj.drawText(width / 2.0, height / 2.0, "BOARD FULL");
+                    myEventSC.hasMouseClickEvent();
+                    myGameBoard = genGameBoard(rowsGameBoard, colsGameBoard);
+                    player = 1;
+                    fieldsUsed = 0;
                 }
 
-                if(existsWinner(myGameBoard, 1) || existsWinner(myGameBoard, 2)) {
-                    break;
+                if(existsWinner(myGameBoard, 1)) {
+                    myDrawObj.drawText(width / 2.0, height / 2.0, "YELLOW WINS");
+                    myDrawObj.show();
+                    myEventSC.hasMouseClickEvent();
+                    myGameBoard = genGameBoard(rowsGameBoard, colsGameBoard);
+                    player = 1;
+                    fieldsUsed = 0;
+                }
+
+                if(existsWinner(myGameBoard, 2)) {
+                    myDrawObj.drawText(width / 2.0, height / 2.0, "RED WINS");
+                    myDrawObj.show();
+                    myEventSC.hasMouseClickEvent();
+                    myGameBoard = genGameBoard(rowsGameBoard, colsGameBoard);
+                    player = 1;
+                    fieldsUsed = 0;
                 }
                 myDrawObj.show();
             }
