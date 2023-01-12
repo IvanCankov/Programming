@@ -40,15 +40,13 @@ public class Aufgabe1 {
     }
 
     private static void makeMove(int[][] currentGameBoard, int player, int col) {
-        if (isMovePossible(currentGameBoard, col)) {
-            int row = 0;
-            for (int i = 0; i < currentGameBoard.length; i++) {
-                if (currentGameBoard[i][col] == 0) {
-                    row = i;
-                }
+        int row = 0;
+        for (int i = 0; i < currentGameBoard.length; i++) {
+            if (currentGameBoard[i][col] == 0) {
+                row = i;
             }
-            currentGameBoard[row][col] = player;
         }
+        currentGameBoard[row][col] = player;
     }
 
     private static boolean existsWinner(int[][] currentGameBoard, int player) {
@@ -102,15 +100,9 @@ public class Aufgabe1 {
             }
         }
 
-
-
-
-
-
         return false;
     }
-
-
+    
     public static void main(String[] args) {
 
         // canvas settings
@@ -141,9 +133,7 @@ public class Aufgabe1 {
 
         // game play starts
         System.out.println("Player " + player + (player == 1 ? " (RED)" : " (YELLOW)") + " has to make a move!");
-        while (!myDrawObj.isClosed() && gameActive &&
-               !existsWinner(myGameBoard, 1) &&
-               !existsWinner(myGameBoard, 2)) {
+        while (!myDrawObj.isClosed() && gameActive){
 
             if(myEventSC.hasKeyPressEvent()){
                 if(myEventSC.nextKeyPressEvent().getChar() == 'q'){
@@ -163,9 +153,20 @@ public class Aufgabe1 {
                     System.out.println();
                 }
 
-                makeMove(myGameBoard, player % 2 + 1, mouseX);
-                drawGameBoard(myDrawObj, myGameBoard, oneSquareSize);
-                player++;
+                if (isMovePossible(myGameBoard, mouseX)) {
+                    makeMove(myGameBoard, player % 2 + 1, mouseX);
+                    drawGameBoard(myDrawObj, myGameBoard, oneSquareSize);
+                    player++;
+                    fieldsUsed++;
+                }
+
+                if (fieldsUsed >= rowsGameBoard * colsGameBoard){
+                    break;
+                }
+
+                if(existsWinner(myGameBoard, 1) || existsWinner(myGameBoard, 2)) {
+                    break;
+                }
             }
             else {
                 myEventSC.nextEvent();
