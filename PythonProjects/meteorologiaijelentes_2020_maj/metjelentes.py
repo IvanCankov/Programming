@@ -29,8 +29,7 @@ for index, jelentes in enumerate(jelentesek):
     if jelentes['homerseklet'] > jelentesek[legmagasabb_index]['homerseklet']:
         legmagasabb_index = index
 
-print(f'3. feladat\nA legalacsonyabb hőmérséklet: {jelentesek[legalacsonyabb_index]["varos"]} {jelentesek[legalacsonyabb_index]["ora"]}:{jelentesek[legalacsonyabb_index]["perc"]} {jelentesek[legalacsonyabb_index]["homerseklet"]} fok.\nA legmagasabb hőmérséklet: {jelentesek[legmagasabb_index]["varos"]} {jelentesek[legmagasabb_index]["ora"]}:{jelentesek[legmagasabb_index]["perc"]} {jelentesek[legmagasabb_index]["homerseklet"]} fok.')
-print('4. feladat')
+print(f'3. feladat\nA legalacsonyabb hőmérséklet: {jelentesek[legalacsonyabb_index]["varos"]} {jelentesek[legalacsonyabb_index]["ora"]}:{jelentesek[legalacsonyabb_index]["perc"]} {jelentesek[legalacsonyabb_index]["homerseklet"]} fok.\nA legmagasabb hőmérséklet: {jelentesek[legmagasabb_index]["varos"]} {jelentesek[legmagasabb_index]["ora"]}:{jelentesek[legmagasabb_index]["perc"]} {jelentesek[legmagasabb_index]["homerseklet"]} fok.\n4. feladat')
 for index, jelentes in enumerate(jelentesek):
     if jelentes['irany'] == '000' and jelentes['erosseg'] == '00':
         print(f'{jelentes["varos"]} {jelentes["ora"]}:{jelentes["perc"]}')
