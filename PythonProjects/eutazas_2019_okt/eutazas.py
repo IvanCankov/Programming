@@ -53,3 +53,8 @@ def naposzama(e1, h1, n1, e2, h2, n2):
     d2 = 365 * e2 + e2 // 4 - e2 // 100 + e2 // 400 + (h2 * 306 + 5) // 10 + n2 - 1
     napokszama = d2 - d1
     return napokszama
+
+with open('/home/ivan/Programming/PythonProjects/eutazas_2019_okt/figyelmeztetes.txt', 'w', encoding = 'UTF-8') as file:
+    for utas in utasok:
+        if utas['ervenyes'] - utas['datum'] == 3:
+            print(f'{utas["azonosito"]} {utas["ervenyes"]}-{utas["ervenyes"]}-{utas["ervenyes"]}', file = file)
