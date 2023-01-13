@@ -20,10 +20,17 @@ nem_szallhattak_fel = 0
 egy_allomas = 0
 legtobben = 0
 megallo = 0
+ingyenesen_utazok = 0
+kedvezmenyesen_utazok = 0
 
 for index, utas in enumerate(utasok):
-    if utas['ervenyes'] == 0 or utas['datum'] > utas['ervenyes'] and utas['tipus'] != 'JGY':
+    if utas['ervenyes'] > 0 and utas['tipus'] == 'JGY' or utas['datum'] < utas['ervenyes'] and utas['tipus'] != 'JGY':
         nem_szallhattak_fel += 1
+        if utas['tipus'] == 'RVS' or utas['tipus'] == 'GYK' or utas['tipus'] == 'NYP':
+            ingyenesen_utazok += 1
+        if utas['tipus'] == 'TAB' or utas['tipus'] == 'NYB':
+            kedvezmenyesen_utazok += 1
+            
     if utas['allomas'] == utasok[index - 1]['allomas']:
         egy_allomas += 1
     else:
@@ -35,3 +42,4 @@ for index, utas in enumerate(utasok):
 
 print(f'3. feladat\nA buszra {nem_szallhattak_fel} utas nem szállhatott fel.')
 print(f'4. feladat\nA legtöbb utas ({legtobben} fő) a {megallo}. megállóban próbált felszállni.')
+print(f'5. feladat\nIngyenesen utazók száma: {ingyenesen_utazok} fő\nA kedvezményesen utazók száma: {kedvezmenyesen_utazok} fő')
