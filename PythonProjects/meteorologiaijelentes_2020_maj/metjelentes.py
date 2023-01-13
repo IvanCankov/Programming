@@ -1,6 +1,7 @@
 #1. feladat adatok beolvasasa
 
 jelentesek = []
+nem_volt_szelcsned = set()
 with open('/home/ivan/Programming/PythonProjects/meteorologiaijelentes_2020_maj/tavirathu13.txt', 'r', encoding = 'UTF-8') as file:
     for line in file:
         line = line.strip().split()
@@ -12,6 +13,7 @@ with open('/home/ivan/Programming/PythonProjects/meteorologiaijelentes_2020_maj/
             'erosseg' : line[2][3:],
             'homerseklet' : int(line[3])
         }
+        nem_volt_szelcsned.add(line[0])
         jelentesek.append(jelentes)
 
 varoskod = input(f'2. feladat\nAdja meg egy település kódját! Település: ')
@@ -33,3 +35,5 @@ print(f'3. feladat\nA legalacsonyabb hőmérséklet: {jelentesek[legalacsonyabb_
 for index, jelentes in enumerate(jelentesek):
     if jelentes['irany'] == '000' and jelentes['erosseg'] == '00':
         print(f'{jelentes["varos"]} {jelentes["ora"]}:{jelentes["perc"]}')
+        nem_volt_szelcsned.remove(jelentes['varos'])
+
