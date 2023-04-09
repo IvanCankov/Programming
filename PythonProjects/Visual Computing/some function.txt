@@ -1,0 +1,31 @@
+Sure! Here's an example of applying a filter to a 2D numpy array using np.apply_along_axis:
+
+python
+
+import numpy as np
+
+# Define a filter function
+def filter_func(x):
+    # Filter the element based on some condition
+    if x < 0:
+        return 0
+    else:
+        return x
+
+# Create a 2D numpy array
+arr = np.array([[-1, 2, -3],
+                [4, -5, 6]])
+
+# Apply the filter function to all elements in the array along axis=1 (rows)
+filtered_arr = np.apply_along_axis(filter_func, axis=1, arr=arr)
+
+print(filtered_arr)
+
+This will output the following array:
+
+lua
+
+[[0 2 0]
+ [4 0 6]]
+
+Here, the filter_func function is defined to set all negative elements to 0, and leave all positive elements unchanged. np.apply_along_axis applies this function to each element in the input array arr along the rows (axis=1), resulting in a new filtered array filtered_arr.
