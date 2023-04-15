@@ -36,16 +36,50 @@ def evc_demosaic_pattern(input_image: np.ndarray, pattern = 'RGGB') -> Tuple[np.
     B = np.zeros(input_image.shape)
 
     # Extract color channels without interpolation
-    #for some reason it doesn't work when i add if-else statements for the pattern :/
-    #this one is for RGGB
 
     #get every second element starting from 0 (row)
     #get every second element starting from 0 (column)
-    R[0::2, 0::2] = input_image[0::2, 0::2]
-    G[0::2, 1::2] = input_image[0::2, 1::2]
-    G[1::2, 0::2] = input_image[1::2, 0::2]
-    B[1::2, 1::2] = input_image[1::2, 1::2]
+    if pattern == 'RGGB':
+        R[0::2, 0::2] = input_image[0::2, 0::2]
+        G[0::2, 1::2] = input_image[0::2, 1::2]
+        G[1::2, 0::2] = input_image[1::2, 0::2]
+        B[1::2, 1::2] = input_image[1::2, 1::2]
 
+    if pattern == 'RBBG':
+        R[0::2, 0::2] = input_image[0::2, 0::2]
+        B[0::2, 1::2] = input_image[0::2, 1::2]
+        B[1::2, 0::2] = input_image[1::2, 0::2]
+        G[1::2, 1::2] = input_image[1::2, 1::2]
+
+    if pattern == 'BGGR':
+        B[0::2, 0::2] = input_image[0::2, 0::2]
+        G[0::2, 1::2] = input_image[0::2, 1::2]
+        G[1::2, 0::2] = input_image[1::2, 0::2]
+        R[1::2, 1::2] = input_image[1::2, 1::2]
+
+    if pattern == 'GRBG':
+        G[0::2, 0::2] = input_image[0::2, 0::2]
+        R[0::2, 1::2] = input_image[0::2, 1::2]
+        B[1::2, 0::2] = input_image[1::2, 0::2]
+        G[1::2, 1::2] = input_image[1::2, 1::2]
+
+    if pattern == 'GBRG':
+        G[0::2, 0::2] = input_image[0::2, 0::2]
+        B[0::2, 1::2] = input_image[0::2, 1::2]
+        R[1::2, 0::2] = input_image[1::2, 0::2]
+        G[1::2, 1::2] = input_image[1::2, 1::2]
+        
+    if pattern == 'GBBR':
+        G[0::2, 0::2] = input_image[0::2, 0::2]
+        B[0::2, 1::2] = input_image[0::2, 1::2]
+        B[1::2, 0::2] = input_image[1::2, 0::2]
+        R[1::2, 1::2] = input_image[1::2, 1::2]
+
+    if pattern == 'BRRG':
+        B[0::2, 0::2] = input_image[0::2, 0::2]
+        R[0::2, 1::2] = input_image[0::2, 1::2]
+        R[1::2, 0::2] = input_image[1::2, 0::2]
+        G[1::2, 1::2] = input_image[1::2, 1::2]
 
     
     ### END STUDENT CODE
@@ -104,7 +138,7 @@ def evc_interpolate(red : np.ndarray, green : np.ndarray, blue : np.ndarray) -> 
     #       from crashing.
 
     #silly lil filter
-    filter = np.array([[0, 1, 0], [1, 4, 1], [0, 1, 0]]) / 4
+    filter = np.array([[0, 0.25, 0], [0.25, 1, 0.25], [0, 0.25, 0]])
 
     # Interpolate the red channel
     R_inter = ndimage.correlate(red, filter, mode='constant')

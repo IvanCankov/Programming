@@ -26,11 +26,20 @@ def evc_compute_brightness(input_image: np.ndarray) -> np.ndarray:
     # TODO: Implement this function.
     # HINT: The function 'rgb2gray' might be useful.
 
-    brightness = np.ones(input_image.shape)
+    # Normalize the image by dividing it by the maximum value
+    max_val = np.max(input_image)
+    normalized = input_image / max_val
+    
+    # Convert the normalized image to grayscale
+    grayscale = rgb2gray(normalized)
+    
+    # Multiply the grayscale image by the maximum value
+    brightness = grayscale * max_val
+    
+    # Return the result
+    return brightness
     ### END STUDENT CODE
 
-
-    return brightness
 
 def evc_compute_chromaticity(input_image: np.ndarray, brightness: np.ndarray) -> np.ndarray:
     """ evc_compute_chromaticity calculates the chromaticity of the 'input' image
@@ -50,11 +59,13 @@ def evc_compute_chromaticity(input_image: np.ndarray, brightness: np.ndarray) ->
     # NOTE: The following line can be removed. It prevents the framework
     #       from crashing.
 
-    chromaticity = np.zeros(input_image.shape)
+    # Divide each color channel of the input image by its corresponding brightness value
+    chromaticity = input_image / np.dstack((brightness, brightness, brightness))
+    
+    # Return the result
+    return chromaticity
     ### END STUDENT CODE
 
-
-    return chromaticity
 
 def evc_gamma_correct(input_image: np.ndarray, gamma: float) -> np.ndarray:
     """evc_gamma_correct performs gamma correction on the 'input_image' image.
@@ -74,11 +85,17 @@ def evc_gamma_correct(input_image: np.ndarray, gamma: float) -> np.ndarray:
     # NOTE: The following line can be removed. It prevents the framework
     #       from crashing.
 
-    corrected = np.zeros(input_image.shape)
+        # Check if gamma is zero and set it to a small value to avoid division by zero
+    if gamma == 0:
+        gamma = 1e-6
+    
+    # Compute the gamma-corrected image
+    corrected = np.power(input_image, 1.0 / gamma)
+    
+    # Return the result
+    return corrected
     ### END STUDENT CODE
 
-
-    return corrected
 
 def evc_reconstruct(brightness_corrected: np.ndarray, chromaticity) -> np.ndarray:
     """ evc_reconstruct reconstructs the color values by multiplying the corrected
@@ -96,8 +113,9 @@ def evc_reconstruct(brightness_corrected: np.ndarray, chromaticity) -> np.ndarra
     # NOTE:  The following line can be removed. It prevents the framework
     #       from crashing.
 
-    result = np.zeros(brightness_corrected.shape)
-    ### END STUDENT CODE
-
-
+    # Multiply the brightness values with the chromaticity
+    result = np.multiply(brightness_corrected[..., np.newaxis], chromaticity)
+    
+    # Return the result
     return result
+    ### END STUDENT CODE

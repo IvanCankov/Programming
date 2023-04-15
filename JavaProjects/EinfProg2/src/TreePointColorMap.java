@@ -18,7 +18,7 @@ public class TreePointColorMap {
 
         BranchNode newNode = new BranchNode(key, value, null, null);
 
-        if(root== null){
+        if(root == null){
 
             root = newNode;
         } else {

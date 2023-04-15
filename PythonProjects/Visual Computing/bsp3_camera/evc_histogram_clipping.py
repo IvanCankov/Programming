@@ -27,12 +27,19 @@ def evc_prepare_histogram_range(input_image: np.ndarray, low: float, high: float
     # NOTE: The following two lines can be removed. They prevent the
     #       framework from crashing.
 
-    newLow = low
-    newHigh = high
+    # Get the maximum intensity in the image
+    max_intensity = np.max(input_image)
+
+    # Calculate new values for lower and upper bounds
+    new_low = max(0, low)
+    new_high = min(max_intensity, high)
+
+    # Normalize the bounds to [0,1]
+    new_low /= max_intensity
+    new_high /= max_intensity
     ### END STUDENT CODE
     
-    
-    return newLow, newHigh
+    return new_low, new_high
 
 
 def evc_transform_histogram(input_image: np.ndarray, newLow: float, newHigh: float) -> np.ndarray:
@@ -54,11 +61,28 @@ def evc_transform_histogram(input_image: np.ndarray, newLow: float, newHigh: flo
 	# NOTE: The following line can be removed. It prevents the framework
     #       from crashing.
 
-    result = np.zeros(input_image.shape)
+    # Compute the histogram of the input image
+    hist, bins = np.histogram(input_image, bins=254, range=(0, 1))
+
+    # Compute the cumulative distribution function (CDF)
+    cdf = np.cumsum(hist)
+
+    # Normalize the CDF to map the range [newLow, newHigh] to [0, 1]
+    cdf_norm = (cdf - cdf.min()) / (cdf.max() - cdf.min())
+    cdf_norm = newLow + (newHigh - newLow) * cdf_norm
+
+    # Create a lookup table using the normalized CDF
+    lut = np.interp(np.linspace(0, 1, 254), cdf_norm, bins[:-1])
+
+    # Apply the lookup table to the input image
+    output_image = np.take(lut, np.digitize(input_image.ravel(), bins[:-1]))
+
+    # Reshape the output image to match the input shape
+    output_image = np.reshape(output_image, input_image.shape)
     ### END STUDENT CODE
 
     
-    return result
+    return output_image
 
 
 def evc_clip_histogram(input_image: np.ndarray) -> np.ndarray:
@@ -76,8 +100,12 @@ def evc_clip_histogram(input_image: np.ndarray) -> np.ndarray:
 	# NOTE: The following line can be removed. It prevents the framework
     #       from crashing.
 
-    result = np.zeros(input_image.shape)
+    # Set all values < 0 to 0
+    input_image[input_image < 0] = 0
+
+    # Set all values > 1 to 1
+    input_image[input_image > 1] = 1
+
     ### END STUDENT CODE
 
-    
-    return result
+    return input_image

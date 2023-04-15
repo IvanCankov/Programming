@@ -14,7 +14,6 @@ def evc_white_balance(input_image: np.ndarray, white: np.ndarray) -> np.ndarray:
       OUTPUT
       result      ... result after white balance"""
     
-    
     ### STUDENT CODE
     # TODO: perform white balancing using the 'white' variable
 	  # HINT: Make sure the program does not crash if 'white' is zero!
@@ -24,8 +23,19 @@ def evc_white_balance(input_image: np.ndarray, white: np.ndarray) -> np.ndarray:
     # NOTE: The following line can be removed. It prevents the framework
     #       from crashing.
 
-    result = np.copy(input_image)
+    # Check if white is zero to avoid division by zero
+    if np.all(white == 0):
+        return input_image
+    
+    # Normalize the image with the white point
+    normalized = input_image / white
+    
+    # Clip the pixel values to the range [0, 1]
+    clipped = np.clip(normalized, 0, 1)
+    
+    # Return the result
+    result = np.minimum(clipped, 1)
+    return clipped 
     ### END STUDENT CODE
     
-    result = np.minimum(result, 1)
-    return result
+    
