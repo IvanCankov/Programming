@@ -45,8 +45,6 @@ public class Aufgabe3Test {
         pl.add(1, p4);
         pl.add(4, p5);
 
-        // TODO: implement .add()
-
         testValue(pl.size(), 5);
 
         testEquals(pl.get(0), p3);
@@ -88,14 +86,10 @@ public class Aufgabe3Test {
         testEquals(raster.getPixelColor(p5.getX(),p5.getY()), Color.CYAN);
         testEquals(raster.getPixelColor(3,3), Color.BLACK);
 
-        /*
-
         System.out.println("Test8:");
         pcm = raster.asMap();
         testEquals(pcm.get(p5),Color.CYAN);
         testEquals(pcm.get(new Point(3,3)),Color.BLACK);
-
-        */
     }
 
     public static void testIdentical(Object given, Object expected) {

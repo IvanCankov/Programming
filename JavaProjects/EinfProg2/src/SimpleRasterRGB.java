@@ -130,9 +130,24 @@ public class SimpleRasterRGB {
         }
     }
 
+
+    public TreePointColorMap asMap() {
+
+        TreePointColorMap treePointColorMap = new TreePointColorMap();
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                Point point = new Point(i, j);
+                treePointColorMap.put(point, getPixelColor(i, j));
+            }
+        }
+
+        return treePointColorMap;
+    }
+
     public void swapChannel(int ch1, int ch2) {
         SimpleDataBufferInt copy = new SimpleDataBufferInt(6, height * width);
-        // NOTE: wi haben hier vergessen die Reihe den Elemente zu tauschen in copy.setElem()
+        // NOTE: wir haben hier vergessen die Reihe den Elemente zu tauschen in copy.setElem()
         //die Idee war erst die Channel Nummer dann Position in diesem Fall i und danach die Farbe simpleDataBufferInt.getElem(channel Nummer, Position i)
 
         for (int i = 0; i < width * height; i++) {
