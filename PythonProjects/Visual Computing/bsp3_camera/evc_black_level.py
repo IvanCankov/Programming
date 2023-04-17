@@ -10,58 +10,51 @@ from PIL.TiffTags import TAGS
 
 
 def evc_read_file_info(filename: str) -> Tuple[int, Tuple]:
-    """evc_read_file_info extracts the black level (blackLevel) and the neutral
-    white value (asShotNeutral) from the image file specified by filename.
-    
-      INPUT
-      filename... 		    filename of the image
-    
-      OUTPUT
-      blackLevel... 		    black level, which is stored in the image infos
-      asShotNeutral... 	    neutral white value, which is stored in the image"""
 
-    ### STUDENT CODE
-    #TODO:  Implement this function.
-    #HINT: 	'PIL.TiffTags.TAGS' might be useful.
-    #NOTE:  The following two lines can be removed. They prevent the
-    #       framework from crashing.
+    # open the image
     img_pil = Image.open(filename)
 
+    # get all tags in a dict
     meta_dict = {TAGS[ key ] : img_pil.tag [ key ] for key in img_pil.tag_v2 }
-    blackLevel = meta_dict['BlackLevel']
+
+    # get blacklevel
+    blackLevel = meta_dict['BlackLevel'][0]
+
+    # get whatever this is
     asShotNeutral = meta_dict['AsShotNeutral']
     ### END STUDENT CODE
     
-    
+    #return the 2 values
     return blackLevel, asShotNeutral
 
 
     
 def evc_transform_colors(input_image: np.ndarray, blackLevel: float) -> np.ndarray:
-    """evc_transform_colors adjusts the contrast such that black (blackLevel and
-    values below) becomes 0 and white becomes 1.
-    The white value of the input image is 65535.
     
-      INPUT
-      input_image...            input image
-      blackLevel... 		black level of the input image
+    # copy the image
+    output_image = input_image.copy().astype(float)
+
+    # creates a boolean mask where each element of the mask is True if the corresponding element of the output_image is less than or equal to blackLevel
+    mask = output_image <= blackLevel
+
+    ### Yes, there is a reason for subtracting the blackLevel value from every pixel value in the output_image.
+    # The blackLevel value represents the level below which the image sensor produces no signal,
+    # resulting in a pure black image. However, due to the inherent noise in the image sensor, 
+    # even when no signal is present, some small fluctuations in the signal can still be detected.
+    # These fluctuations can cause a small offset or bias in the pixel values, resulting in a "dark current" 
+    # that can manifest as a small amount of noise or a slightly elevated baseline level in the image.
+    # Subtracting the blackLevel value from the pixel values effectively removes this bias,
+    # bringing the true black level of the image down to zero. This can improve the contrast and overall quality
+    # of the image by reducing the amount of noise and increasing the dynamic range.
+    output_image = output_image - blackLevel
+
+    # sets to zero any pixel value in the output_image that corresponds to a True value in the mask 
+    output_image[mask] = 0         
+
+    # rescales the pixel values to the range between 0 and 1
+    output_image = output_image / (65535 - blackLevel)
     
-      OUTPUT
-      result... 			image in double format where all values are
-                          transformed from the interval [blackLevel, 65535]
-                          to [0, 1]. All values below the black level have to
-                          be 0."""
-
-    ### STUDENT CODE
-    #TODO:  Implement this function.
-    #NOTE:  The following line can be removed. It prevents the framework
-    #       from crashing.
-
-    result = np.zeros(input_image.shape)
-    for row, i in enumerate(input_image):
-        for col, j in enumerate(i):
-            result[row][col] = blackLevel / j if j > blackLevel else 0
     ### END STUDENT CODE
     
-    
-    return result
+    # return the processed image
+    return output_image
