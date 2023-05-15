@@ -28,10 +28,43 @@ public class Point {
         return (this.x > p.getX() || (this.x == p.getX() && this.y > p.getY())) ? 1 : -1;
     }
 
-    public boolean equals(Point point) {
-        if(point != null) {
-            return this.x == point.x && this.y == point.y;
+    @Override
+    // Returns 'true' if 'o' is of class 'Point' and has coordinates equal to those of 'this'.
+    // (This means that for two objects p1 and p2 of 'Point', p1.equals(p2) == true if and only if
+    // p1.compareTo(p2) == 0.)
+    // Return 'false' otherwise.
+    public boolean equals(Object o) {
+
+        if (this == o) {
+            return true;
         }
-        return false;
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Point otherPoint = (Point) o;
+        return this.x == otherPoint.x && this.y == otherPoint.y;
     }
+
+    @Override
+    // Returns the hash code of 'this'.
+    public int hashCode() {
+
+        final int prime = 31;
+        int hashCode = 17;
+
+        hashCode = prime * hashCode + x;
+        hashCode = prime * hashCode + y;
+
+        return hashCode;
+    }
+
+    @Override
+    // Returns a string representation of 'this'.
+    public String toString() {
+
+        return "[" + getX() + ", " + getY() + "]";
+    }
+
 }
