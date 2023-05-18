@@ -2,23 +2,33 @@ public class RationalCollection {
 
     private Node root;
 
+
+    //Initialises this as an empty RationalCollection.
     public RationalCollection() {
 
         this.root = null;
     }
 
+    //Adds all rationals from rc to a new tree that are smaller than the maximum.
+    public RationalCollection(RationalCollection rc, Rational maximum) {
+        //TODO: implement constructor
+    }
+
+    //Adds the specified node to the collection
     public void add(Node n) {
 
         if (root == null) root = n;
         else root.nodeAdd(n);
     }
 
+    //Counts how many times the specified rational occurs within the collection
     public int count(Rational r) {
 
         if (root == null) return 0;
         else return root.count(r);
     }
 
+    //Returns the collection in string form
     @Override
     public String toString() {
 
@@ -28,7 +38,7 @@ public class RationalCollection {
 }
 
 class Node {
-    private Rational value;
+    private final Rational value;
     private Node left;
     private Node right;
 
