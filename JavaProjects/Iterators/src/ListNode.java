@@ -61,6 +61,10 @@ public class ListNode {
         else this.getNext().add(node);
     }
 
+    public void remove(Point point) {
+        // TODO: implement method
+    }
+
     /**
      *
      * @return the string representation of this node
