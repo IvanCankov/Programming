@@ -19,13 +19,11 @@ public class Main {
         list.add(new ListNode(p5));
         list.add(new ListNode(p6));
 
-        System.out.println(list.toString());
+        System.out.println(list);
         System.out.println();
 
-        Iterator<Point> listIterator = list.iterator();
-        while (listIterator.hasNext()) {
-            Point point = listIterator.next();
-            System.out.println(point);
+        for (ListNode node : list) {
+            System.out.println(node);
         }
     }
 }

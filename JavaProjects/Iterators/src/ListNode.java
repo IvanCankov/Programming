@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -7,18 +8,22 @@ public class ListNode {
     private Point value;
 
     public ListNode(Point p) {
+
         this.value = p;
     }
 
     public void setNext(ListNode node) {
+
         this.next = node;
     }
 
     public ListNode getNext() {
+
         return next;
     }
 
     public Point getValue() {
+
         return value;
     }
 
@@ -31,15 +36,17 @@ public class ListNode {
 
     @Override
     public String toString() {
-        return this.next != null ? (this.value.toString() + ", " + this.next.toString()) : this.value.toString();
+
+        return (this.value.toString() + ": " + this.getValue().getColor());
     }
 }
 
-class LinkedList implements Iterable<Point> {
+class LinkedList implements Iterable<ListNode> {
 
     private ListNode root;
 
     public LinkedList() {
+
         this.root = null;
     }
 
@@ -53,30 +60,39 @@ class LinkedList implements Iterable<Point> {
     public String toString() {
 
         if (root == null) return "";
-        else return root.toString();
+        StringBuilder returned = new StringBuilder();
+        for (ListNode ln : this) {
+            if (ln.getNext() != null) returned.append(ln).append(", ");
+            else returned.append(ln);
+        }
+        return returned.toString();
     }
 
     @Override
-    public Iterator<Point> iterator() {
+    public Iterator<ListNode> iterator() {
+
         return new SLLIterator();
     }
 
-    private class SLLIterator implements Iterator<Point> {
+    private class SLLIterator implements Iterator<ListNode> {
 
         private ListNode current;
-t
+
         public SLLIterator() {
+
             this.current = root;
         }
         @Override
         public boolean hasNext() {
+
             return current != null;
         }
 
         @Override
-        public Point next() {
+        public ListNode next() {
+
             if (!hasNext()) throw new NoSuchElementException("No more elements in the list");
-            Point value = current.getValue();
+            ListNode value = current;
             current = current.getNext();
             return value;
         }
