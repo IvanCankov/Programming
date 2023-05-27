@@ -1,4 +1,3 @@
-import java.awt.*;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -20,21 +19,41 @@ public class ListNode {
         this.value = p;
     }
 
+    /**
+     * Sets the next parameter of this node
+     *
+     * @param node is the value that we wish to set next to
+     */
     public void setNext(ListNode node) {
 
         this.next = node;
     }
 
+    /**
+     * Returns next of this node
+     *
+     * @return this.next
+     */
     public ListNode getNext() {
 
         return next;
     }
 
+    /**
+     * Returns the value of this node
+     *
+     * @return this.value
+     */
     public Point getValue() {
 
         return value;
     }
 
+    /**
+     * Adds a specified node to this and consequently other nodes
+     *
+     * @param node is the value that will be added to the nodes
+     */
     public void add(ListNode node) {
 
         if (this.value.equals(node.value)) this.value = node.value;
@@ -42,6 +61,10 @@ public class ListNode {
         else this.getNext().add(node);
     }
 
+    /**
+     *
+     * @return the string representation of this node
+     */
     @Override
     public String toString() {
 
@@ -53,17 +76,28 @@ class LinkedList implements Iterable<ListNode> {
 
     private ListNode root;
 
+    /**
+     * Creates a new empty linked list
+     */
     public LinkedList() {
 
         this.root = null;
     }
 
+    /**
+     *
+     * @param node adds the specified node to the list
+     */
     public void add(ListNode node) {
 
         if (root == null) this.root = node;
         else root.add(node);
     }
 
+    /**
+     *
+     * @return the string representation of this linked list using an iterator
+     */
     @Override
     public String toString() {
 
