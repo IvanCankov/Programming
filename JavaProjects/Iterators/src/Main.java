@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.Iterator;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,5 +20,12 @@ public class Main {
         list.add(new ListNode(p6));
 
         System.out.println(list.toString());
+        System.out.println();
+
+        Iterator<Point> listIterator = list.iterator();
+        while (listIterator.hasNext()) {
+            Point point = listIterator.next();
+            System.out.println(point);
+        }
     }
 }
