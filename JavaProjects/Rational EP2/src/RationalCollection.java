@@ -2,11 +2,15 @@ public class RationalCollection {
 
     private Node root;
 
-
     //Initialises this as an empty RationalCollection.
     public RationalCollection() {
 
         this.root = null;
+    }
+
+    public Node getRoot() {
+
+        return root;
     }
 
     //Adds all rationals from rc to a new tree that are smaller than the maximum.
