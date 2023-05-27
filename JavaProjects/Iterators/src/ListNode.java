@@ -2,11 +2,19 @@ import java.awt.*;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * Represents a node in a singly linked list
+ */
 public class ListNode {
 
     private ListNode next;
     private Point value;
 
+    /**
+     * Constructs a new ListNode with the specified Point as the value
+     *
+     * @param p the Point value for this node
+     */
     public ListNode(Point p) {
 
         this.value = p;
