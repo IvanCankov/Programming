@@ -1,6 +1,34 @@
 import java.util.Iterator;
 
 public class DoublyLinkedListNode{
+
+    DoublyLinkedListNode next;
+    DoublyLinkedListNode previous;
+    Point value;
+
+    public DoublyLinkedListNode(Point point) {
+        this.value = point;
+    }
+
+    public DoublyLinkedListNode getNext() {
+        return next;
+    }
+
+    public DoublyLinkedListNode getPrevious() {
+        return previous;
+    }
+
+    public Point getValue() {
+        return value;
+    }
+
+    public void setNext(DoublyLinkedListNode next) {
+        this.next = next;
+    }
+
+    public void setPrevious(DoublyLinkedListNode previous) {
+        this.previous = previous;
+    }
 }
 class DoublyLinkedList implements Iterable<Point>, List {
 
