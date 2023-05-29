@@ -2,7 +2,7 @@ import java.util.Iterator;
 
 public class DoublyLinkedListNode{
 }
-class DoublyLinkedList implements Iterator<Point>, List {
+class DoublyLinkedList implements Iterable<Point>, List {
 
     @Override
     public void add(ListNode node) {
@@ -25,12 +25,19 @@ class DoublyLinkedList implements Iterator<Point>, List {
     }
 
     @Override
-    public boolean hasNext() {
-        return false;
+    public Iterator<Point> iterator() {
+        return null;
     }
 
-    @Override
-    public Point next() {
-        return null;
+    private class DLLIterator implements Iterator<ListNode> {
+        @Override
+        public boolean hasNext() {
+            return false;
+        }
+
+        @Override
+        public ListNode next() {
+            return null;
+        }
     }
 }
