@@ -30,5 +30,19 @@ public class Main {
         list.remove(new Point(1, 7, Color.BLACK));
 
         System.out.println(list);
+
+        System.out.println(list.pop());
+        System.out.println(list.pop());
+        System.out.println(list.pop());
+        System.out.println(list.pop());
+        System.out.println(list);
+
+        list.push(p1);
+        list.push(p2);
+        list.push(p3);
+        list.push(p4);
+        list.push(p5);
+
+        System.out.println(list);
     }
 }

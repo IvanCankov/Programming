@@ -101,10 +101,19 @@ class LinkedList implements Iterable<ListNode> {
         else root.add(node);
     }
 
-    public void push(ListNode node) {
+    public void push(Point point) {
 
+        ListNode node = new ListNode(point);
         if (this.root != null) node.setNext(root);
         this.root = node;
+    }
+
+    public Point pop() {
+
+        if (this.root == null) return null;
+        Point value = this.root.getValue();
+        this.root = root.getNext();
+        return value;
     }
 
     /**
@@ -112,7 +121,7 @@ class LinkedList implements Iterable<ListNode> {
      * @param point is the point you wish to remove, if the value does not exist the function does nothing
      */
     public void remove(Point point) {
-        
+
         if (this.root == null) return;
         if (this.root.getValue().equals(point)) this.root = this.root.getNext();
         else this.root.remove(point);
