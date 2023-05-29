@@ -24,5 +24,11 @@ public class Main {
         for (ListNode node : list) {
             System.out.println(node);
         }
+
+        list.remove(new Point(1, 1, Color.BLACK));
+        list.remove(new Point(1, 5, Color.BLACK));
+        list.remove(new Point(1, 7, Color.BLACK));
+
+        System.out.println(list);
     }
 }
