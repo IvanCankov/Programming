@@ -79,7 +79,7 @@ public class ListNode {
     }
 }
 
-class LinkedList implements Iterable<ListNode> {
+class LinkedList implements Iterable<ListNode>, List{
 
     private ListNode root;
 
@@ -95,6 +95,7 @@ class LinkedList implements Iterable<ListNode> {
      *
      * @param node adds the specified node to the list
      */
+    @Override
     public void add(ListNode node) {
 
         if (root == null) this.root = node;
