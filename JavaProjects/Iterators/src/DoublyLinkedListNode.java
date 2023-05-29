@@ -53,18 +53,19 @@ class DoublyLinkedList implements Iterable<Point>, List {
     }
 
     @Override
-    public Iterator<Point> iterator() {
-        return null;
+    public Iterator<DoublyLinkedListNode> iterator() { // what the fuck
+
+        return new DLLIterator();
     }
 
-    private class DLLIterator implements Iterator<ListNode> {
+    private class DLLIterator implements Iterator<DoublyLinkedListNode> {
         @Override
         public boolean hasNext() {
             return false;
         }
 
         @Override
-        public ListNode next() {
+        public DoublyLinkedListNode next() {
             return null;
         }
     }
