@@ -59,19 +59,19 @@ def is_outside(cars: List[dict]) -> None:
 
 
 def kilometres_travelled(cars: List[dict]) -> None:
-    travelled = {}
-    longest = 0
+    travelled: dict = {}
+    longest: int = 0
 
     for index, car in enumerate(cars):
         if not car['out']:
-            licenseplate = car['licenseplate']
-            back = index - 1
+            licenseplate: str = car['licenseplate']
+            back: int = index - 1
             while cars[back]["licenseplate"] != licenseplate and index != 0:
                 back -= 1
-            travelled_km = car['km'] - cars[back]["km"]
+            travelled_km: int = car['km'] - cars[back]["km"]
             if travelled_km > longest:
-                longest = travelled_km
-                person = car['id']
+                longest: int = travelled_km
+                person: int = car['id']
             if travelled.get(licenseplate):
                 travelled[licenseplate] += travelled_km
             else:
@@ -83,7 +83,7 @@ def kilometres_travelled(cars: List[dict]) -> None:
 
 
 def paper(cars: List[dict]) -> None:
-    licenseplate = input("7. feladat\nRendszám: ")
+    licenseplate: str = input("7. feladat\nRendszám: ")
     with open(licenseplate + '_menetlevel.txt', 'w') as file:
         for car in cars:
             if car["licenseplate"] == licenseplate and car["out"]:
