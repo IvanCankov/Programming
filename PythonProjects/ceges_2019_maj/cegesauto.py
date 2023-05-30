@@ -1,82 +1,98 @@
-def main():    #1. Feladat: adatok beolvasasa
-    autok = []
+from typing import List
 
-    with open('/home/ivan/Programming/PythonProjects/ceges_2018_maj/autok.txt') as file:
+
+def main():  # 1. Feladat: adatok beolvasasa
+    FILE_NAME: str = "autok.txt"
+    cars = read_data(FILE_NAME)
+    last_out(cars)
+    traffic(cars)
+    is_outside(cars)
+    kilometres_travelled(cars)
+    paper(cars)
+
+
+def read_data(file_name: str) -> List[dict]:
+    cars: List[dict] = []
+    with open(file_name) as file:
         for line in file:
             line = line.strip().split(" ")
-            auto = {
-                'nap' : int(line[0]),
-                'oraperc' : line[1],
-                'rendszam' : line[2],
-                'azonosito' : int(line[3]),
-                'km' : int(line[4]),
-                'ki' : True if line[5] == '0' else False
+            car = {
+                'day': int(line[0]),
+                'time': line[1],
+                'licenseplate': line[2],
+                'id': int(line[3]),
+                'km': int(line[4]),
+                'out': True if line[5] == '0' else False
             }
-            autok.append(auto)
+            cars.append(car)
+    return cars
 
-    for auto in reversed(autok):
-        if auto['ki']:
-            print(f'2. Feladat\n{auto["nap"]}. nap rendszám: {auto["rendszam"]}')
+
+def last_out(cars: List[dict]) -> None:
+    for car in reversed(cars):
+        if car['out']:
+            print(f'2. Feladat\n{car["day"]}. nap rendszám: {car["licenseplate"]}')
             break
 
+
+def traffic(cars: List[dict]) -> None:
     print("3. feladat")
     try:
-        nap = int(input("Nap: "))
-        print(f'Forgalom a(z) {nap}. napon:')
-
-        for auto in autok:
-            if auto['nap'] == nap:
-                print(f'{auto["oraperc"]} {auto["rendszam"]} {auto["azonosito"]} {"ki" if auto["ki"] else "be"}')
-                
+        day: int = int(input("Nap: "))
+        print(f'Forgalom a(z) {day}. napon:')
+        for car in cars:
+            if car['day'] == day:
+                print(f'{car["time"]} {car["licenseplate"]} {car["id"]} {"ki" if car["out"] else "be"}')
     except ValueError:
         print("Helytelen ertek")
-        
-    
 
-    kint_van = set()
-    for auto in autok:
-        if auto['ki']:
-            kint_van.add(auto['rendszam'])
+
+def is_outside(cars: List[dict]) -> None:
+    outside: set = set()
+    for car in cars:
+        if car['out']:
+            outside.add(car['licenseplate'])
         else:
-            kint_van.remove(auto['rendszam'])
+            outside.remove(car['licenseplate'])
 
-    print(f'4. feladat\nA hónap végén {len(kint_van)} autót nem hoztak vissza.')
+    print(f'4. feladat\nA hónap végén {len(outside)} autót nem hoztak vissza.')
 
-    megtett = {}
-    leghosszabb = 0
 
-    for index, auto in enumerate(autok):
-        if not auto['ki']:
-            rendszam = auto['rendszam']
-            vissza = index - 1
+def kilometres_travelled(cars: List[dict]) -> None:
+    travelled = {}
+    longest = 0
 
-            while autok[vissza]["rendszam"] != rendszam and index != 0:
-                vissza -= 1
-
-            megtett_km = auto['km'] - autok[vissza]["km"]
-            if megtett_km > leghosszabb:
-                leghosszabb = megtett_km
-                szemely = auto['azonosito']
-
-            if megtett.get(rendszam):
-                megtett[rendszam] += megtett_km
+    for index, car in enumerate(cars):
+        if not car['out']:
+            licenseplate = car['licenseplate']
+            back = index - 1
+            while cars[back]["licenseplate"] != licenseplate and index != 0:
+                back -= 1
+            travelled_km = car['km'] - cars[back]["km"]
+            if travelled_km > longest:
+                longest = travelled_km
+                person = car['id']
+            if travelled.get(licenseplate):
+                travelled[licenseplate] += travelled_km
             else:
-                megtett[rendszam] = megtett_km
-
-    for key, value in sorted(megtett.items()):
+                travelled[licenseplate] = travelled_km
+    for key, value in sorted(travelled.items()):
         print(f'{key} {value} km')
 
-    print(f'6. feladat\nLeghosszabb út: {leghosszabb} km, személy: {szemely}')
+    print(f'6. feladat\nLeghosszabb út: {longest} km, személy: {person}')
 
-    rendszam = input("7. feladat\nRendszám: ")
-    with open(rendszam + '_menetlevel.txt', 'w') as file:
-        for auto in autok:
-            if auto["rendszam"] == rendszam and auto["ki"]:
-                print(f'{auto["azonosito"]}\t{auto["oraperc"]}\t{auto["km"]} km', file = file, end = '')
-            if auto["rendszam"] == rendszam and auto["ki"]:
-                print(f'{auto["oraperc"]}\t{auto["km"]} km', file = file)
+
+def paper(cars: List[dict]) -> None:
+    licenseplate = input("7. feladat\nRendszám: ")
+    with open(licenseplate + '_menetlevel.txt', 'w') as file:
+        for car in cars:
+            if car["licenseplate"] == licenseplate and car["out"]:
+                print(f'{car["id"]}\t{car["time"]}\t{car["km"]} km', file=file, end='')
+            if car["licenseplate"] == licenseplate and car["out"]:
+                print(f'{car["time"]}\t{car["km"]} km', file=file)
 
     print('Menetlevél kész.')
+
 
 if __name__ == '__main__':
     main()
