@@ -29,6 +29,11 @@ public class DoublyLinkedListNode{
     public void setPrevious(DoublyLinkedListNode previous) {
         this.previous = previous;
     }
+
+    public void add(Point p) {
+        DoublyLinkedListNode node = new DoublyLinkedListNode(p);
+        if (this == null) this = node;
+    }
 }
 class DoublyLinkedList implements Iterable<Point>, List {
 

@@ -33,8 +33,7 @@ class MeshVertex:
     def mix(a : np.ndarray, b : np.ndarray, t : np.ndarray) -> np.ndarray:
         """Interpolates the line defined by a,b at position t and returns the result."""
         ### STUDENT CODE
-
-        res = a
+        res = a + (b - a) * t
 
         ### END STUDENT CODE
 
@@ -46,9 +45,8 @@ class MeshVertex:
 
         ### STUDENT CODE
 
-        res = a
+        res = a * alpha + b * beta + c * gamma
 
         ### END STUDENT CODE
 
         return res
-

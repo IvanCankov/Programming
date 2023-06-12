@@ -11,42 +11,36 @@ class ClippingPlane:
         self.plane = plane
     
     def inside(self, pos : np.ndarray) -> bool:
-        """Checks if a given point lies behind the plane (opposite direction
-        of normal vector). Points lying on the plane are considered to be
-        inside.
-        position  ... homogeneous position with 4 components
-        return res... logical value which indicates if the point is
-                      inside or not """
 
-        ### STUDENT CODE
-        # TODO 2: Implement this function.
-        # HINT:   You can access the plane property via self.plane.
-        # NOTE:   The following lines can be removed. They prevent the framework
-        #         from crashing.
+        # Calculate the dot product between the normal vector and the position vector
+        dot_product = np.dot(self.plane, pos)
 
-        res = 0
+        # Check if the dot product is less than or equal to 0
+        # Points lying on the plane will have a dot product of 0
+        # Points behind the plane will have a negative dot product
+        inside_plane = dot_product <= 0
 
-        ### END STUDENT CODE
-
-
-        return res
+        return inside_plane
 
     def intersect(self, pos1 : np.ndarray, pos2 : np.ndarray) -> float:
-        """ Intersects the plane with a line between pos1 and pos2.
-        pos1      ... homogeneous position with 4 components
-        pos2      ... homogeneous position with 4 components
-        return t  ... normalized intersection value t in [0, 1]"""
+        # Calculate the direction vector of the line
+        direction = pos2 - pos1
 
-        ### STUDENT CODE
-        # TODO 2: Implement this function.
-        # HINT:   You can access the plane property via self.plane.
-        # NOTE:   The following lines can be removed. They prevent the framework
-        #         from crashing.
+        # Calculate the dot product between the normal vector of the plane and the direction vector
+        dot_product = np.dot(self.plane, direction)
 
-        t = 0
+        # Check if the line is parallel to the plane (dot product is close to 0)
+        if np.abs(dot_product) < 1e-6:
+            # Line is parallel to the plane, so there is no intersection
+            return None
 
-        ### END STUDENT CODE
+        # Calculate the intersection parameter t
+        t = -np.dot(self.plane, pos1) / dot_product
 
+        # Check if the intersection is within the line segment
+        if t < 0 or t > 1:
+            # Intersection is outside the line segment
+            return None
 
         return t
     

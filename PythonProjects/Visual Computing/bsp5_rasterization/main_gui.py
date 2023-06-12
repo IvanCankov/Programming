@@ -57,6 +57,7 @@ class App(Ui_MainWindow):
         print("rasterize() called")
         self.model.rasterize(self.rasterization_mode)
 
+        print("this was reached")
         # show image
         self.img = np.uint8(self.model.image*255) 
 
@@ -66,6 +67,7 @@ class App(Ui_MainWindow):
         ui.label_image.setPixmap(QtGui.QPixmap(qImg))
 
         ui.button_save_as.setEnabled(True)
+
 
     def save_image(self):
         print("save_image() called")

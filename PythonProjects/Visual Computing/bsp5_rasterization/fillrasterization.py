@@ -32,14 +32,8 @@ def line_eq(A : float, B : float, C : float, x : float, y : float) -> float:
         res  ... distance of the point (x, y) to the line (A, B, C)."""
 
     ### STUDENT CODE
-    # TODO 3:   Implement this function.
-    # NOTE:     The following lines can be removed. They prevent the framework
-    #           from crashing.
-
-    res = 0
-
+    res = abs(A * x + B * y + C) / (A ** 2 + B ** 2) ** 0.5
     ### END STUDENT CODE
-
 
     return res
 
