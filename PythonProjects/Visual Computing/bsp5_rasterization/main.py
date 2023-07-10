@@ -8,7 +8,7 @@ from ModelHandler import Model
 
 # argument parser
 parser = argparse.ArgumentParser()
-parser.add_argument('--model', default='data/star.ply', help='path to the .ply file')
+parser.add_argument('--model', default='data/clipped_torus.ply', help='path to the .ply file')
 parser.add_argument('--rasterization_mode', default='line', help='line or fill rasterization')
 parser.add_argument('--save_dir', default='data/', help='save directory')
 

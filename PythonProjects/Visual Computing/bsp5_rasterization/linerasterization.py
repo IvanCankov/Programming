@@ -50,13 +50,12 @@ def drawLine(framebuffer: Framebuffer, v1: MeshVertex, v2: MeshVertex):
     y = y1
 
 
-    for _ in range(int(steps)):
+    for i in range(int(steps)):
 
         # Perform interpolation for the depth and color values
-        t = np.array([(_ + 1) / steps])  # Interpolation coefficient
+        t = np.array([(i + 1) / steps])  # Interpolation coefficient
         depth = MeshVertex.MeshVertex.mix(depth1, depth2, t)
         color = MeshVertex.MeshVertex.mix(v1.get_color(), v2.get_color(), t)
-
 
 
         # Set the pixel at the current coordinates (x, y) in the framebuffer

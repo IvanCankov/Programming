@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/JavaProjects/EinfProg1/Aufgabenblatt1/Aufgabenblatt1.iml" filepath="$PROJECT_DIR$/JavaProjects/EinfProg1/Aufgabenblatt1/Aufgabenblatt1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaProjects/EinfProg1/Aufgabenblatt2/Aufgabenblatt2.iml" filepath="$PROJECT_DIR$/JavaProjects/EinfProg1/Aufgabenblatt2/Aufgabenblatt2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaProjects/EinfProg1/Aufgabenblatt3/Aufgabenblatt3.iml" filepath="$PROJECT_DIR$/JavaProjects/EinfProg1/Aufgabenblatt3/Aufgabenblatt3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaProjects/EinfProg1/Aufgabenblatt4/Aufgabenblatt4.iml" filepath="$PROJECT_DIR$/JavaProjects/EinfProg1/Aufgabenblatt4/Aufgabenblatt4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaProjects/EinfProg1/Aufgabenblatt5/Aufgabenblatt5.iml" filepath="$PROJECT_DIR$/JavaProjects/EinfProg1/Aufgabenblatt5/Aufgabenblatt5.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaProjects/EinfProg1/Aufgabenblatt6/Aufgabenblatt6.iml" filepath="$PROJECT_DIR$/JavaProjects/EinfProg1/Aufgabenblatt6/Aufgabenblatt6.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaProjects/Camel EP2/Camel EP2.iml" filepath="$PROJECT_DIR$/JavaProjects/Camel EP2/Camel EP2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaProjects/EP2_Test2/EP2_Test2.iml" filepath="$PROJECT_DIR$/JavaProjects/EP2_Test2/EP2_Test2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaProjects/EP2_Test2/EP2_Test2_SS22/EP2_Test2_SS22.iml" filepath="$PROJECT_DIR$/JavaProjects/EP2_Test2/EP2_Test2_SS22/EP2_Test2_SS22.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaProjects/EinfProg2/EinfProg2.iml" filepath="$PROJECT_DIR$/JavaProjects/EinfProg2/EinfProg2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaProjects/Iterators/Iterators.iml" filepath="$PROJECT_DIR$/JavaProjects/Iterators/Iterators.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaProjects/Mobile Tree/Mobile Tree.iml" filepath="$PROJECT_DIR$/JavaProjects/Mobile Tree/Mobile Tree.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Programming.iml" filepath="$PROJECT_DIR$/.idea/Programming.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaProjects/Rational EP2/Rational EP2.iml" filepath="$PROJECT_DIR$/JavaProjects/Rational EP2/Rational EP2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaProjects/EinfProg1/Ueben1/Ueben1.iml" filepath="$PROJECT_DIR$/JavaProjects/EinfProg1/Ueben1/Ueben1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaProjects/EinfProg1/Ueben2/Ueben2.iml" filepath="$PROJECT_DIR$/JavaProjects/EinfProg1/Ueben2/Ueben2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaProjects/EinfProg1/Ueben3/Ueben3.iml" filepath="$PROJECT_DIR$/JavaProjects/EinfProg1/Ueben3/Ueben3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaProjects/EinfProg1/Ueben4/Ueben4.iml" filepath="$PROJECT_DIR$/JavaProjects/EinfProg1/Ueben4/Ueben4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaProjects/EinfProg1/Ueben5/Ueben5.iml" filepath="$PROJECT_DIR$/JavaProjects/EinfProg1/Ueben5/Ueben5.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaProjects/probetest2_Mo/probetest2_Mo.iml" filepath="$PROJECT_DIR$/JavaProjects/probetest2_Mo/probetest2_Mo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaProjects/songlist, songiterable, songiterator, song, emptylist, nonemptylist/songlist, songiterable, songiterator, song, emptylist, nonemptylist.iml" filepath="$PROJECT_DIR$/JavaProjects/songlist, songiterable, songiterator, song, emptylist, nonemptylist/songlist, songiterable, songiterator, song, emptylist, nonemptylist.iml" />
+    </modules>
+  </component>
+</project>

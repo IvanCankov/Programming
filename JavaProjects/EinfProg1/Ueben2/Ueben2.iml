@@ -7,14 +7,18 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="CodeDraw8" level="project" />
-    <orderEntry type="library" name="CodeDraw4" level="project" />
-    <orderEntry type="library" name="CodeDraw7" level="project" />
-    <orderEntry type="library" name="CodeDraw5" level="project" />
-    <orderEntry type="library" name="CodeDraw2" level="project" />
-    <orderEntry type="library" name="CodeDraw3" level="project" />
     <orderEntry type="library" name="CodeDraw" level="project" />
-    <orderEntry type="library" name="CodeDraw1" level="project" />
+    <orderEntry type="library" name="CodeDraw3" level="project" />
+    <orderEntry type="library" name="CodeDraw7" level="project" />
+    <orderEntry type="library" name="CodeDraw9" level="project" />
+    <orderEntry type="library" name="CodeDraw12" level="project" />
+    <orderEntry type="library" name="CodeDraw10" level="project" />
     <orderEntry type="library" name="CodeDraw6" level="project" />
+    <orderEntry type="library" name="CodeDraw2" level="project" />
+    <orderEntry type="library" name="CodeDraw5" level="project" />
+    <orderEntry type="library" name="CodeDraw1" level="project" />
+    <orderEntry type="library" name="CodeDraw4" level="project" />
+    <orderEntry type="library" name="CodeDraw8" level="project" />
+    <orderEntry type="library" name="CodeDraw11" level="project" />
   </component>
 </module>

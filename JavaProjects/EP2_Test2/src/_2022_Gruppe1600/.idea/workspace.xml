@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3929bc5b-4239-4672-94d4-bd9b65f572ca" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../../../../PythonProjects/Visual Computing/0/clipped_torus.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../PythonProjects/Visual Computing/bsp5_rasterization/data/clipped_star.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../PythonProjects/Visual Computing/bsp5_rasterization/data/star.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../songlist, songiterable, songiterator, song, emptylist, nonemptylist/src/EmptyList.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../songlist, songiterable, songiterator, song, emptylist, nonemptylist/src/EmptyList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../PythonProjects/Visual Computing/bsp5_rasterization/clip.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../PythonProjects/Visual Computing/bsp5_rasterization/clip.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../PythonProjects/Visual Computing/bsp5_rasterization/fillrasterization.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../PythonProjects/Visual Computing/bsp5_rasterization/fillrasterization.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../PythonProjects/Visual Computing/bsp5_rasterization/linerasterization.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../PythonProjects/Visual Computing/bsp5_rasterization/linerasterization.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../PythonProjects/Visual Computing/bsp5_rasterization/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../PythonProjects/Visual Computing/bsp5_rasterization/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../PythonProjects/Visual Computing/bsp5_rasterization/rasterize.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../PythonProjects/Visual Computing/bsp5_rasterization/rasterize.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
+  </component>
+  <component name="ProjectId" id="2ReuFoAkkCqC78Hg9JT3NXZUoh2" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3929bc5b-4239-4672-94d4-bd9b65f572ca" name="Changes" comment="" />
+      <created>1687622767600</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1687622767600</updated>
+    </task>
+    <servers />
+  </component>
+</project>

@@ -14,7 +14,7 @@ def rasterize(mesh : Mesh, framebuffer : Framebuffer, mode = 'line'):
     """Rasterizes a given mesh and put it into the given framebuffer. Mode can be selected (line, fill)"""
     framebuffer.clear()
     clipping_planes = ClippingPlane.get_clipping_planes()
-    
+    mesh.homogenize()
     mesh_clipped = clip(mesh, clipping_planes)
 
     mesh_clipped.homogenize()

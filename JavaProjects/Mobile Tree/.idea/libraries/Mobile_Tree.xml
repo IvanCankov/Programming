@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Mobile Tree">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/probetest1A_former_semester.zip!/" />
+      <root url="jar://$PROJECT_DIR$/probetest1_Mi.zip!/" />
+      <root url="jar://$PROJECT_DIR$/probetest2_Mi.zip!/" />
+      <root url="jar://$PROJECT_DIR$/probetest1_Mo.zip!/" />
+      <root url="jar://$PROJECT_DIR$/probetest2_Mo.zip!/" />
+      <root url="jar://$PROJECT_DIR$/probetest1B_former_semester.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

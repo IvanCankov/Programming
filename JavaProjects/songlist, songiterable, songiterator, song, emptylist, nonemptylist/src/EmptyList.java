@@ -34,6 +34,16 @@ public class EmptyList implements SongList {
 
     @Override
     public SongIterator iterator() {
-        return null;
+        return new SongIterator() {
+            @Override
+            public boolean hasNext() {
+                return false;
+            }
+
+            @Override
+            public Song next() {
+                return null;
+            }
+        };
     }
 }

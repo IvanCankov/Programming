@@ -71,10 +71,36 @@ def draw_triangle(framebuffer : Framebuffer, v1 : MeshVertex, v2 : MeshVertex, v
             col3 = t
 
         ### STUDENT CODE
-        # TODO 3: Implement this function.
-        # HINT:   Don't forget to implement the function lineEq!
-        #         Read the instructions and tutorial.py for further explanations!
-        # BONUS:  Solve this task without using loops.
+        x1 = x1[0]
+        y1 = y1[0]
+        x2 = x2[0]
+        y2 = y2[0]
+        x3 = x3[0]
+        y3 = y3[0]
+        min_x = int(min(x1, x2, x3))
+        max_x = int(max(x1, x2, x3))
+        min_y = int(min(y1, y2, y3))
+        max_y = int(max(y1, y2, y3))
+        a1, b1 = -(y3 - y2), x3 - x2
+        a2, b2 = -(y1 - y3), x1 - x3
+        a3, b3 = -(y2 - y1), x2 - x1
+        c1 = -(a1 * x2 + b1 * y2)
+        c2 = -(a2 * x3 + b2 * y3)
+        c3 = -(a3 * x1 + b3 * y1)
 
+        ov1 = a1 * x1 + b1 * y1 + c1
+        ov2 = a2 * x2 + b2 * y2 + c2
+        ov3 = a3 * x3 + b3 * y3 + c3
+        for y in range(min_y, max_y + 1):
+            for x in range(min_x, max_x + 1):
+                o1 = a1 * x + b1 * y + c1
+                o2 = a2 * x + b2 * y + c2
+                o3 = a3 * x + b3 * y + c3
+                if o1 <= 0 and o2 <= 0 and o3 <= 0:
+                    alpha = o1 / ov1
+                    beta = o2 / ov2
+                    gamma = o3 / ov3
+                    depth = MeshVertex.barycentric_mix(depth1, depth2, depth3, alpha, beta, gamma)
+                    color = MeshVertex.barycentric_mix(col1, col2, col3, alpha, beta, gamma)
+                    framebuffer.set_pixel(np.array([int(x)]), np.array([int(y)]), np.array([depth]), np.array(color))
         ### END STUDENT CODE
-

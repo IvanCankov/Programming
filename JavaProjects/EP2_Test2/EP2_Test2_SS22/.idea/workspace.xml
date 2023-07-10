@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="7480e371-52df-43a9-8cce-8ee73c3e11c2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angabe/Aufgabenblatt2.tex" beforeDir="false" afterPath="$PROJECT_DIR$/angabe/Aufgabenblatt2.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angabe/figures/aufgabe1.png" beforeDir="false" afterPath="$PROJECT_DIR$/angabe/figures/aufgabe1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Aufgabe4.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Aufgabe4.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="ProjectId" id="1qq5XcwBJIkoqdHwiJZKaFhpsve" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.116027534" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+  </component>
+  <component name="RunManager" selected="Application.TestQueueAndStack">
+    <configuration name="Aufgabe3" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Aufgabe3" />
+      <module name="EP2_Test1_SS22" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Aufgabe4" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Aufgabe4" />
+      <module name="EP2_Test1_SS22" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Aufgabe5" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Aufgabe5" />
+      <module name="EP2_Test1_SS22" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GuessingGame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="GuessingGame" />
+      <module name="EP2_Test1_SS22" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestQueueAndStack" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="TestQueueAndStack" />
+      <module name="EP2_Test1_SS22" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Aufgabe3" />
+      <item itemvalue="Application.Aufgabe4" />
+      <item itemvalue="Application.Aufgabe5" />
+      <item itemvalue="Application.GuessingGame" />
+      <item itemvalue="Application.TestQueueAndStack" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.TestQueueAndStack" />
+        <item itemvalue="Application.GuessingGame" />
+        <item itemvalue="Application.Aufgabe4" />
+        <item itemvalue="Application.Aufgabe3" />
+        <item itemvalue="Application.Aufgabe5" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7480e371-52df-43a9-8cce-8ee73c3e11c2" name="Default Changelist" comment="" />
+      <created>1617794320675</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1617794320675</updated>
+      <workItem from="1636915035711" duration="3243000" />
+      <workItem from="1637097446880" duration="39000" />
+      <workItem from="1648153103405" duration="121000" />
+      <workItem from="1652007135601" duration="252000" />
+      <workItem from="1656352788053" duration="1232000" />
+      <workItem from="1656354051978" duration="214000" />
+      <workItem from="1658755808897" duration="822000" />
+      <workItem from="1658763493737" duration="11000" />
+      <workItem from="1658763643448" duration="61000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/../../.." />
+    </ignored-roots>
+  </component>
+</project>
