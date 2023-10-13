@@ -63,4 +63,8 @@ public class Ant {
         position[0] = newX % field.getFieldDimensions()[1];
         position[1] = newY % field.getFieldDimensions()[0];
     }
+
+    void searchMove(Field field) {
+
+    }
 }
