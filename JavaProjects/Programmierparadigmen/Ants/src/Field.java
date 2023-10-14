@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 
@@ -57,9 +56,9 @@ public class Field {
 
     public Position wrapPosition(Position pos) {
         var x = pos.x() % dimension.width();
-        if (x < 0) {x += dimension.width();};
+        if (x < 0) {x += dimension.width();}
         var y = pos.y() % dimension.height();
-        if (y < 0) {y += dimension.height();};
+        if (y < 0) {y += dimension.height();}
         return new Position(x, y);
     }
 
