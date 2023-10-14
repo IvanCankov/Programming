@@ -1,12 +1,12 @@
 public class AntHill {
-    private final int[] position; // position[0]=width, position[1]=height
+    private final Position position; // position.x()=width, position.y()=height
     private int storedFood;
-    public AntHill(int[] fieldPosition) {
+    public AntHill(Position fieldPosition) {
         this.position = fieldPosition;
         this.storedFood = 0;
     }
 
-    public int[] getPosition() {
+    public Position getPosition() {
         return this.position;
     }
 

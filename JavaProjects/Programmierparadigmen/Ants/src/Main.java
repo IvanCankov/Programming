@@ -20,3 +20,15 @@ enum State {
     SUCHE,
     BRINGT
 }
+
+record Position(int x, int y) {
+    public Position add(Position add) {
+        return new Position(
+                this.x() + add.x(),
+                this.y() + add.y()
+        );
+    }
+};
+record Dimension(int width, int height) {};
+
+

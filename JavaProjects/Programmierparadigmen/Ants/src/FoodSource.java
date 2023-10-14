@@ -1,11 +1,11 @@
-class FoodSource {
-    private final int[] position; // position[0]=width, position[1]=height
+public class FoodSource {
+    private final Position position; // position[0]=width, position[1]=height
 
-    public FoodSource(int[] fieldPosition) {
+    public FoodSource(Position fieldPosition) {
         this.position = fieldPosition;
     }
 
-    public int[] getPosition() {
+    public Position getPosition() {
         return this.position;
     }
 }

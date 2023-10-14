@@ -1,18 +1,33 @@
+import java.util.Arrays;
 import java.util.Random;
 
 public class Ant {
     private Random random;
-    private int[] lastDirection;
+    private int lastDirectionIdx;
     private State state;
-    private int[] position; // position[0]=width, position[1]=height
+    private Position position; // position.x() coordinate in width, position.y() coordinate in height
 
-    public Ant(int[] posAntHill) {						        	// Ants now take in a height, width argument so that they
+    // These are the 8 relative fields around an Ant
+    // the order is important, the coordinates form a circle
+    private static final Position[] directions = {
+            new Position( 0,  1),    // North
+            new Position( 1,  1),    // Northeast
+            new Position( 1,  0),    // East
+            new Position( 1, -1),   // Southeast
+            new Position( 0, -1),   // South
+            new Position(-1, -1),  // Southwest
+            new Position(-1,  0),   // West
+            new Position(-1,  1)    // Northwest
+    };
+
+    public Ant(Position posAntHill) {						        	// Ants now take in a height, width argument so that they
         this.state = State.ERKUNDUNG;						    	// can be spawned dead centre
-        this.position = new int[]{posAntHill[0], posAntHill[1]};    // spawns ants in centre of AntHill
+        this.position = posAntHill;    // spawns ants in centre of AntHill
         this.random = new Random();			 				    	// TODO: summons a new random every time gotta fix this
+        this.lastDirectionIdx = this.random.nextInt(directions.length);
     }
 
-    public int[] getPosition() {
+    public Position getPosition() {
         return this.position;
     }
 
@@ -24,47 +39,67 @@ public class Ant {
         this.state = tmp;
     }
 
+    // Das hier ist echt schlau W man's @FluxTape
+    private int wrapAddDirectionIdx(int add) {
+        int newDirectionIdx = (lastDirectionIdx + add) % directions.length;
+        if (newDirectionIdx < 0) {newDirectionIdx += directions.length;};
+        return newDirectionIdx;
+    }
+
+    private void moveInDirection(int directionIdx, Field field) {
+        this.position = field.wrapPosition(position.add(directions[directionIdx]));
+        this.lastDirectionIdx = directionIdx;
+    }
     public void randomMove(Field field) {
-        int[][] directions = {  				//These are the initial moves that an ant can make
-                {0, 1},    // North
-                {1, 1},    // Northeast
-                {1, 0},    // East
-                {1, -1},   // Southeast
-                {0, -1},   // South
-                {-1, -1},  // Southwest
-                {-1, 0},   // West
-                {-1, 1}    // Northwest
-        };
-
-        int num = -1;
-        if (lastDirection == null) {
-            num = random.nextInt(8);
-            lastDirection = new int[2];
-        } else {
-            num = random.nextInt(5);
-            directions = new int[][]{										//lastMove 1,1
-                    {lastDirection[0], (lastDirection[1] + 1) % 2},			// 1,0
-                    {-lastDirection[0], (lastDirection[1] - 1) % 2},		// -1,0
-                    {lastDirection[0], lastDirection[1]},					// 1,1
-                    {(lastDirection[0] + 1) % 2, lastDirection[1]},			// 0,1
-                    {(lastDirection[0] - 1) % 2, -lastDirection[1]}			// 0,-1
-                    // Used the modulus operator so something like 2,2 doesn't happen
-            };
-        }
-        // Loads the new position into temporary variables
-        int newX = position[0] + directions[num][0];
-        int newY = position[1] + directions[num][1];
-
-        // Saves the last direction moved
-        lastDirection[0] = directions[num][0];
-        lastDirection[1] = directions[num][1];
-
-        // Moves the ant modulus operator used so the array behaves like a torus
-        position[0] = newX % field.getFieldDimensions()[1];
-        position[1] = newY % field.getFieldDimensions()[0];
+        var rNum = this.random.nextInt(-2, 3); // random number from -2 to 2
+        // the indexes around the last direction are the new possible directions for the Ant
+        var newDirectionIdx = wrapAddDirectionIdx(rNum);
+        moveInDirection(newDirectionIdx, field);
     }
 
     void searchMove(Field field) {
 
+    }
+
+
+    void deliverMove(Field field) {
+        // get scent in each direction
+        var scentInDir = new float[directions.length];
+        var possibleDirIdxs = new int[] {
+                wrapAddDirectionIdx(-2),
+                wrapAddDirectionIdx(-1),
+                lastDirectionIdx,
+                wrapAddDirectionIdx(1),
+                wrapAddDirectionIdx(2)
+        };
+        // get relevant scent values
+        float scentSum = 0;
+        for (int i : possibleDirIdxs) {
+            var scentPos = position.add(directions[i]);
+            float scent = field.getScentTrail(scentPos);
+            scentInDir[i] = scent;
+            scentSum += scent;
+        }
+        // normalise scent values so sum = 1
+        for (int i : possibleDirIdxs) {
+            scentInDir[i] /= scentSum;
+        }
+        // calculate probability ranges
+        var possibilityRanges = new float[possibleDirIdxs.length+1];
+        possibilityRanges[0] = 0;
+        for (int i = 1; i < possibilityRanges.length; i++) {
+            possibilityRanges[i] = possibilityRanges[i-1] + scentInDir[possibleDirIdxs[i]];
+        }
+        // calculate next direction
+        float r = random.nextFloat(); // get random value between 0 and 1
+        int newDirectionIdx = 0;
+        for (int i = 0; i < possibilityRanges.length-1; i++) {
+            if (r >= possibilityRanges[i] && r < possibilityRanges[i+1]) {
+                newDirectionIdx = possibleDirIdxs[i];
+                break; // not needed but avoids unnecessary checks
+            }
+        }
+        // update position of Ant
+        moveInDirection(newDirectionIdx, field);
     }
 }
