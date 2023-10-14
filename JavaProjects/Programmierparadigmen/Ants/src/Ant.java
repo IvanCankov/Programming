@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -6,6 +7,8 @@ public class Ant {
     private int lastDirectionIdx;
     private State state;
     private Position position; // position.x() coordinate in width, position.y() coordinate in height
+
+    private int failedMove;
 
     // These are the 8 relative fields around an Ant
     // the order is important, the coordinates form a circle
@@ -25,6 +28,7 @@ public class Ant {
         this.position = posAntHill;    // spawns ants in centre of AntHill
         this.random = new Random();			 				    	// TODO: summons a new random every time gotta fix this
         this.lastDirectionIdx = this.random.nextInt(directions.length);
+        this.failedMove = 0;
     }
 
     public Position getPosition() {
@@ -58,6 +62,36 @@ public class Ant {
     }
 
     void searchMove(Field field) {
+        // get scent in each direction
+        var possibleDirIdxs = new int[] {
+                wrapAddDirectionIdx(-2),
+                wrapAddDirectionIdx(-1),
+                lastDirectionIdx,
+                wrapAddDirectionIdx(1),
+                wrapAddDirectionIdx(2)
+        };
+        // get relevant scent values
+        float maxScent = 0.0F;
+        int chosenPos = 0;
+        for (int i : possibleDirIdxs) {
+            var scentPos = position.add(directions[i]);
+            float scent = field.getScentTrail(scentPos);
+            if (scent > maxScent) {
+                chosenPos = i;
+                maxScent = scent;
+            }
+        }
+        if (maxScent < 0.5) {
+            this.failedMove += 1;
+            this.randomMove(field);
+            if (this.failedMove >= 3) {
+                this.setState(State.ERKUNDUNG);
+                this.failedMove = 0;
+            }
+        } else {
+            this.moveInDirection(chosenPos, field);
+        }
+
 
     }
 

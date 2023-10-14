@@ -7,10 +7,9 @@ public class Main {
         Field field = new Field(21, 21, 5, 2);
         field.printHillAndFoodSources();
         field.printAnts();
-        field.update();
-        field.update();
-        field.update();
-        field.update();
+        for (int i = 0; i < 10000; i++) {
+            field.update();
+        }
         field.printAnts();
     }
 }

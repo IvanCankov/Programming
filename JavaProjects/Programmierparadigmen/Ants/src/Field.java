@@ -80,6 +80,11 @@ public class Field {
             if (getScentTrail(position) > 0.7F) {
                 ant.setState(State.SUCHE);
             }
+            for (FoodSource source : this.foodSources) {
+                if (source.getPosition().equals(ant.getPosition())) {
+                    ant.setState(State.BRINGT);
+                }
+            }
             setScentTrail(position, 0.98F);
             switch (antState) {
                 case ERKUNDUNG -> ant.randomMove(this);
