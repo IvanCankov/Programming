@@ -1,0 +1,398 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 13px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+    display: block;
+    text-decoration: none;
+}
+
+.container {
+    max-width: 98rem;
+    margin: 0 auto;
+    padding: 0 2.2rem;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    z-index: 1400;
+    height: 4.4rem;
+    background: rgba(0,0,0,0.95);
+    width: 100%;
+}
+
+.nav-list {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* this adjusts the spacing between idek why a negative vauel works */
+    margin: 0 -1rem;
+}
+
+.nav-list-mobile {
+    display: none;
+}
+
+.nav-link {
+    font-size: 1.4rem;
+    color: #FFF;
+    padding: 0 1rem;
+    transition: opacity .5s;
+}
+
+.nav-link:hover {
+    opacity: 0.7;
+}
+
+.nav-link-apple { 
+    width: 1.6rem;
+    height: 4.4rem;
+    background: url("images/icons/apple.svg") center no-repeat;
+} 
+
+.nav-link-search { 
+    width: 1.6rem;
+    height: 4.4rem;
+    background: url("images/icons/search.svg") center no-repeat;
+} 
+
+.nav-link-bag { 
+    width: 1.6rem;
+    height: 4.4rem;
+    background: url("images/icons/bag.svg") center no-repeat;
+} 
+
+.ispoon-12-pro {
+    background: url("images/cutlery/spoon/spoon-large.png");
+    margin-top: 3.8rem;
+    border-top: none;
+}
+
+.title {
+    color: #FFF;
+    text-align: center;
+    padding-top: 5.5rem;
+}
+
+.title-heading {
+    font-size: 5.6rem;
+    line-height: 1.07143;
+    letter-spacing: -0.005rem;
+}
+
+.title-sub-heading {
+    font-size: 2.65rem;
+    margin-top: .6rem;
+    letter-spacing: -0.008rem;
+    font-weight: 400;
+}
+
+.title-price {
+    font-size: 1.7rem;
+    color: #888;
+    margin-top: .68rem;
+}
+
+.cta {
+    text-align: center;
+    margin-top: .68rem;
+}
+
+.cta-link {
+    color: #66bbff;
+    font-size: 2.1rem;
+    display: inline-block;
+}
+
+.cta-link:nth-child(2) {
+    margin-left: 2.6rem;
+}
+
+.cta-link:hover {
+    border-bottom: 2px solid #66bbff;
+}
+
+.ifork-12-pro-max-plus {
+    background: url("images/cutlery/fork/fork-large.png") center no-repeat;
+}
+
+.title-dark {
+    color: black;
+}
+
+.cta-link-darker {
+    color: #0070c9;
+}
+
+.cta-link-darker:hover {
+    border-bottom-color: #0070c9;
+}
+
+.iknife-12-ultra-pro-super-max {
+    background: url("images/cutlery/knife/knife-large.jpg") center no-repeat;
+}
+
+.title-heading-iknife-12-ultra-pro-super-max {
+    height: 7.8rem;
+    background: url("images/hero/iknife-12-ultra-pro-super-max/logo_iknife-12-ultra-pro-super-max_large.png") center no-repeat;
+    background-size: auto 7.8rem;
+    margin-top: 1.6rem;
+}
+
+.hero {
+    height: 56rem;
+    background-size: auto 56.6rem;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-top: .6rem solid #FFF;
+    border-bottom: .6rem solid #FFF;
+}
+
+@media screen and (max-width: 1068px) {
+    .ispoon-12-pro {
+        background: url("images/cutlery/spoon/spoon-medium.png") center no-repeat;
+    }
+
+    .ifork-12-pro-max-plus {
+        background: url("images/hero/ifork-12-pro-max-plus/iphone_11_medium.jpg");
+    }
+
+    .iknife-12-ultra-pro-super-max {
+        background: url("images/hero/iknife-12-ultra-pro-super-max/iknife-12-ultra-pro-super-max_medium.jpg");
+    }
+
+    .hero {
+        height: 65rem;
+        background-size: auto 69.8rem;
+        background-position: bottom center;
+        background-repeat: no-repeat ;
+    }   
+
+    .title-heading {
+        font-size: 4.4rem;
+    }
+
+    .title-sub-heading {
+        font-size: 2.4rem;
+    }
+
+    .cta-link:nth-child(2){
+        margin-left: 2rem;
+    }
+
+    .title-heading-iknife-12-ultra-pro-super-max {
+        height: 6.2rem;
+        background: url("images/hero/iknife-12-ultra-pro-super-max/logo_iknife-12-ultra-pro-super-max_medium.png") center no-repeat;
+        background-size: auto 6.2rem;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    /* this is going to be the title bar */
+    header {
+        height: 4.4rem;
+        transition: background .36s cubic-bezier(0.32, 0.08, 0.24, 1),
+                    height .56s cubic-bezier(0.32, 0.08, 0.24, 1);
+    }
+    
+    /* selects the container inside the header */
+    header .container {
+        padding: 0;
+    }
+
+    /* this is the top most content */
+    .ispoon-12-pro {
+        margin-top: 3.8rem;
+    }
+
+    .nav-list {
+        margin: 0;
+    }
+
+    .nav-list-mobile {
+        display: flex;
+    }
+
+    .nav-item {
+        width: 4.8rem;
+        height: 4.8rem;
+        display: flex;
+        justify-content: center;
+    }
+
+    .nav-item-hidden {
+        display: none;
+    }
+
+    .mobile-menu {
+        position: relative;
+        z-index: 1500;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    /* this animates the littlee drop down menu */
+    .line {
+        position: absolute;
+        width: 1.7rem;
+        height: 1px;
+        background-color: #fff;
+        transition: margin-top .32s cubic-bezier(0.04, 0.04, 0.12, 0.96);
+    }
+
+    .line-top {
+        margin-bottom: 1rem;
+    }
+
+    .active .line-top {
+        margin-top: 0;
+        transform: rotate(45deg);
+        transition: transfrom .32s 1s cubic-bezier(0.04, 0.04, 0.12, 0.96);
+    }
+
+    .active .line-bottom {
+        margin-top: -1rem;
+        transform: rotate(-45deg);
+        transition: transfrom .32s 1s cubic-bezier(0.04, 0.04, 0.12, 0.96);
+    }
+
+    header.active {
+        height: 100%;
+        background-color: rgba(0, 0, 0, .98);
+        backdrop-filter: blur(10rem);
+        transition: background .36s cubic-bezier(0.32, 0.08, 0.24, 1),
+                    height .56s cubic-bezier(0.32, 0.08, 0.24, 1);
+    }
+
+    .nav-link-apple {
+        width: 1.8rem;
+        height: 4.8rem;
+        position: relative;
+        z-index: 1500;
+    }
+
+    .nav-link-bag {
+        width: 1.6rem;
+        height: 4.8rem;
+        transition: opacity 3s;
+    }
+
+    .nav {
+        position: relative;
+        
+    }
+
+    .nav-link {
+        font-size: 1.7rem;
+        padding: 0;
+        margin: auto 0;
+    }
+
+    .nav-list-larger {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 0;
+        display: block;
+        padding: 10.5rem 5rem;
+        z-index: 1000;
+        box-sizing: border-box;
+        transition: opacity .3s;
+        visibility: hidden;
+        overflow: auto;
+    }
+
+    header.active .nav-list-larger {
+        width: 100%;
+        height: 100%;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    header.active .nav-link-bag {
+        opacity: 0;
+        transition: opacity .3s;
+        visibility: hidden;
+    }
+
+    .nav-list-larger .nav-item {
+        width: 100%;
+        justify-content: flex-start;
+        border-bottom: solid 2px rgba(255, 255, 255, 0.349);
+    }
+
+    .nav-list-larger li:nth-child(9) {
+        border-bottom: none;
+    }
+
+    .nav-list-larger .nav-item:nth-child(10) {
+        border-bottom: none;
+    }
+
+    .active .nav-list-larger .nav-item {
+        animation: fade_in 1s ease-in;
+    }
+
+    @keyframes fade_in {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+        
+    }
+
+    .ispoon-12-pro {
+        background: url("images/cutlery/spoon/spoon-small.png") center no-repeat;
+    }
+
+    .ifork-12-pro-max-plus {
+        background: url("images/hero/ifork-12-pro-max-plus/iphone_11_small.jpg") center no-repeat;
+    }
+
+    .iknife-12-ultra-pro-super-max {
+        background: url("images/hero/iknife-12-ultra-pro-super-max/iknife-12-ultra-pro-super-max_small.jpg") center no-repeat;
+    }
+
+    .hero {
+        height: 55rem;
+        background-size: auto 59.8rem;
+        background-position: bottom center;
+        background-repeat: no-repeat ;
+    }   
+
+    .title-heading {
+        font-size: 3.8rem;
+    }
+
+    .title-sub-heading {
+        font-size: 2rem;
+    }
+
+    .cta-link:nth-child(1){
+        margin-right: 1.2rem;
+    }
+
+    .title-heading-iknife-12-ultra-pro-super-max {
+        height: 5rem;
+        background: url("images/hero/iknife-12-ultra-pro-super-max/logo_iknife-12-ultra-pro-super-max_medium.png") center no-repeat;
+        background-size: auto 5rem;
+    }
+}
