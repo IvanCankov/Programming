@@ -1,3 +1,5 @@
+package Test.src;
+
 public class AntHill {
     private final Position position; // position.x()=width, position.y()=height
     private int storedFood;
@@ -16,5 +18,6 @@ public class AntHill {
 
     public void addFood() {
         this.storedFood++;
+        System.out.println("AntHill Food: " + storedFood);
     }
 }

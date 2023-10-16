@@ -1,9 +1,11 @@
+package Test.src;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Ant {
-    private Random random;
+    private static final float BASE_PROBABILITY = 0.01F;
     private int lastDirectionIdx;
     private State state;
     private Position position; // position.x() coordinate in width, position.y() coordinate in height
@@ -25,9 +27,8 @@ public class Ant {
 
     public Ant(Position posAntHill) {						        	// Ants now take in a height, width argument so that they
         this.state = State.ERKUNDUNG;						    	// can be spawned dead centre
-        this.position = posAntHill;    // spawns ants in centre of AntHill
-        this.random = new Random();			 				    	// TODO: summons a new random every time gotta fix this
-        this.lastDirectionIdx = this.random.nextInt(directions.length);
+        this.position = posAntHill;                                     // spawns ants in centre of AntHill
+        this.lastDirectionIdx = ThreadLocalRandom.current().nextInt(directions.length);
         this.failedMove = 0;
     }
 
@@ -50,53 +51,16 @@ public class Ant {
         return newDirectionIdx;
     }
 
+    public void invertDirection() {
+        this.lastDirectionIdx = wrapAddDirectionIdx(4);
+    }
+
     private void moveInDirection(int directionIdx, Field field) {
         this.position = field.wrapPosition(position.add(directions[directionIdx]));
         this.lastDirectionIdx = directionIdx;
     }
-    public void randomMove(Field field) {
-        var rNum = this.random.nextInt(-2, 3); // random number from -2 to 2
-        // the indexes around the last direction are the new possible directions for the Ant
-        var newDirectionIdx = wrapAddDirectionIdx(rNum);
-        moveInDirection(newDirectionIdx, field);
-    }
 
-    void searchMove(Field field) {
-        // get scent in each direction
-        var possibleDirIdxs = new int[] {
-                wrapAddDirectionIdx(-2),
-                wrapAddDirectionIdx(-1),
-                lastDirectionIdx,
-                wrapAddDirectionIdx(1),
-                wrapAddDirectionIdx(2)
-        };
-        // get relevant scent values
-        float maxScent = 0.0F;
-        int chosenPos = 0;
-        for (int i : possibleDirIdxs) {
-            var scentPos = position.add(directions[i]);
-            float scent = field.getScentTrail(scentPos);
-            if (scent > maxScent) {
-                chosenPos = i;
-                maxScent = scent;
-            }
-        }
-        if (maxScent < 0.5) {
-            this.failedMove += 1;
-            this.randomMove(field);
-            if (this.failedMove >= 3) {
-                this.setState(State.ERKUNDUNG);
-                this.failedMove = 0;
-            }
-        } else {
-            this.moveInDirection(chosenPos, field);
-        }
-
-
-    }
-
-
-    void deliverMove(Field field) {
+    private int getNextDirIdx(Field field, boolean invertProbabilities) {
         // get scent in each direction
         var scentInDir = new float[directions.length];
         var possibleDirIdxs = new int[] {
@@ -109,23 +73,32 @@ public class Ant {
         // get relevant scent values
         float scentSum = 0;
         for (int i : possibleDirIdxs) {
-            var scentPos = position.add(directions[i]);
-            float scent = field.getScentTrail(scentPos);
+            Position scentPos = position.add(directions[i]);
+            float scent = field.getScentTrail(scentPos) + BASE_PROBABILITY;
+
+            if (field.getScentTrail(scentPos) > 0.6 && this.state == State.ERKUNDUNG) {
+                this.setState(State.SUCHE);
+                return i;
+            }
+
+            if (invertProbabilities) {
+                scent = 1/scent;
+            }
             scentInDir[i] = scent;
             scentSum += scent;
         }
-        // normalise scent values so sum = 1
+        // normalise scent values so sum = 1, implies scent values will be between 0 and 1
         for (int i : possibleDirIdxs) {
             scentInDir[i] /= scentSum;
         }
         // calculate probability ranges
         var possibilityRanges = new float[possibleDirIdxs.length+1];
         possibilityRanges[0] = 0;
-        for (int i = 1; i < possibilityRanges.length; i++) {
-            possibilityRanges[i] = possibilityRanges[i-1] + scentInDir[possibleDirIdxs[i]];
+        for (int i = 0; i < possibleDirIdxs.length; i++) {
+            possibilityRanges[i+1] = possibilityRanges[i] + scentInDir[possibleDirIdxs[i]];
         }
         // calculate next direction
-        float r = random.nextFloat(); // get random value between 0 and 1
+        float r = ThreadLocalRandom.current().nextFloat(); // get random value between 0 and 1
         int newDirectionIdx = 0;
         for (int i = 0; i < possibilityRanges.length-1; i++) {
             if (r >= possibilityRanges[i] && r < possibilityRanges[i+1]) {
@@ -133,7 +106,22 @@ public class Ant {
                 break; // not needed but avoids unnecessary checks
             }
         }
-        // update position of Ant
-        moveInDirection(newDirectionIdx, field);
+        return newDirectionIdx;
+    }
+
+    public void discoverMove(Field field) {
+        int newDirectionIdx = getNextDirIdx(field, true);
+        moveInDirection(newDirectionIdx, field); // update position of Ant
+    }
+
+    void searchMove(Field field) {
+        int newDirectionIdx = getNextDirIdx(field, false);
+        moveInDirection(newDirectionIdx, field); // update position of Ant
+    }
+
+
+    public void deliverMove(Field field) {
+        int newDirectionIdx = getNextDirIdx(field, false);
+        moveInDirection(newDirectionIdx, field); // update position of Ant
     }
 }
