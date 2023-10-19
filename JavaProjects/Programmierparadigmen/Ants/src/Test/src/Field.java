@@ -1,14 +1,11 @@
 package Test.src;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Random;
+import java.util.*;
 import java.lang.Math;
 
 public class Field {
 
-    private float[][] field; // 2D array of all scent values in the Field
+    private Hashtable<Position, Float> field; // 2D array of all scent values in the Field
 
     private final Dimension dimension; // width = x dimension, height = y dimension
     private HashSet<Ant> ants;  						// storing ants in a set where each ant has a position stored with it so
@@ -19,7 +16,7 @@ public class Field {
 
     public Field(int width, int height, int antCount, int foodSourceCount) {
         this.dimension = new Dimension(width, height);
-        this.field = new float[height][width];  			        // initialises the field as an MxN board
+        this.field = new Hashtable<>();  			        // initialises the field as an MxN board
         this.random = new Random();
         this.antHill = new AntHill(this.getRandomFieldPos()); 		// place antHill at random position
         this.ants = new HashSet<>();
@@ -88,24 +85,24 @@ public class Field {
     }
 
     // set scent value at specified Position
-    private void setScentTrail(Position pos, float strength) {
-        pos = wrapPosition(pos); // normalise coordinates to field boundaries
-        this.field[pos.y()][pos.x()] = strength;
+    private void setScentTrail(Position position, float strength) {
+        position = wrapPosition(position); // normalise coordinates to field boundaries
+        this.field.put(position, strength);
     }
 
     // get scent value at specified Position
-    public float getScentTrail(Position pos) {
-        pos = wrapPosition(pos); // normalise coordinates to field boundaries
-        return this.field[pos.y()][pos.x()];
+    public float getScentTrail(Position position) {
+        position = wrapPosition(position); // normalise coordinates to field boundaries
+        return this.field.getOrDefault(position, 0.00F);
     }
 
     // add to scent value at specified Position
     // saturating add -> MAX_SCENT constant
-    public void addScentTrail(Position pos, float strength) {
+    public void addScentTrail(Position position, float strength) {
         final float MAX_SCENT = 5;
-        float newStrength = getScentTrail(pos) + strength;
+        float newStrength = getScentTrail(position) + strength;
         newStrength = Math.min(newStrength, MAX_SCENT);
-        setScentTrail(pos, newStrength);
+        setScentTrail(position, newStrength);
     }
 
     // update all scent values in the field, and switch Ant modes
@@ -144,7 +141,9 @@ public class Field {
         }
         for (int y = 0; y < dimension.height(); y++) {
             for (int x = 0; x < dimension.width(); x++) {
-                this.field[y][x] *= 0.995F;
+                Position currentPosition = new Position(x, y);
+                float newStrength = this.field.getOrDefault(currentPosition, 0.0F) * 0.998F;
+                this.field.put(currentPosition, newStrength);
             }
         }
     }

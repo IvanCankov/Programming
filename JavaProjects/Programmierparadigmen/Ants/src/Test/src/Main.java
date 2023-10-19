@@ -12,8 +12,8 @@ public class Main {
         String[] command = {"sh", "-c", "export DISPLAY=:0"};
         // Start the process
         try {
-            Process process = Runtime.getRuntime().exec(command);
-            process.waitFor();
+            //Process process = Runtime.getRuntime().exec(command);
+            //process.waitFor();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -25,7 +25,8 @@ public class Main {
     // create a new display frame and run the simulation for a set number of steps
     private static void simulation() {
         Field field = new Field(250, 200, 100, 20);
-        field.printHillAndFoodSources();
+        //field.printHillAndFoodSources();
+        field.printAnts();
         //field.printAnts();
         Display testDisp = new Display(4, field);
         testDisp.showFrame();

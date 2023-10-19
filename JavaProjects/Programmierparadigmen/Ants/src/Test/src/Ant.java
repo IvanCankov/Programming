@@ -24,9 +24,9 @@ public class Ant {
             new Position(-1,  1)     // Northwest
     };
 
-    public Ant(Position posAntHill) {						        // position of AntHill needed for spawning of Ants
-        this.state = State.ERKUNDUNG;						    	// initial State is 'Erkundung'
-        this.position = posAntHill;                                 // spawns ants in centre of AntHill
+    public Ant(Position posAntHill) {				// position of AntHill needed for spawning of Ants
+        this.state = State.ERKUNDUNG;				// initial State is 'Erkundung'
+        this.position = posAntHill;                 // spawns ants in centre of AntHill
         this.lastDirectionIdx = ThreadLocalRandom.current().nextInt(directions.length);
     }
 

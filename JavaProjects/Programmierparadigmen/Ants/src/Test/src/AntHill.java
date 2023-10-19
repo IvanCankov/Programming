@@ -25,4 +25,11 @@ public class AntHill {
         this.storedFood++;
         System.out.println("AntHill Food: " + storedFood);
     }
+
+    public double getEuclideanDistance(Ant ant) {
+        Position position = ant.getPosition();
+        int x = position.x() - this.position.x();
+        int y = position.y() - this.position.y();
+        return Math.sqrt(Math.pow((x), 2.0) + Math.pow((y), 2.0));
+    }
 }
