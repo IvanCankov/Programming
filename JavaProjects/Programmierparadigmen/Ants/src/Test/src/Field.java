@@ -3,6 +3,8 @@ package Test.src;
 import java.util.*;
 import java.lang.Math;
 
+import static src.Parameters.*;
+
 public class Field {
 
     private Hashtable<Position, Float> field; // 2D array of all scent values in the Field
@@ -16,12 +18,14 @@ public class Field {
 
     public Field(int width, int height, int antCount, int foodSourceCount) {
         this.dimension = new Dimension(width, height);
-        this.field = new Hashtable<>();  			        // initialises the field as an MxN board
+        this.field = new Hashtable<>();  			     // initialises the field as an MxN board
         this.random = new Random();
         this.antHill = new AntHill(this.getRandomFieldPos()); 		// place antHill at random position
         this.ants = new HashSet<>();
-        for (int i = 0; i < antCount; i++){	 						// add ants to the centre of the AntHill
-            ants.add(new Ant(this.antHill.getPosition()));
+        for (int i = 0; i < antCount; i++){             // add ants to the centre of the AntHill
+            Ant ant = new Ant(this.antHill.getPosition());
+            ant.setHome(this.antHill);
+            ants.add(ant);
         }
         this.foodSources = new HashSet<>();
         for (int i = 0; i < foodSourceCount; i++) {                 // randomly place food sources
@@ -66,7 +70,7 @@ public class Field {
     }
 
     // debug print method
-    void printHillAndFoodSources() {
+    public void printHillAndFoodSources() {
         System.out.println("AntHill:");
         System.out.println(antHill.getPosition().toString());
         System.out.println("FoodSources:");
@@ -106,11 +110,11 @@ public class Field {
     }
 
     // update all scent values in the field, and switch Ant modes
-    void update() {
+    public void update() {
         for (Ant ant : ants) {
             State antState = ant.getState();
             Position position = ant.getPosition();
-            if (getScentTrail(position) > 1F) {
+            if (getScentTrail(position) > SCENT_THRESHOLD_SUCHE) {
                 ant.setState(State.SUCHE);
             }
             for (FoodSource source : this.foodSources) {
@@ -126,15 +130,15 @@ public class Field {
             }
             switch (antState) {
                 case ERKUNDUNG -> {
-                    addScentTrail(position, 0.1F);
+                    addScentTrail(position, SCENT_STRENGTH_ERKUNDUNG);
                     ant.discoverMove(this);
                 }
                 case SUCHE     -> {
-                    addScentTrail(position, 0.1F);
+                    addScentTrail(position, SCENT_STRENGTH_SUCHE);
                     ant.searchMove(this);
                 }
                 case BRINGT    -> {
-                    addScentTrail(position, 1.0F);
+                    addScentTrail(position, SCENT_STRENGTH_BRINGT);
                     ant.deliverMove(this);
                 }
             }
@@ -142,7 +146,7 @@ public class Field {
         for (int y = 0; y < dimension.height(); y++) {
             for (int x = 0; x < dimension.width(); x++) {
                 Position currentPosition = new Position(x, y);
-                float newStrength = this.field.getOrDefault(currentPosition, 0.0F) * 0.998F;
+                float newStrength = this.field.getOrDefault(currentPosition, 0.0F) * SCENT_FIELD_MULTIPLIER;
                 this.field.put(currentPosition, newStrength);
             }
         }
