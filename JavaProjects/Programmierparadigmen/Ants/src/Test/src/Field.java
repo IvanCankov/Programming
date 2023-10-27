@@ -1,16 +1,14 @@
 package Test.src;
 
 import java.util.*;
-import java.lang.Math;
-
-import static src.Parameters.*;
+import java.util.stream.Collectors;
 
 public class Field {
 
-    private Hashtable<Position, Float> field; // 2D array of all scent values in the Field
+    private Hashtable<Position, Scent> field; // 2D array of all scent values in the Field
 
     private final Dimension dimension; // width = x dimension, height = y dimension
-    private HashSet<Ant> ants;  						// storing ants in a set where each ant has a position stored with it so
+    private HashSet<Ant> ants;  // storing ants in a set where each ant has a position stored with it so
     // that we don't have to use a 3D array to store ants and the trail
     private HashSet<FoodSource> foodSources;
     private AntHill antHill;
@@ -18,14 +16,14 @@ public class Field {
 
     public Field(int width, int height, int antCount, int foodSourceCount) {
         this.dimension = new Dimension(width, height);
-        this.field = new Hashtable<>();  			     // initialises the field as an MxN board
+        this.field = new Hashtable<>();  			        // initialises the field as an MxN board
         this.random = new Random();
         this.antHill = new AntHill(this.getRandomFieldPos()); 		// place antHill at random position
         this.ants = new HashSet<>();
-        for (int i = 0; i < antCount; i++){             // add ants to the centre of the AntHill
-            Ant ant = new Ant(this.antHill.getPosition());
-            ant.setHome(this.antHill);
-            ants.add(ant);
+        for (int i = 0; i < antCount; i++){	 						// add ants to the centre of the AntHill
+            int hp = random.nextInt(100);
+            int attack = random.nextInt(100);
+            ants.add(new Ant(this.antHill, hp, attack));
         }
         this.foodSources = new HashSet<>();
         for (int i = 0; i < foodSourceCount; i++) {                 // randomly place food sources
@@ -33,15 +31,50 @@ public class Field {
         }
     }
 
-    // returns an Iterable over all Ant positions, functional style
+    // constructor for test case usage
+    public Field(int width, int height, Position[] antPositions, Position[] foodSourcePositions) {
+        this.dimension = new Dimension(width, height);
+        this.field = new Hashtable<>();  			        // initialises the field as an MxN board
+        this.random = new Random();
+        this.antHill = new AntHill(new Position(width/2, height/2)); // place ant hill in center
+        this.ants = new HashSet<>();
+        for (var pos : antPositions) {
+            int hp = random.nextInt(100);
+            int attack = random.nextInt(100);
+            ants.add(new Ant(this.antHill, hp, attack));
+        }
+        this.foodSources = new HashSet<>();
+        for (var pos : foodSourcePositions) {                 // randomly place food sources
+            foodSources.add(new FoodSource(pos));
+        }
+    }
+
+    public AntHill getAntHill() {
+        return antHill;
+    }
+
+    // returns an Iterable over all Ant positions, STYLE: functional
     // http://www.lambdafaq.org/how-do-i-turn-a-stream-into-an-iterable/
     public Iterable<Position> getAntPositions() {
         return ants.stream().map(Ant::getPosition)::iterator;
     }
 
-    // returns an Iterable over all FoodSource positions, functional style
+    public Iterable<Ant> getAnts() {
+        return ants;
+    }
+
+    // returns an Iterable over all FoodSource positions, STYLE: functional
     public Iterable<Position> getFoodSourcePositions() {
         return foodSources.stream().map(FoodSource::getPosition)::iterator;
+    }
+
+    // returns an Iterable of all FoodSources at a given position, STYLE: functional
+    public Iterable<FoodSource> getFoodSourcesAtPosition(Position pos) {
+        return foodSources.stream().filter(f -> f.position.equals(pos))::iterator;
+    }
+
+    public void addFoodToAntHill() {
+        this.antHill.addFood();
     }
 
     // return position of AntHill
@@ -82,73 +115,54 @@ public class Field {
     // returns a Position width coordinates wrapped around to fit within the Field
     public Position wrapPosition(Position pos) {
         var x = pos.x() % dimension.width();
-        if (x < 0) {x += dimension.width();};
+        if (x < 0) {x += dimension.width();}
         var y = pos.y() % dimension.height();
-        if (y < 0) {y += dimension.height();};
+        if (y < 0) {y += dimension.height();}
         return new Position(x, y);
     }
 
-    // set scent value at specified Position
-    private void setScentTrail(Position position, float strength) {
+    // get scent value at specified Position
+    public float getScentTrail(Position position, Ant ant) {
         position = wrapPosition(position); // normalise coordinates to field boundaries
-        this.field.put(position, strength);
+        Scent scent =  this.field.get(position);
+        if (scent == null) {
+            return 0F;
+        }
+        return scent.getStrength(ant);
     }
 
-    // get scent value at specified Position
-    public float getScentTrail(Position position) {
+    // TODO: add unified interface for Ant and AntHill
+    public float getScentTrail(Position position, AntHill antHill) {
         position = wrapPosition(position); // normalise coordinates to field boundaries
-        return this.field.getOrDefault(position, 0.00F);
+        Scent scent =  this.field.get(position);
+        if (scent == null) {
+            return 0F;
+        }
+        return scent.getStrength(antHill);
     }
 
     // add to scent value at specified Position
     // saturating add -> MAX_SCENT constant
-    public void addScentTrail(Position position, float strength) {
-        final float MAX_SCENT = 5;
-        float newStrength = getScentTrail(position) + strength;
-        newStrength = Math.min(newStrength, MAX_SCENT);
-        setScentTrail(position, newStrength);
+    public void addScentTrail(Position position, Ant ant, float strength) {
+        Scent scent = this.field.getOrDefault(position, new Scent());
+        scent.addScent(ant, strength);
+        this.field.put(position, scent);
     }
 
     // update all scent values in the field, and switch Ant modes
     public void update() {
         for (Ant ant : ants) {
-            State antState = ant.getState();
-            Position position = ant.getPosition();
-            if (getScentTrail(position) > SCENT_THRESHOLD_SUCHE) {
-                ant.setState(State.SUCHE);
-            }
-            for (FoodSource source : this.foodSources) {
-                if (source.getPosition().equals(ant.getPosition())) {
-                    ant.setState(State.BRINGT);
-                    ant.invertDirection();
-                }
-            }
-            if (antState == State.BRINGT && position.equals(antHill.getPosition())) {
-                antHill.addFood();
-                ant.setState(State.SUCHE);
-                ant.invertDirection();
-            }
-            switch (antState) {
-                case ERKUNDUNG -> {
-                    addScentTrail(position, SCENT_STRENGTH_ERKUNDUNG);
-                    ant.discoverMove(this);
-                }
-                case SUCHE     -> {
-                    addScentTrail(position, SCENT_STRENGTH_SUCHE);
-                    ant.searchMove(this);
-                }
-                case BRINGT    -> {
-                    addScentTrail(position, SCENT_STRENGTH_BRINGT);
-                    ant.deliverMove(this);
-                }
-            }
+            this.ants.remove(ant);
+            List<Ant> antsWithSpecificPosition = this.ants.stream()
+                    .filter(a -> a.getPosition().equals(ant.getPosition()))
+                    .collect(Collectors.toCollection(ArrayList::new));
+            this.ants.add(ant);
+
+            ant.move(this);
         }
-        for (int y = 0; y < dimension.height(); y++) {
-            for (int x = 0; x < dimension.width(); x++) {
-                Position currentPosition = new Position(x, y);
-                float newStrength = this.field.getOrDefault(currentPosition, 0.0F) * SCENT_FIELD_MULTIPLIER;
-                this.field.put(currentPosition, newStrength);
-            }
-        }
+        // multiply every scent value by SCENT_FIELD_MULTIPLIER
+        this.field.values().forEach(Scent::fade);
+        // optimisation: remove scent entry if no scent
+        this.field.values().removeIf(Scent::isEmpty);
     }
 }

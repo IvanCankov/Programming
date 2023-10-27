@@ -1,22 +1,20 @@
 package graphics;
 
 import Test.src.Field;
+
 import javax.swing.*;
 
 public class Display
 {
-    private JFrame mainFrame;
-    private PixelPanel pixelPanel;
+    private final JFrame mainFrame;
+    private final PixelPanel pixelPanel;
 
-    private Field field;
-
-    public Display(int scale, Field field)
+    public Display(int scale, DrawData drawData)
     {
-        this.field = field;
         mainFrame = new JFrame("My First GUI");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainFrame.setSize(field.getDimension().width()*scale, field.getDimension().height()*scale);
-        pixelPanel = new PixelPanel(scale, this.field);
+        mainFrame.setSize(drawData.getDimension().width()*scale, drawData.getDimension().height()*scale);
+        pixelPanel = new PixelPanel(scale, drawData);
         mainFrame.add(pixelPanel);
     }
 
