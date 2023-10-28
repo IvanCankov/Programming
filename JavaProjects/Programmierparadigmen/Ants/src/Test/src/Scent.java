@@ -39,7 +39,11 @@ public class Scent {
         return colonyScent.getOrDefault(ant, 0F);
     }
 
-    // add scent value contributed by the Ant
+    /**
+     * Adds a scent value to a given position
+     * @param ant is the ant at that position
+     * @param strength
+     */
     public void addScent(Ant ant, float strength) {
         final AntHill colony = ant.getHome();
         // add new Hashtable for colony if it doesn't exist already
@@ -51,7 +55,9 @@ public class Scent {
         colonyScent.put(ant, newStrength); // set new strength
     }
 
-    // multiply all strengths by SCENT_FIELD_MULTIPLIER
+    /**
+     * Fades all scents by SCENT_FIELD_MULTIPLIER found in Parameters.java
+     */
     public void fade() {
         for (var colonyScents : scent.values()) {
             for (Ant key : colonyScents.keySet()) {
@@ -64,7 +70,9 @@ public class Scent {
         scent.values().removeIf(Hashtable::isEmpty); // remove empty hashsets
     }
 
-    // if isEmpty then total scent strength is 0
+    /**
+     * @return true if there are no scents at a given position
+     */
     public boolean isEmpty() {
         return scent.isEmpty();
     }

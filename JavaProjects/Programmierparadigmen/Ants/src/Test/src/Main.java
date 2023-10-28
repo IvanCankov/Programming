@@ -36,17 +36,18 @@ public class Main {
     private static void simulation() {
         Field field = new Field(250, 200, 50, 50);
         //field.printHillAndFoodSources();
-        //field.printAnts();
+        field.printAnts();
         DrawData drawData = new DrawData(field);
         Display testDisp = new Display(4, drawData);
         testDisp.showFrame();
 
-        for (int i = 0; i < 20000; i++) {
+        for (int i = 0; i < 1000; i++) {
             field.update();
             drawData.update();
             testDisp.refresh();
-            sleep(10);
+            sleep(30);
         }
+        field.printAnts();
     }
 
     // sleep for t milliseconds

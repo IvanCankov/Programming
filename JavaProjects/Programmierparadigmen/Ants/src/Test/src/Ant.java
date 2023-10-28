@@ -7,25 +7,36 @@ import java.util.stream.Collectors;
 import static Test.src.Parameters.*;
 
 public class Ant extends FieldObj {
+
     private int lastDirectionIdx;  // the last direction the Ant moved in
     private State state;           // state the Ant is in
     private final AntHill home;          // the AntHill the Ant belongs to
     private boolean doRandomMove;
 
     // Ant fightclub uwu
-    private final int HP;
+    private int HP;
     private final int attack;
 
+    /**
+     * @return HP of the ant
+     */
     public int getHP() {
-        return HP;
+        return this.HP;
     }
 
-    public int getAttack() {
-        return attack;
+    /**
+     * This method makes two ants fight
+     * @param ant is the other ant this ant will fight with
+     */
+    public void fight(Ant ant) {
+        ant.HP -= this.attack;
+        this.HP -= ant.attack;
     }
 
-    // These are the 8 relative fields around an Ant
-    // the order is important, the coordinates form a circle
+    /**
+     *  These are the 8 relative fields around an Ant
+     *  the order is important, the coordinates form a circle
+     */
     private static final Position[] directions = {
             new Position( 0,  1),    // North
             new Position( 1,  1),    // Northeast
@@ -37,6 +48,12 @@ public class Ant extends FieldObj {
             new Position(-1,  1)     // Northwest
     };
 
+    /**
+     * @param home is the anthill the ant belong to
+     * @param hp is the hitpoints that the ant has
+     * @param attack is the attack power that the ant has
+     */
+
     public Ant(AntHill home, int hp, int attack) {
         this.HP = hp;                                // position of AntHill needed for spawning of Ants
         this.attack = attack;
@@ -47,27 +64,43 @@ public class Ant extends FieldObj {
         this.home = home;
     }
 
+    /**
+     * @return the anthill that the ant belongs to
+     */
+
     public AntHill getHome() {
         return this.home;
     }
 
-    // set lastDirectionIdx to provided value, wrapped if too large or small
+    /**
+     * Set lastDirectionIdx to provided value, wrapped if too large or small
+     * @param lastDirectionIdx the last direction the ant chose
+     */
     public void setLastDirectionIdx(int lastDirectionIdx) {
         this.lastDirectionIdx = 0;
         this.lastDirectionIdx = wrapAddDirectionIdx(lastDirectionIdx);
     }
 
-    // returns the State of the Ant
+    /**
+     * @return the state of the ant
+     */
     public State getState() {
         return state;
     }
 
-    // set the State of the Ant from other classes
+    /**
+     * Sets the state of the ant
+     * @param tmp is what the ants state will be set to
+     */
     public void setState(State tmp) {
         this.state = tmp;
     }
 
-    // Das hier ist echt schlau W man's @FluxTape
+    /**
+     * Normalises directions to the 8 that our ant can move in
+     * @param add
+     * @return the direction in which our ant will move
+     */
     private int wrapAddDirectionIdx(int add) {
         int newDirectionIdx = (lastDirectionIdx + add) % directions.length;
         // needed as modulo in Java returns a negative number for negative input
@@ -75,11 +108,19 @@ public class Ant extends FieldObj {
         return newDirectionIdx;
     }
 
+    /**
+     * Returns all the positions the ant can move to
+     * @param field is the field on which the ant currently is
+     * @param directionIdx ??
+     * @return ??
+     */
     public Position getRelativePosition(Field field, int directionIdx) {
         return field.wrapPosition(position.add(directions[wrapAddDirectionIdx(directionIdx)]));
     }
 
-    // set direction of the Ant to be the inverse of the previous direction
+    /**
+     * Set the direction of the ant to be the inverse of the previous direction
+     */
     public void invertDirection() {
         this.lastDirectionIdx = wrapAddDirectionIdx(4);
     }
@@ -88,7 +129,7 @@ public class Ant extends FieldObj {
     private void moveInDirection(Field field, int directionIdx) {
         this.position = field.wrapPosition(position.add(directions[directionIdx]));
         this.lastDirectionIdx = directionIdx;
-        //SimulationsDB.addMovement(this, position);
+        SimulationsDB.addMovement(this, position);
     }
 
     // This is seriously getting overcoupled
@@ -126,6 +167,7 @@ public class Ant extends FieldObj {
                     this.state = State.BRINGT;
                     invertDirection();
                     source.grabFood();
+                    SimulationsDB.registerFoodFound(this, source);
                     // Ant can only grab food once
                     return true;
                 }
