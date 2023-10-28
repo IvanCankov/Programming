@@ -3,6 +3,7 @@ package Test.src;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static Test.src.Parameters.*;
 
@@ -132,10 +133,13 @@ public class Ant extends FieldObj {
         SimulationsDB.addMovement(this, position);
     }
 
-    // This is seriously getting overcoupled
-    // Child method is in AntHill
-    private Position getPositionWithLowestEuclideanDistance() {
-        var possibleDirections = new int[] {
+    /**
+     * BLACK MAGIC DO NOT TOUCH
+     * @param field is the field that the ant is on
+     * @return index of the direction the ant will move
+     */
+    private int getPositionWithLowestEuclideanDistance(Field field) {
+        var possibleDirIdxs = new int[] {
                 wrapAddDirectionIdx(-2),
                 wrapAddDirectionIdx(-1),
                 lastDirectionIdx,
@@ -143,15 +147,63 @@ public class Ant extends FieldObj {
                 wrapAddDirectionIdx(2)
         };
 
-        // Returns all positions as a List
-        ArrayList<Position> positions = Arrays.stream(possibleDirections)
-                .mapToObj(possibleDirection -> position.add(directions[possibleDirection]))
-                .collect(Collectors.toCollection(ArrayList::new));
+        float maxProbability = Float.MIN_VALUE;
+        int maxProbabilityIdx = -1;
 
-        // Returns the position with the lowest Euclidean distance to the ant's home
-        return positions.stream()
-                .min(Comparator.comparingDouble(home::getEuclideanDistance))
-                .orElse(null);
+        for (int i : possibleDirIdxs) {
+            Position scentPos = position.add(directions[i]);
+            float scent = field.getScentTrail(scentPos, this) + BASE_PROBABILITY;
+            float distance = (float) this.home.getEuclideanDistance(scentPos);
+
+            // play around with this so the ants path is not just a straight line
+            // float probability = (distance + 1) * scent / ((distance + 1) * (distance + 1));
+            // float probability = scent / ((distance + 1) * (distance + 1));
+            // float probability = (-distance + 1) * scent / ((distance + 1) * (distance + 1)); this is js beautiful
+
+            // Best one so far
+            // float probability = scent * 3 / ((distance + 1) * (distance + 1) * (distance + 1));
+            float probability = (float) (scent * 13.4F / Math.pow((distance + 1), 7));
+
+            if (probability > maxProbability) {
+                maxProbability = probability;
+                maxProbabilityIdx = i;
+            }
+        }
+
+        if (maxProbabilityIdx != -1) {
+            return maxProbabilityIdx;
+        }
+
+        float[] scentInDir = new float[possibleDirIdxs.length];
+        float sum = 0;
+
+        for (int i = 0; i < possibleDirIdxs.length; i++) {
+            int idx = possibleDirIdxs[i];
+            Position scentPos = position.add(directions[idx]);
+            float scent = field.getScentTrail(scentPos, this);
+            float distance = (float) ((float) this.home.getEuclideanDistance(scentPos));
+            float probability = (scent + (-distance + 1)) / (-distance + 1);
+            scentInDir[i] = probability;
+            sum += probability * -(distance + 1);
+        }
+
+        for (int i = 0; i < possibleDirIdxs.length; i++) {
+            scentInDir[i] /= sum;
+            if (scentInDir[i] < 0.1F) scentInDir[i] = 0.5F / sum;
+
+        }
+
+        float r = ThreadLocalRandom.current().nextFloat();
+        int newDirectionIdx = 0;
+
+        for (int i = 0; i < scentInDir.length; i++) {
+            if (r >= (i > 0 ? scentInDir[i - 1] : 0) && r < scentInDir[i]) {
+                newDirectionIdx = possibleDirIdxs[i];
+                break;
+            }
+        }
+
+        return newDirectionIdx;
     }
 
     // uses info about the field and a possible position
@@ -283,7 +335,7 @@ public class Ant extends FieldObj {
 
     // move Ant to next coordinate, used in State 'Bringt'
     private void deliverMove(Field field) {
-        int newDirectionIdx = getNextDirIdx(field, false);
+        int newDirectionIdx = getPositionWithLowestEuclideanDistance(field);
         moveInDirection(field, newDirectionIdx); // update position of Ant
     }
 
