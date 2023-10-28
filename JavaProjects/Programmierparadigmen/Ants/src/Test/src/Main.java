@@ -41,7 +41,7 @@ public class Main {
         Display testDisp = new Display(4, drawData);
         testDisp.showFrame();
 
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 10000; i++) {
             field.update();
             drawData.update();
             testDisp.refresh();

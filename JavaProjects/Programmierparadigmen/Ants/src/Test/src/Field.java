@@ -19,6 +19,7 @@ public class Field {
         this.random = new Random();
         this.antHill = new AntHill(this.getRandomFieldPos()); 		// place antHill at random position
         this.ants = new HashSet<>();
+        this.foodSources = new HashSet<>();
 
         for (int i = 0; i < antCount; i++){	 						// add ants to the centre of the AntHill
             int hp = random.nextInt(100);
