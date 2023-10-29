@@ -27,5 +27,6 @@ public final class Parameters {
     // max scent value possible
     public static final float MAX_SCENT_STRENGTH = 100F;
 
+    public static final boolean ANT_SLEEPY_WAKEY_TIMER = true;
 
 }

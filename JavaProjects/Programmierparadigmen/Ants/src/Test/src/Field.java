@@ -1,6 +1,8 @@
 package Test.src;
 
-import java.awt.*;
+import javax.swing.Timer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
 
 public class Field {
@@ -14,9 +16,11 @@ public class Field {
     private HashSet<Obstacle> obstacles;
     private AntHill antHill;
     private Random random;
+    private Timer antStateToggleTimer;
 
 
-    public Field(int width, int height, int antCount, int foodSourceCount, int obstacleCount) {
+
+    public Field(int width, int height, int antCount, int foodSourceCount, int obstacleCount, boolean timer) {
         this.dimension = new Dimension(width, height);
         this.field = new Hashtable<>();  			        // initialises the field as an MxN board
         this.random = new Random();
@@ -24,6 +28,7 @@ public class Field {
         this.ants = new HashSet<>();
         this.foodSources = new HashSet<>();
         this.obstacles = new HashSet<>();
+
 
         while (ants.size() < antCount) {	 						// add ants to the centre of the AntHill
             addNewAntWithRandomStats();
@@ -43,10 +48,16 @@ public class Field {
                 addNewObstacleWithRandomValues(newPosition);
             }
         }
+
+        if (timer) {
+            createAntStateToggleTimer(); // Call the method to create the timer
+            antStateToggleTimer.start(); // Start the timer
+        }
     }
 
+
     // constructor for test case usage
-    public Field(int width, int height, Position[] antPositions, Position[] foodSourcePositions, Position[] obstaclePositions) {
+    public Field(int width, int height, Position[] antPositions, Position[] foodSourcePositions, Position[] obstaclePositions, boolean timer) {
         this.dimension = new Dimension(width, height);
         this.field = new Hashtable<>();  			        // initialises the field as an MxN board
         this.random = new Random();
@@ -68,6 +79,30 @@ public class Field {
                 addNewObstacleWithRandomValues(pos);
             }
         }
+    }
+
+    /**
+     * Zzz-mimimimi/wakey-wakey ant timer
+     * @author Ivan Cankov
+     */
+    private void createAntStateToggleTimer() {
+        antStateToggleTimer = new Timer(10000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                toggleAntStates();
+            }
+        });
+    }
+
+
+    /**
+     * Toggles ant states based on the time elapsed
+     * @author Ivan Cankov
+     */
+    private void toggleAntStates() {
+        ants.forEach(ant -> ant.setState(
+                ant.getState() == State.RETURNS ? State.SUCHE : State.RETURNS
+        ));
     }
 
     private void addNewObstacleWithRandomValues(Position pos)

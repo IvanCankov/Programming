@@ -2,6 +2,7 @@ package Test.src;
 
 import graphics.Display;
 import graphics.DrawData;
+import Test.src.Parameters.*;
 
 import java.lang.Thread;
 
@@ -30,7 +31,7 @@ public class Test {
     }
     // create a new display frame and run the simulation for a set number of steps
     private static void simulation() {
-        Field field = new Field(250, 200, 50, 50, 20);
+        Field field = new Field(250, 200, 50, 50, 20, Parameters.ANT_SLEEPY_WAKEY_TIMER);
         //field.printHillAndFoodSources();
         //field.printAnts();
         DrawData drawData = new DrawData(field);

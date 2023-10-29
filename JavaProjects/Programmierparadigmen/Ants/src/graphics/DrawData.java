@@ -49,6 +49,7 @@ public class DrawData {
                 case ERKUNDUNG -> setColor(x, y, Color.ORANGE);
                 case SUCHE     -> setColor(x, y, Color.BLUE);
                 case BRINGT    -> setColor(x, y, Color.MAGENTA);
+                case RETURNS    -> setColor(x, y, Color.WHITE);
             }
         }
         // color food sources

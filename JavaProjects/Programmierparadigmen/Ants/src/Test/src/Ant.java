@@ -4,6 +4,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static Test.src.Parameters.*;
 
+
 public class Ant extends FieldObj implements Colony {
 
     private int lastDirectionIdx;  // the last direction the Ant moved in
@@ -16,8 +17,7 @@ public class Ant extends FieldObj implements Colony {
     // Ant fightclub uwu
     private int HP;
     private final int attack;
-    private AntHill ;
-    private Ant this.home.;
+
 
     /**
      * @return HP of the ant
@@ -351,7 +351,7 @@ public class Ant extends FieldObj implements Colony {
         switch (this.state) {
             case ERKUNDUNG -> field.addScentTrail(position, this, SCENT_STRENGTH_ERKUNDUNG);
             case SUCHE     -> field.addScentTrail(position, this, SCENT_STRENGTH_SUCHE);
-            case BRINGT    -> field.addScentTrail(position, this, SCENT_STRENGTH_BRINGT);
+            case BRINGT, RETURNS    -> field.addScentTrail(position, this, SCENT_STRENGTH_BRINGT);
         }
         // move Ant
         if (doRandomMove) {
@@ -362,7 +362,7 @@ public class Ant extends FieldObj implements Colony {
         switch (this.state) {
             case ERKUNDUNG -> discoverMove(field);
             case SUCHE     -> searchMove(field);
-            case BRINGT    -> deliverMove(field);
+            case BRINGT, RETURNS -> deliverMove(field);
         }
         // determine if next move should be random move
         this.doRandomMove = ThreadLocalRandom.current().nextFloat() <= RANDOM_MOVE_PROBABILITY;
@@ -392,7 +392,8 @@ public class Ant extends FieldObj implements Colony {
         int ranInt = ThreadLocalRandom.current().nextInt(5) - 2; // random number from -2 to 2
         int newDirectionIdx = wrapAddDirectionIdx(ranInt);
         boolean canMove = moveInDirection(field, newDirectionIdx); // update position of Ant
-        while (!canMove)
+        int tempFix = 0; // TODO: add proper fix
+        while (!canMove && tempFix < 10)
         {
             if (ranInt >= 2)
             {
@@ -401,6 +402,7 @@ public class Ant extends FieldObj implements Colony {
             ranInt = ranInt + 1;
             newDirectionIdx = wrapAddDirectionIdx(ranInt);
             canMove = moveInDirection(field, newDirectionIdx);
+            tempFix++;
         }
 
     }
