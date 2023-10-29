@@ -2,12 +2,17 @@ package graphics;
 
 import static Test.src.Parameters.SCENT_DISPLAY_MULTIPLIER;
 
-import Test.src.Ant;
-import Test.src.AntHill;
-import Test.src.Field;
-import Test.src.Position;
+import Test.src.*;
 import Test.src.Dimension;
+
 import java.awt.*;
+
+/** stores data needed for drawing
+ * Field can't be used for drawing directly as the GUI runs on a different thread
+ * which causes an issue with some iterators of Field.
+ * So this class stores the data needed for drawing in an intermediate, fixed size array
+ * @author Mathias Engel
+ */
 public class DrawData {
     private final Color[][] colors;
     private final Field field;
@@ -17,6 +22,12 @@ public class DrawData {
         int xDim = this.field.getDimension().width();
         int yDim = this.field.getDimension().height();
         colors = new Color[yDim][xDim];
+        // init colors
+        for (int y = 0; y < yDim; y++) {
+            for (int x = 0; x < xDim; x++) {
+                this.setColor(x, y, Color.BLACK);
+            }
+        }
     }
 
     public Dimension getDimension() {
@@ -28,7 +39,8 @@ public class DrawData {
     }
 
     private void setColor(int x, int y, Color color) {
-        this.colors[y][x] = color;
+        Position pos = field.wrapPosition(new Position(x, y));
+        this.colors[pos.y()][pos.x()] = color;
     }
 
     public void update() {
@@ -63,6 +75,18 @@ public class DrawData {
             int x = field.getAntHillPosition().x();
             int y = field.getAntHillPosition().y();
             setColor(x, y, Color.GREEN);
+        }
+
+        // color obstacles
+        for (Obstacle o : field.getObstacles())
+        {
+            for (int i = o.getObstacleTopLeft().x(); i <= o.getObstacleBotRight().x(); i++)
+            {
+                for (int j = o.getObstacleTopLeft().y(); j <= o.getObstacleBotRight().y(); j++)
+                {
+                    setColor(i, j, Color.GRAY);
+                }
+            }
         }
     }
 }

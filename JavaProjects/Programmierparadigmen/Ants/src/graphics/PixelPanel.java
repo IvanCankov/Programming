@@ -30,7 +30,7 @@ public class PixelPanel extends JPanel {
         Color resetColor = new Color(11, 22, 33); // should not be used elsewhere
         Color lastColor;
         // draw colors
-        // drawing rectangles by filling lines with same color if possible
+        // drawing rectangles by filling lines with same color if possible (optimisation)
         for (int y = 0; y < drawData.getDimension().height(); y++) {
             lastColor = resetColor;
             int xDelta = 0;

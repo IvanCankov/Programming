@@ -393,7 +393,7 @@ public class Ant extends FieldObj implements Colony {
         int newDirectionIdx = wrapAddDirectionIdx(ranInt);
         boolean canMove = moveInDirection(field, newDirectionIdx); // update position of Ant
         int tempFix = 0; // TODO: add proper fix
-        while (!canMove && tempFix < 10)
+        while (!canMove && tempFix < 3)
         {
             if (ranInt >= 2)
             {
