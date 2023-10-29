@@ -4,6 +4,9 @@ import java.util.Hashtable;
 
 import static Test.src.Parameters.*;
 
+/** Used to store the scents left by different Ants on a specific coordinate
+ *  @author Mathias Engel
+ */
 public class Scent {
     // maps: AntHill -> Ant -> Float
     // The general idea is to store the scent value each ant has left on the particular Scent object
@@ -16,14 +19,10 @@ public class Scent {
         this.scent = new Hashtable<>();
     }
 
-    // get cumulative strength of scent from the home colony of the specified Ant
-    public float getStrength(Ant ant) {
-        return getStrength(ant.getHome());
-    }
 
     // get cumulative strength of scent from Ants of the specified colony
-    public float getStrength(AntHill antHill) {
-        var colonyScent = scent.get(antHill);
+    public float getStrength(Colony colony) {
+        var colonyScent = scent.get(colony.getColony());
         if (colonyScent == null) {
             return 0F;
         }
@@ -32,7 +31,7 @@ public class Scent {
 
     // get strength of scent of one particular ant
     public float getIndividualStrength(Ant ant) {
-        var colonyScent = scent.get(ant.getHome());
+        var colonyScent = scent.get(ant.getColony());
         if (colonyScent == null) {
             return 0F;
         }
@@ -42,10 +41,10 @@ public class Scent {
     /**
      * Adds a scent value to a given position
      * @param ant is the ant at that position
-     * @param strength
+     * @param strength is the scent strength to be added
      */
     public void addScent(Ant ant, float strength) {
-        final AntHill colony = ant.getHome();
+        final AntHill colony = ant.getColony();
         // add new Hashtable for colony if it doesn't exist already
         scent.computeIfAbsent(colony, k -> new Hashtable<>());
         var colonyScent = scent.get(colony);

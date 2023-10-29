@@ -1,7 +1,7 @@
 package Test.src;
 
 // represents an ant hill on the Field
-public class AntHill extends FieldObj {
+public class AntHill extends FieldObj implements Colony {
     private int storedFood;          // how much food has been brought to the AntHill
 
     public AntHill(Position fieldPosition) {
@@ -24,5 +24,10 @@ public class AntHill extends FieldObj {
         int x = position.x() - this.position.x();
         int y = position.y() - this.position.y();
         return Math.sqrt(Math.pow((x), 2.0) + Math.pow((y), 2.0));
+    }
+
+    @Override
+    public AntHill getColony() {
+        return this;
     }
 }

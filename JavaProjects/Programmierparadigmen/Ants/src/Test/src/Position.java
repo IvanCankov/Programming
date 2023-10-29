@@ -7,4 +7,12 @@ public record Position(int x, int y) {
                 this.y() + add.y()
         );
     }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (!obj.getClass().equals(Position.class)) return false;
+        Position other = (Position) obj;
+        return this.x == other.x && this.y == other.y;
+    }
 }

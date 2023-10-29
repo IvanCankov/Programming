@@ -3,8 +3,8 @@ package Test.src;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Stack;
 
+// Class written by Ion Mihaescu unless otherwise noted
 public class SimulationsDB {
 
     private static HashSet<AntPath> runningPaths = new HashSet<>();
@@ -46,6 +46,12 @@ public class SimulationsDB {
             runningPaths.remove(pathToUpdate);
             finishedPaths.add(pathToUpdate);
         }
+    }
+
+    public static void startNewPathAfterAnthill(Ant a)
+    {
+        if (getAntPathByAnt(a) != null) return;
+        runningPaths.add(new AntPath(a));
     }
 
     public static HashMap<AntPath, Integer> getPathsWithCost(Ant a)

@@ -1,21 +1,18 @@
 package Test.src;
 
-import Test.src.Field;
 import graphics.Display;
 import graphics.DrawData;
-//import Test.src.test.BaseTests;
 
-import java.io.IOException;
 import java.lang.Thread;
 
-public class Main {
-    public static void main(String[] args) throws IOException, InterruptedException {
-        //BaseTests.moveSearchTest();
-        //BaseTests.moveDiscoverTest();
+public class Test {
+    public static void main(String[] args) {
+
         graphicSimulation();
     }
 
-    private static void graphicSimulation() throws IOException, InterruptedException {
+    private static void graphicSimulation() {
+        //Display stuff
         System.setProperty("java.awt.headless", "false");
         //Set DISPLAY variable
         String[] command = {"sh", "-c", "export DISPLAY=:0"};
@@ -27,27 +24,25 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-
         simulation();
         //simulation();
         //simulation();
     }
     // create a new display frame and run the simulation for a set number of steps
     private static void simulation() {
-        Field field = new Field(250, 200, 50, 50);
+        Field field = new Field(250, 200, 50, 50, 20);
         //field.printHillAndFoodSources();
-        field.printAnts();
+        //field.printAnts();
         DrawData drawData = new DrawData(field);
         Display testDisp = new Display(4, drawData);
         testDisp.showFrame();
 
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 20000; i++) {
             field.update();
             drawData.update();
             testDisp.refresh();
-            sleep(30);
+            sleep(10);
         }
-        field.printAnts();
     }
 
     // sleep for t milliseconds

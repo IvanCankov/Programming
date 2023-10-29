@@ -1,25 +1,27 @@
 package Test.src;
 
-import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static Test.src.Parameters.*;
 
-public class Ant extends FieldObj {
+public class Ant extends FieldObj implements Colony {
 
     private int lastDirectionIdx;  // the last direction the Ant moved in
     private State state;           // state the Ant is in
-    private final AntHill home;          // the AntHill the Ant belongs to
-    private boolean doRandomMove;
+    private Behaviour behaviour;   // behavioural pattern the Ant follows
+    private final AntHill home;    // the AntHill the Ant belongs to
+    private boolean doRandomMove;  // if true the next move will be in a random direction
+    private int travelDistance;
 
     // Ant fightclub uwu
     private int HP;
     private final int attack;
+    private AntHill ;
+    private Ant this.home.;
 
     /**
      * @return HP of the ant
+     * @author Ivan Cankov
      */
     public int getHP() {
         return this.HP;
@@ -28,6 +30,7 @@ public class Ant extends FieldObj {
     /**
      * This method makes two ants fight
      * @param ant is the other ant this ant will fight with
+     * @author Ivan Cankov
      */
     public void fight(Ant ant) {
         ant.HP -= this.attack;
@@ -54,22 +57,24 @@ public class Ant extends FieldObj {
      * @param hp is the hitpoints that the ant has
      * @param attack is the attack power that the ant has
      */
-
     public Ant(AntHill home, int hp, int attack) {
         this.HP = hp;                                // position of AntHill needed for spawning of Ants
         this.attack = attack;
         this.state = State.ERKUNDUNG;						    	// initial State is 'Erkundung'
+        int behaviourIdx = ThreadLocalRandom.current().nextInt(Behaviour.values().length);
+        this.behaviour = Behaviour.values()[behaviourIdx];
         this.position = home.getPosition();                                 // spawns ants in centre of AntHill
         this.lastDirectionIdx = ThreadLocalRandom.current().nextInt(directions.length);
         this.doRandomMove = false;
         this.home = home;
+        this.travelDistance = 0;
     }
 
     /**
-     * @return the anthill that the ant belongs to
+     * @return the AntHill that the ant belongs to
      */
-
-    public AntHill getHome() {
+    @Override
+    public AntHill getColony() {
         return this.home;
     }
 
@@ -98,9 +103,9 @@ public class Ant extends FieldObj {
     }
 
     /**
-     * Normalises directions to the 8 that our ant can move in
-     * @param add
-     * @return the direction in which our ant will move
+     * Add to internal direction index and normalise to the 8 directions that our Ant can move in
+     * @param add the direction index to add to the internal index
+     * @return the direction index of param 'add' plus the internal index
      */
     private int wrapAddDirectionIdx(int add) {
         int newDirectionIdx = (lastDirectionIdx + add) % directions.length;
@@ -110,13 +115,13 @@ public class Ant extends FieldObj {
     }
 
     /**
-     * Returns all the positions the ant can move to
+     * Returns the positions an Ant would move to, given a specific directionIdx offset
      * @param field is the field on which the ant currently is
-     * @param directionIdx ??
-     * @return ??
+     * @param directionIdxOffset the offset applied to the Ants
+     * @return Position on the field, derived from Ants current position and direction
      */
-    public Position getRelativePosition(Field field, int directionIdx) {
-        return field.wrapPosition(position.add(directions[wrapAddDirectionIdx(directionIdx)]));
+    public Position getRelativePosition(Field field, int directionIdxOffset) {
+        return field.wrapPosition(position.add(directions[wrapAddDirectionIdx(directionIdxOffset)]));
     }
 
     /**
@@ -127,16 +132,23 @@ public class Ant extends FieldObj {
     }
 
     // move position of Ant according to directionIdx, and update lastDirectionIdx variable accordingly
-    private void moveInDirection(Field field, int directionIdx) {
-        this.position = field.wrapPosition(position.add(directions[directionIdx]));
-        this.lastDirectionIdx = directionIdx;
-        SimulationsDB.addMovement(this, position);
+    private boolean moveInDirection(Field field, int directionIdx) {
+        Position newPos = position.add(directions[directionIdx]);
+        Obstacle potentialObstacle = field.obstacleAt(newPos);
+        if (potentialObstacle == null || obstacleShouldBeScaled(potentialObstacle)) {
+            this.position = field.wrapPosition(newPos);
+            this.lastDirectionIdx = directionIdx;
+            travelDistance = travelDistance + 1;
+            SimulationsDB.addMovement(this, position);
+            return true;
+        }
+        return false;
     }
-
     /**
      * BLACK MAGIC DO NOT TOUCH
      * @param field is the field that the ant is on
      * @return index of the direction the ant will move
+     * @author Ivan Cankov
      */
     private int getPositionWithLowestEuclideanDistance(Field field) {
         var possibleDirIdxs = new int[] {
@@ -161,8 +173,7 @@ public class Ant extends FieldObj {
             // float probability = (-distance + 1) * scent / ((distance + 1) * (distance + 1)); this is js beautiful
 
             // Best one so far
-            // float probability = scent * 3 / ((distance + 1) * (distance + 1) * (distance + 1));
-            float probability = (float) (scent * 13.4F / Math.pow((distance + 1), 7));
+            float probability = scent * 3 / ((distance + 1) * (distance + 1) * (distance + 1));
 
             if (probability > maxProbability) {
                 maxProbability = probability;
@@ -180,17 +191,15 @@ public class Ant extends FieldObj {
         for (int i = 0; i < possibleDirIdxs.length; i++) {
             int idx = possibleDirIdxs[i];
             Position scentPos = position.add(directions[idx]);
-            float scent = field.getScentTrail(scentPos, this);
-            float distance = (float) ((float) this.home.getEuclideanDistance(scentPos));
-            float probability = (scent + (-distance + 1)) / (-distance + 1);
+            float scent = field.getScentTrail(scentPos, this) + BASE_PROBABILITY;
+            float distance = (float) this.home.getEuclideanDistance(scentPos);
+            float probability = scent / (distance + 1);
             scentInDir[i] = probability;
-            sum += probability * -(distance + 1);
+            sum += probability;
         }
 
         for (int i = 0; i < possibleDirIdxs.length; i++) {
             scentInDir[i] /= sum;
-            if (scentInDir[i] < 0.1F) scentInDir[i] = 0.5F / sum;
-
         }
 
         float r = ThreadLocalRandom.current().nextFloat();
@@ -206,30 +215,29 @@ public class Ant extends FieldObj {
         return newDirectionIdx;
     }
 
-    // uses info about the field and a possible position
-    // to check if the state of the Ant needs to be updated
-    // returns true if Ant should move to field directly (FoodSource or AntHill
+
+    /**
+     * uses info about the field and a possible position
+     * and updates the state of the Ant if needed
+     * @param field is the Field that the Ant is on
+     * @return true if Ant should move to checked position directly (FoodSource or AntHill)
+     * @author Mathias Engel
+     */
     private boolean updateState(Field field, Position possiblePos) {
+
         switch (this.state) {
             case ERKUNDUNG -> {
                 if (field.getScentTrail(possiblePos, this) > SCENT_THRESHOLD_SUCHE) {
                     this.state = State.SUCHE;
                 }
-                for (FoodSource source : field.getFoodSourcesAtPosition(possiblePos)) {
-                    this.state = State.BRINGT;
-                    invertDirection();
-                    source.grabFood();
-                    SimulationsDB.registerFoodFound(this, source);
-                    // Ant can only grab food once
+                if (grabFoodAndInvertDirection(field, possiblePos)) {
+                    this.state = State.BRINGT; // -> Ant can only grab food once
                     return true;
                 }
             }
             case SUCHE -> {
-                for (FoodSource source : field.getFoodSourcesAtPosition(possiblePos)) {
-                    this.state = State.BRINGT;
-                    invertDirection();
-                    source.grabFood();
-                    // Ant can only grab food once
+                if (grabFoodAndInvertDirection(field, possiblePos)) {
+                    this.state = State.BRINGT; // -> Ant can only grab food once
                     return true;
                 }
             }
@@ -238,6 +246,7 @@ public class Ant extends FieldObj {
                     field.addFoodToAntHill();
                     this.state = State.SUCHE;
                     invertDirection();
+                    SimulationsDB.startNewPathAfterAnthill(this);
                     return true;
                 }
             }
@@ -245,9 +254,42 @@ public class Ant extends FieldObj {
         return false;
     }
 
+    /**
+     * try to grab food and if successful invert direction
+     * @param field Field the Ant lives on
+     * @param pos Position to check for food source
+     * @return true if there is a food source at the given position
+     *         false if there is no food source at the position
+     */
+    private boolean grabFoodAndInvertDirection(Field field, Position pos) {
+        FoodSource source = field.getFoodSourceAtPosition(pos);
+        if (source == null) {
+            return false;
+        }
+        assert(source.hasFood());
+        invertDirection();
+        source.grabFood();
+        SimulationsDB.addMovement(this, pos);
+        SimulationsDB.registerFoodFound(this, source);
 
-    // returns the index of the next direction the Ant should move
-    // based on the scent values of surrounding coordinates and randomness
+        if (!source.hasFood())
+        {
+            //Food source has been exhausted
+            field.removeFoodSource(source);
+        }
+        return true;
+    }
+
+
+    /**
+     * returns the index of the next direction the Ant should move
+     * based on the scent values of surrounding coordinates and randomness
+     * @param field Field the Ant lives on
+     * @param invertProbabilities if set to true Ant will prefer directions with
+     *                            low scent value instead of high scent values
+     * @return the index of the direction the ant should move to
+     * @author Mathias Engel
+     */
     private int getNextDirIdx(Field field, boolean invertProbabilities) {
         // calculate direction indexes the Ant could move
         var scentInDir = new float[directions.length];
@@ -299,6 +341,11 @@ public class Ant extends FieldObj {
         return newDirectionIdx;
     }
 
+    /**
+     * Move ant to new Position on the Field based on it's internal State
+     * @param field the Field the Ant lives on
+     * @author Mathias Engel
+     */
     public void move(Field field) {
         // set scent
         switch (this.state) {
@@ -317,6 +364,7 @@ public class Ant extends FieldObj {
             case SUCHE     -> searchMove(field);
             case BRINGT    -> deliverMove(field);
         }
+        // determine if next move should be random move
         this.doRandomMove = ThreadLocalRandom.current().nextFloat() <= RANDOM_MOVE_PROBABILITY;
     }
 
@@ -339,9 +387,28 @@ public class Ant extends FieldObj {
         moveInDirection(field, newDirectionIdx); // update position of Ant
     }
 
+    // move ant in random direction
     private void randomMove(Field field) {
         int ranInt = ThreadLocalRandom.current().nextInt(5) - 2; // random number from -2 to 2
         int newDirectionIdx = wrapAddDirectionIdx(ranInt);
-        moveInDirection(field, newDirectionIdx); // update position of Ant
+        boolean canMove = moveInDirection(field, newDirectionIdx); // update position of Ant
+        while (!canMove)
+        {
+            if (ranInt >= 2)
+            {
+                ranInt = -2;
+            }
+            ranInt = ranInt + 1;
+            newDirectionIdx = wrapAddDirectionIdx(ranInt);
+            canMove = moveInDirection(field, newDirectionIdx);
+        }
+
+    }
+
+    // True if obstacle should be scaled, false if obstacle should be avoided
+    public boolean obstacleShouldBeScaled(Obstacle obstacle)
+    {
+        // Scaling can be more taxing if the ant has travelled farther
+        return ((int) obstacle.getAvgScaleCost() + travelDistance) < obstacle.getAvgPassCost();
     }
 }

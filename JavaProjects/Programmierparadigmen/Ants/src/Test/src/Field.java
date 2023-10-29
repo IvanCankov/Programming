@@ -1,5 +1,6 @@
 package Test.src;
 
+import java.awt.*;
 import java.util.*;
 
 public class Field {
@@ -10,21 +11,22 @@ public class Field {
     private HashSet<Ant> ants;  // storing ants in a set where each ant has a position stored with it so
     // that we don't have to use a 3D array to store ants and the trail
     private HashSet<FoodSource> foodSources;
+    private HashSet<Obstacle> obstacles;
     private AntHill antHill;
     private Random random;
 
-    public Field(int width, int height, int antCount, int foodSourceCount) {
+
+    public Field(int width, int height, int antCount, int foodSourceCount, int obstacleCount) {
         this.dimension = new Dimension(width, height);
         this.field = new Hashtable<>();  			        // initialises the field as an MxN board
         this.random = new Random();
         this.antHill = new AntHill(this.getRandomFieldPos()); 		// place antHill at random position
         this.ants = new HashSet<>();
         this.foodSources = new HashSet<>();
+        this.obstacles = new HashSet<>();
 
-        for (int i = 0; i < antCount; i++){	 						// add ants to the centre of the AntHill
-            int hp = random.nextInt(100);
-            int attack = random.nextInt(100);
-            ants.add(new Ant(this.antHill, hp, attack));
+        while (ants.size() < antCount) {	 						// add ants to the centre of the AntHill
+            addNewAntWithRandomStats();
         }
         while (foodSources.size() < foodSourceCount) {
             Position newPosition = this.getRandomFieldPos();
@@ -32,31 +34,55 @@ public class Field {
 
             if (foodSources.stream().noneMatch(source -> source.getPosition().equals(newPosition))) {
                 foodSources.add(newFoodSource);
+            }
+        }
+        while (obstacles.size() < obstacleCount) {
+            Position newPosition = this.getRandomFieldPos();
+
+            if (obstacles.stream().noneMatch(ob -> ob.getPosition().equals(newPosition))) {
+                addNewObstacleWithRandomValues(newPosition);
             }
         }
     }
 
     // constructor for test case usage
-    public Field(int width, int height, Position[] antPositions, Position[] foodSourcePositions, int foodSourceCount) {
+    public Field(int width, int height, Position[] antPositions, Position[] foodSourcePositions, Position[] obstaclePositions) {
         this.dimension = new Dimension(width, height);
         this.field = new Hashtable<>();  			        // initialises the field as an MxN board
         this.random = new Random();
         this.antHill = new AntHill(new Position(width/2, height/2)); // place ant hill in center
         this.ants = new HashSet<>();
+        this.foodSources = new HashSet<>();
+        this.obstacles = new HashSet<>();
 
-        for (var pos : antPositions) {
-            int hp = random.nextInt(100);
-            int attack = random.nextInt(100);
-            ants.add(new Ant(this.antHill, hp, attack));
+        while (ants.size() < antPositions.length) {
+            addNewAntWithRandomStats();
         }
-        while (foodSources.size() < foodSourceCount) {
-            Position newPosition = this.getRandomFieldPos();
-            FoodSource newFoodSource = new FoodSource(newPosition);
-
-            if (foodSources.stream().noneMatch(source -> source.getPosition().equals(newPosition))) {
-                foodSources.add(newFoodSource);
+        for (var pos : foodSourcePositions){
+            if (foodSources.stream().noneMatch(source -> source.getPosition().equals(pos))) {
+                foodSources.add(new FoodSource(pos));
             }
         }
+        for (var pos : obstaclePositions){
+            if (obstacles.stream().noneMatch(obst -> obst.getPosition().equals(pos))) {
+                addNewObstacleWithRandomValues(pos);
+            }
+        }
+    }
+
+    private void addNewObstacleWithRandomValues(Position pos)
+    {
+        int obstSide = random.nextInt(dimension.width() / 8);
+        int obstHeight = random.nextInt(10);
+        double shapeFactor = random.nextDouble();
+        obstacles.add(new Obstacle(pos, new ThreeDimension(obstSide, obstHeight), shapeFactor));
+    }
+
+    private void addNewAntWithRandomStats()
+    {
+        int hp = random.nextInt(99)+1;
+        int attack = random.nextInt(99)+1;
+        ants.add(new Ant(this.antHill, hp, attack));
     }
 
     public AntHill getAntHill() {
@@ -78,13 +104,24 @@ public class Field {
         return foodSources.stream().map(FoodSource::getPosition)::iterator;
     }
 
+    // returns an Iterable over all Obstacle positions, STYLE: functional
+    public Iterable<Obstacle> getObstacles() {
+        return obstacles.stream()::iterator;
+    }
+
     // returns an Iterable of all FoodSources at a given position, STYLE: functional
-    public Iterable<FoodSource> getFoodSourcesAtPosition(Position pos) {
-        return foodSources.stream().filter(f -> f.position.equals(pos))::iterator;
+    public FoodSource getFoodSourceAtPosition(Position pos) {
+        if (foodSources.stream().noneMatch(f -> f.position.equals(pos))) return null;
+        return foodSources.stream().filter(f -> f.position.equals(pos)).findFirst().get();
     }
 
     public void addFoodToAntHill() {
         this.antHill.addFood();
+    }
+
+    public void removeFoodSource(FoodSource food)
+    {
+        foodSources.remove(food);
     }
 
     // return position of AntHill
@@ -130,17 +167,10 @@ public class Field {
     }
 
     // get scent value at specified Position
-    public float getScentTrail(Position position, Ant ant) {
+    public float getScentTrail(Position position, Colony colony) {
         position = wrapPosition(position); // Normalise coordinates to field boundaries
         Scent scent = this.field.get(position);
-        return (scent != null) ? scent.getStrength(ant) : 0F;
-    }
-
-    // TODO: add unified interface for Ant and AntHill
-    public float getScentTrail(Position position, AntHill antHill) {
-        position = wrapPosition(position); // Normalise coordinates to field boundaries
-        Scent scent = this.field.get(position);
-        return (scent != null) ? scent.getStrength(antHill) : 0F;
+        return (scent != null) ? scent.getStrength(colony) : 0F;
     }
 
     // add to scent value at specified Position
@@ -155,6 +185,7 @@ public class Field {
      * Each ant will fight with every other ant on the field
      * with the same position if and only if the ant isn't dead
      * additionally an ant will not fight itself
+     * @author Ivan Cankov
      */
     private void antsFight() {
         this.ants.removeIf(ant -> ant.getHP() <= 0);
@@ -162,7 +193,7 @@ public class Field {
             if (ant.getHP() <= 0) return;
             this.ants.stream()
                     .filter(a -> a != ant && a.getPosition().equals(ant.getPosition())
-                            && !a.getHome().equals(ant.getHome()))
+                            && !a.getColony().equals(ant.getColony()))
                     .forEach(ant::fight);
         });
     }
@@ -175,5 +206,20 @@ public class Field {
         this.ants.forEach(ant -> ant.move(this));
         this.field.values().forEach(Scent::fade);
         this.field.values().removeIf(Scent::isEmpty);
+    }
+
+
+    public Obstacle obstacleAt(Position p) {
+        for (Obstacle o : obstacles) {
+            for (int i = o.getObstacleTopLeft().x(); i <= o.getObstacleBotRight().x(); i++)
+            {
+                for (int j = o.getObstacleTopLeft().y(); j <= o.getObstacleBotRight().y(); j++)
+                {
+                    Position obstaclePos  = new Position(i, j);
+                    if (p.equals(obstaclePos)) return o;
+                }
+            }
+        }
+        return null;
     }
 }

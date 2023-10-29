@@ -2,6 +2,7 @@ package Test.src;
 
 import java.util.Stack;
 
+// Class written by Ion Mihaescu unless otherwise noted
 public class AntPath {
     private Ant ant;
     private Stack<Position> path;
