@@ -1,13 +1,33 @@
 package Test.src;
 
-public class FoodSource {
-    private final Position position; // position[0]=width, position[1]=height
+// represents a food source on the Field
+public class FoodSource extends FieldObj {
+    // Addition of capacity by Ion Mihaescu
+    private int capacity;
 
-    public FoodSource(Position fieldPosition) {
+    public FoodSource(Position fieldPosition, int capacity) {
+
         this.position = fieldPosition;
+        this.capacity = capacity;
     }
 
-    public Position getPosition() {
-        return this.position;
+    public FoodSource(Position fieldPosition) {
+
+        this.position = fieldPosition;
+        this.capacity = 10;
+    }
+
+    public void grabFood() {
+        capacity = capacity - 1;
+    }
+
+    public int getCapacity()
+    {
+        return capacity;
+    }
+
+    public boolean hasFood()
+    {
+        return capacity > 0;
     }
 }

@@ -1,18 +1,46 @@
 package Test.src;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Ant {
-    private static final float BASE_PROBABILITY = 0.01F; // to always allow for some randomness even if scent is 0
+import static Test.src.Parameters.*;
+
+
+public class Ant extends FieldObj implements Colony {
+
     private int lastDirectionIdx;  // the last direction the Ant moved in
     private State state;           // state the Ant is in
-    private Position position;     // position.x() coordinate in width, position.y() coordinate in height
+    private Behaviour behaviour;   // behavioural pattern the Ant follows
+    private final AntHill home;    // the AntHill the Ant belongs to
+    private boolean doRandomMove;  // if true the next move will be in a random direction
+    private int travelDistance;
+
+    // Ant fightclub uwu
+    private int HP;
+    private final int attack;
 
 
-    // These are the 8 relative fields around an Ant
-    // the order is important, the coordinates form a circle
+    /**
+     * @return HP of the ant
+     * @author Ivan Cankov
+     */
+    public int getHP() {
+        return this.HP;
+    }
+
+    /**
+     * This method makes two ants fight
+     * @param ant is the other ant this ant will fight with
+     * @author Ivan Cankov
+     */
+    public void fight(Ant ant) {
+        ant.HP -= this.attack;
+        this.HP -= ant.attack;
+    }
+
+    /**
+     *  These are the 8 relative fields around an Ant
+     *  the order is important, the coordinates form a circle
+     */
     private static final Position[] directions = {
             new Position( 0,  1),    // North
             new Position( 1,  1),    // Northeast
@@ -24,28 +52,61 @@ public class Ant {
             new Position(-1,  1)     // Northwest
     };
 
-    public Ant(Position posAntHill) {						        // position of AntHill needed for spawning of Ants
+    /**
+     * @param home is the anthill the ant belong to
+     * @param hp is the hitpoints that the ant has
+     * @param attack is the attack power that the ant has
+     */
+    public Ant(AntHill home, int hp, int attack) {
+        this.HP = hp;                                // position of AntHill needed for spawning of Ants
+        this.attack = attack;
         this.state = State.ERKUNDUNG;						    	// initial State is 'Erkundung'
-        this.position = posAntHill;                                 // spawns ants in centre of AntHill
+        int behaviourIdx = ThreadLocalRandom.current().nextInt(Behaviour.values().length);
+        this.behaviour = Behaviour.values()[behaviourIdx];
+        this.position = home.getPosition();                                 // spawns ants in centre of AntHill
         this.lastDirectionIdx = ThreadLocalRandom.current().nextInt(directions.length);
+        this.doRandomMove = false;
+        this.home = home;
+        this.travelDistance = 0;
     }
 
-    // returns the position of the Ant
-    public Position getPosition() {
-        return this.position;
+    /**
+     * @return the AntHill that the ant belongs to
+     */
+    @Override
+    public AntHill getColony() {
+        return this.home;
     }
 
-    // returns the State of the Ant
+    /**
+     * Set lastDirectionIdx to provided value, wrapped if too large or small
+     * @param lastDirectionIdx the last direction the ant chose
+     */
+    public void setLastDirectionIdx(int lastDirectionIdx) {
+        this.lastDirectionIdx = 0;
+        this.lastDirectionIdx = wrapAddDirectionIdx(lastDirectionIdx);
+    }
+
+    /**
+     * @return the state of the ant
+     */
     public State getState() {
         return state;
     }
 
-    // set the State of the Ant from other classes
+    /**
+     * Sets the state of the ant
+     * @param tmp is what the ants state will be set to
+     */
     public void setState(State tmp) {
         this.state = tmp;
     }
 
-    // Das hier ist echt schlau W man's @FluxTape
+    /**
+     * Add to internal direction index and normalise to the 8 directions that our Ant can move in
+     * @param add the direction index to add to the internal index
+     * @return the direction index of param 'add' plus the internal index
+     */
     private int wrapAddDirectionIdx(int add) {
         int newDirectionIdx = (lastDirectionIdx + add) % directions.length;
         // needed as modulo in Java returns a negative number for negative input
@@ -53,19 +114,182 @@ public class Ant {
         return newDirectionIdx;
     }
 
-    // set direction of the Ant to be the inverse of the previous direction
+    /**
+     * Returns the positions an Ant would move to, given a specific directionIdx offset
+     * @param field is the field on which the ant currently is
+     * @param directionIdxOffset the offset applied to the Ants
+     * @return Position on the field, derived from Ants current position and direction
+     */
+    public Position getRelativePosition(Field field, int directionIdxOffset) {
+        return field.wrapPosition(position.add(directions[wrapAddDirectionIdx(directionIdxOffset)]));
+    }
+
+    /**
+     * Set the direction of the ant to be the inverse of the previous direction
+     */
     public void invertDirection() {
         this.lastDirectionIdx = wrapAddDirectionIdx(4);
     }
 
     // move position of Ant according to directionIdx, and update lastDirectionIdx variable accordingly
-    private void moveInDirection(int directionIdx, Field field) {
-        this.position = field.wrapPosition(position.add(directions[directionIdx]));
-        this.lastDirectionIdx = directionIdx;
+    private boolean moveInDirection(Field field, int directionIdx) {
+        Position newPos = position.add(directions[directionIdx]);
+        Obstacle potentialObstacle = field.obstacleAt(newPos);
+        if (potentialObstacle == null || obstacleShouldBeScaled(potentialObstacle)) {
+            this.position = field.wrapPosition(newPos);
+            this.lastDirectionIdx = directionIdx;
+            travelDistance = travelDistance + 1;
+            SimulationsDB.addMovement(this, position);
+            return true;
+        }
+        return false;
+    }
+    /**
+     * BLACK MAGIC DO NOT TOUCH
+     * @param field is the field that the ant is on
+     * @return index of the direction the ant will move
+     * @author Ivan Cankov
+     */
+    private int getPositionWithLowestEuclideanDistance(Field field) {
+        var possibleDirIdxs = new int[] {
+                wrapAddDirectionIdx(-2),
+                wrapAddDirectionIdx(-1),
+                lastDirectionIdx,
+                wrapAddDirectionIdx(1),
+                wrapAddDirectionIdx(2)
+        };
+
+        float maxProbability = Float.MIN_VALUE;
+        int maxProbabilityIdx = -1;
+
+        for (int i : possibleDirIdxs) {
+            Position scentPos = position.add(directions[i]);
+            float scent = field.getScentTrail(scentPos, this) + BASE_PROBABILITY;
+            float distance = (float) this.home.getEuclideanDistance(scentPos);
+
+            // play around with this so the ants path is not just a straight line
+            // float probability = (distance + 1) * scent / ((distance + 1) * (distance + 1));
+            // float probability = scent / ((distance + 1) * (distance + 1));
+            // float probability = (-distance + 1) * scent / ((distance + 1) * (distance + 1)); this is js beautiful
+
+            // Best one so far
+            float probability = scent * 3 / ((distance + 1) * (distance + 1) * (distance + 1));
+
+            if (probability > maxProbability) {
+                maxProbability = probability;
+                maxProbabilityIdx = i;
+            }
+        }
+
+        if (maxProbabilityIdx != -1) {
+            return maxProbabilityIdx;
+        }
+
+        float[] scentInDir = new float[possibleDirIdxs.length];
+        float sum = 0;
+
+        for (int i = 0; i < possibleDirIdxs.length; i++) {
+            int idx = possibleDirIdxs[i];
+            Position scentPos = position.add(directions[idx]);
+            float scent = field.getScentTrail(scentPos, this) + BASE_PROBABILITY;
+            float distance = (float) this.home.getEuclideanDistance(scentPos);
+            float probability = scent / (distance + 1);
+            scentInDir[i] = probability;
+            sum += probability;
+        }
+
+        for (int i = 0; i < possibleDirIdxs.length; i++) {
+            scentInDir[i] /= sum;
+        }
+
+        float r = ThreadLocalRandom.current().nextFloat();
+        int newDirectionIdx = 0;
+
+        for (int i = 0; i < scentInDir.length; i++) {
+            if (r >= (i > 0 ? scentInDir[i - 1] : 0) && r < scentInDir[i]) {
+                newDirectionIdx = possibleDirIdxs[i];
+                break;
+            }
+        }
+
+        return newDirectionIdx;
     }
 
-    // returns the index of the next direction the Ant should move
-    // based on the scent values of surrounding coordinates and randomness
+
+    /**
+     * uses info about the field and a possible position
+     * and updates the state of the Ant if needed
+     * @param field is the Field that the Ant is on
+     * @return true if Ant should move to checked position directly (FoodSource or AntHill)
+     * @author Mathias Engel
+     */
+    private boolean updateState(Field field, Position possiblePos) {
+
+        switch (this.state) {
+            case ERKUNDUNG -> {
+                if (field.getScentTrail(possiblePos, this) > SCENT_THRESHOLD_SUCHE) {
+                    this.state = State.SUCHE;
+                }
+                if (grabFoodAndInvertDirection(field, possiblePos)) {
+                    this.state = State.BRINGT; // -> Ant can only grab food once
+                    return true;
+                }
+            }
+            case SUCHE -> {
+                if (grabFoodAndInvertDirection(field, possiblePos)) {
+                    this.state = State.BRINGT; // -> Ant can only grab food once
+                    return true;
+                }
+            }
+            case BRINGT -> {
+                if (this.position.equals(field.getAntHillPosition())) {
+                    field.addFoodToAntHill();
+                    this.state = State.SUCHE;
+                    invertDirection();
+                    SimulationsDB.startNewPathAfterAnthill(this);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * try to grab food and if successful invert direction
+     * @param field Field the Ant lives on
+     * @param pos Position to check for food source
+     * @return true if there is a food source at the given position
+     *         false if there is no food source at the position
+     */
+    private boolean grabFoodAndInvertDirection(Field field, Position pos) {
+        FoodSource source = field.getFoodSourceAtPosition(pos);
+        if (source == null) {
+            return false;
+        }
+        assert(source.hasFood());
+        invertDirection();
+        source.grabFood();
+        SimulationsDB.addMovement(this, pos);
+        SimulationsDB.registerFoodFound(this, source);
+
+        if (!source.hasFood())
+        {
+            //Food source has been exhausted
+            field.removeFoodSource(source);
+        }
+        return true;
+    }
+
+
+    /**
+     * returns the index of the next direction the Ant should move
+     * based on the scent values of surrounding coordinates and randomness
+     * @param field Field the Ant lives on
+     * @param invertProbabilities if set to true Ant will prefer directions with
+     *                            low scent value instead of high scent values
+     * @return the index of the direction the ant should move to
+     * @author Mathias Engel
+     */
     private int getNextDirIdx(Field field, boolean invertProbabilities) {
         // calculate direction indexes the Ant could move
         var scentInDir = new float[directions.length];
@@ -80,10 +304,9 @@ public class Ant {
         float scentSum = 0; // sum of scent values of relevant coordinates
         for (int i : possibleDirIdxs) {
             Position scentPos = position.add(directions[i]);
-            float scent = field.getScentTrail(scentPos) + BASE_PROBABILITY;
-            // if scent is above some threshold update state of the Ant
-            if (field.getScentTrail(scentPos) > 0.6 && this.state == State.ERKUNDUNG) {
-                this.setState(State.SUCHE);
+            float scent = field.getScentTrail(scentPos, this) + BASE_PROBABILITY;
+            boolean moveDirectly = updateState(field, scentPos);
+            if (moveDirectly) {
                 return i;
             }
             // if the invertProbabilities argument is true, invert the probabilities
@@ -118,22 +341,76 @@ public class Ant {
         return newDirectionIdx;
     }
 
+    /**
+     * Move ant to new Position on the Field based on it's internal State
+     * @param field the Field the Ant lives on
+     * @author Mathias Engel
+     */
+    public void move(Field field) {
+        // set scent
+        switch (this.state) {
+            case ERKUNDUNG -> field.addScentTrail(position, this, SCENT_STRENGTH_ERKUNDUNG);
+            case SUCHE     -> field.addScentTrail(position, this, SCENT_STRENGTH_SUCHE);
+            case BRINGT, RETURNS    -> field.addScentTrail(position, this, SCENT_STRENGTH_BRINGT);
+        }
+        // move Ant
+        if (doRandomMove) {
+            this.doRandomMove = false;
+            randomMove(field);
+            return;
+        }
+        switch (this.state) {
+            case ERKUNDUNG -> discoverMove(field);
+            case SUCHE     -> searchMove(field);
+            case BRINGT, RETURNS -> deliverMove(field);
+        }
+        // determine if next move should be random move
+        this.doRandomMove = ThreadLocalRandom.current().nextFloat() <= RANDOM_MOVE_PROBABILITY;
+    }
+
     // move Ant to next coordinate, used in State 'Erkundung'
-    public void discoverMove(Field field) {
+    private void discoverMove(Field field) {
         // invert probabilities so the direction with the least scent has the highest probability
         int newDirectionIdx = getNextDirIdx(field, true);
-        moveInDirection(newDirectionIdx, field); // update position of Ant
+        moveInDirection(field, newDirectionIdx); // update position of Ant
     }
 
     // move Ant to next coordinate, used in State 'Suche'
-    void searchMove(Field field) {
+    private void searchMove(Field field) {
         int newDirectionIdx = getNextDirIdx(field, false);
-        moveInDirection(newDirectionIdx, field); // update position of Ant
+        moveInDirection(field, newDirectionIdx); // update position of Ant
     }
 
     // move Ant to next coordinate, used in State 'Bringt'
-    public void deliverMove(Field field) {
-        int newDirectionIdx = getNextDirIdx(field, false);
-        moveInDirection(newDirectionIdx, field); // update position of Ant
+    private void deliverMove(Field field) {
+        int newDirectionIdx = getPositionWithLowestEuclideanDistance(field);
+        moveInDirection(field, newDirectionIdx); // update position of Ant
+    }
+
+    // move ant in random direction
+    private void randomMove(Field field) {
+        int ranInt = ThreadLocalRandom.current().nextInt(5) - 2; // random number from -2 to 2
+        int newDirectionIdx = wrapAddDirectionIdx(ranInt);
+        boolean canMove = moveInDirection(field, newDirectionIdx); // update position of Ant
+        int tempFix = 0; // TODO: add proper fix
+        while (!canMove && tempFix < 10)
+        {
+            if (ranInt >= 2)
+            {
+                ranInt = -2;
+            }
+            ranInt = ranInt + 1;
+            newDirectionIdx = wrapAddDirectionIdx(ranInt);
+            canMove = moveInDirection(field, newDirectionIdx);
+            tempFix++;
+        }
+
+    }
+
+    // True if obstacle should be scaled, false if obstacle should be avoided
+    public boolean obstacleShouldBeScaled(Obstacle obstacle)
+    {
+        // Scaling can be more taxing if the ant has travelled farther
+        return ((int) obstacle.getAvgScaleCost() + travelDistance) < obstacle.getAvgPassCost();
     }
 }
