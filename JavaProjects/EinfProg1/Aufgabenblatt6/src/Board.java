@@ -80,63 +80,32 @@ public class Board {
         for (int i = 1; i < 4; i++) {
             if (mouseX - 1 - i >= 0 && board[pieceHeight][mouseX - i] == player) {
                 leftHorizontal++;
-            } else {
-                break; // Break the loop if consecutive pieces are not the same
             }
-        }
 
-        // Check left diagonal
-        for (int i = 1; i < 4; i++) {
             if (pieceHeight + i < height && mouseX - i > 0 && board[pieceHeight + i][mouseX - i] == player) {
                 leftDiagonal++;
-            } else {
-                break; // Break the loop if consecutive pieces are not the same
             }
-        }
 
-        // Check right horizontal
-        for (int i = 1; i < 4; i++) {
             if (mouseX + i < width && board[pieceHeight][mouseX + i] == player) {
                 rightHorizontal++;
-            } else {
-                break; // Break the loop if consecutive pieces are not the same
             }
-        }
 
-        // Check down
-        for (int i = 1; i < 4; i++) {
             if (pieceHeight + i < height && board[pieceHeight + i][mouseX] == player) {
                 down++;
-            } else {
-                break; // Break the loop if consecutive pieces are not the same
             }
-        }
 
-        // Check right diagonal
-        for (int i = 1; i < 4; i++) {
             if (pieceHeight + i < height && mouseX + i < width && board[pieceHeight + i][mouseX + i] == player) {
                 rightDiagonal++;
-            } else {
-                break; // Break the loop if consecutive pieces are not the same
             }
-        }
 
-        for (int i = 1; i < 4; i++) {
             if (pieceHeight - i > 0 && mouseX + i < width && board[pieceHeight - i][mouseX + i] == player) {
                 rightDiagonalUp++;
-            } else {
-                break; // Break the loop if consecutive pieces are not the same
             }
-        }
 
-        for (int i = 1; i < 4; i++) {
             if (pieceHeight - i > 0 && mouseX - i > 0 && board[pieceHeight - i][mouseX - i] == player) {
                 leftDiagonalUp++;
-            } else {
-                break; // Break the loop if consecutive pieces are not the same
             }
         }
-
 
         // Check if any of the counts reach 4 (Connect Four)
         return leftHorizontal >= 3 || leftDiagonal >= 3 || rightHorizontal >= 3 ||
