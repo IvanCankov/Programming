@@ -4,13 +4,19 @@ import java.awt.*;
 public class Rewrite {
     public static void main(String[] args) {
         Board board = new Board(10, 10);
-        board.addPiece(1, 3);
-        board.addPiece(2, 3);
-        board.addPiece(1, 3);
-        board.addPiece(2, 3);
-        board.addPiece(2, 3);
-        board.addPiece(2, 3);
-        System.out.printf("Winner exists: " + board.addPiece(2, 3));
+        CodeDraw myDrawObj = board.getMyDrawObject();
+        EventScanner myEventSC = myDrawObj.getEventScanner();
+        int player = 0;
+        while (true) {
+            if (myEventSC.hasMouseClickEvent()) {
+                MouseClickEvent currentClick = myEventSC.nextMouseClickEvent();
+                int mouseX = currentClick.getX();
+                System.out.println("debug");
+                System.out.println("Winner exists: " + board.addPiece(player % 2 + 1, mouseX));
+                player += 1;
+            }
+        }
+
     }
 
 }

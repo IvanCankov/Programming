@@ -3,14 +3,14 @@ import codedraw.CodeDraw;
 import java.awt.*;
 
 public class Board {
-    int width;
-    int height;
-    int pieceRadius;
-    int padding;
-    int[][] board;
-    int[] heights;
-    int squareSize;
-    CodeDraw myDrawObject;
+    private final int width;
+    private final int  height;
+    private final int pieceRadius;
+    private final int padding;
+    private final int[][] board;
+    private final int[] heights;
+    private final int squareSize;
+    private final CodeDraw myDrawObject;
 
     Board(int height, int width) {
         this.height = height;
@@ -38,6 +38,14 @@ public class Board {
             startY += squareSize;
         }
         myDrawObject.show();
+    }
+
+    CodeDraw getMyDrawObject() {
+        return myDrawObject;
+    }
+
+    int getSquareSize() {
+        return squareSize;
     }
 
     boolean addPiece(int player, int mouseX) {
