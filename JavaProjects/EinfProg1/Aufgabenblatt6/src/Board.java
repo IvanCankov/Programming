@@ -1,5 +1,7 @@
 import codedraw.CodeDraw;
 import codedraw.EventScanner;
+import codedraw.TextFormat;
+import codedraw.TextOrigin;
 
 import java.awt.*;
 
@@ -13,11 +15,11 @@ public class Board {
     private final int squareSize;
     private final CodeDraw myDrawObject;
     private final EventScanner myEventScanner;
-    Board(int height, int width) {
+    Board(int height, int width, int pieceRadius, int padding) {
         this.height = height;
         this.width = width;
-        this.pieceRadius = 40;
-        this.padding = 60;
+        this.pieceRadius = pieceRadius;
+        this.padding = padding;
 
         this.board = new int[height][width];
         this.heights = new int[width];
@@ -28,6 +30,7 @@ public class Board {
 
         myDrawObject.setColor(Color.BLUE);
         myDrawObject.fillRectangle(0,0, squareSize * width, squareSize * height);
+        myDrawObject.setTextFormat(initTextFormat());
 
         myDrawObject.setColor(Color.WHITE);
         int startY = squareSize / 2;
@@ -40,6 +43,14 @@ public class Board {
             startY += squareSize;
         }
         myDrawObject.show();
+    }
+
+    TextFormat initTextFormat() {
+        TextFormat font = new TextFormat();
+        font.setFontSize(28);
+        font.setTextOrigin(TextOrigin.CENTER);
+        font.setBold(true);
+        return font;
     }
 
     EventScanner getMyEventScanner() {
@@ -55,7 +66,11 @@ public class Board {
         board[pieceHeight ][x] = player;
         heights[x] += 1;
         update(pieceHeight, x);
-        return checkWinner(player, pieceHeight, x) ? 1 : 0;
+        if (checkWinner(player, pieceHeight, x)) {
+            myDrawObject.drawText(width * squareSize / 2.0, height * squareSize / 2.0, "PLAYER " + player + " WINS");
+            return 1;
+        }
+        return 0;
     }
 
     void update(int pieceHeight, int mouseX) {
