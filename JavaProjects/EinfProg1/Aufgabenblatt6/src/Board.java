@@ -1,4 +1,5 @@
 import codedraw.CodeDraw;
+import codedraw.EventScanner;
 
 import java.awt.*;
 
@@ -11,7 +12,7 @@ public class Board {
     private final int[] heights;
     private final int squareSize;
     private final CodeDraw myDrawObject;
-
+    private final EventScanner myEventScanner;
     Board(int height, int width) {
         this.height = height;
         this.width = width;
@@ -23,6 +24,7 @@ public class Board {
 
         this.squareSize = (pieceRadius + padding);
         this.myDrawObject = new CodeDraw(squareSize * width, squareSize * height);
+        this.myEventScanner = myDrawObject.getEventScanner();
 
         myDrawObject.setColor(Color.BLUE);
         myDrawObject.fillRectangle(0,0, squareSize * width, squareSize * height);
@@ -40,25 +42,22 @@ public class Board {
         myDrawObject.show();
     }
 
-    CodeDraw getMyDrawObject() {
-        return myDrawObject;
-    }
-
-    int getSquareSize() {
-        return squareSize;
+    EventScanner getMyEventScanner() {
+        return myEventScanner;
     }
 
     boolean addPiece(int player, int mouseX) {
-        int pieceHeight = height - heights[mouseX] - 1;
-        board[pieceHeight ][mouseX] = player;
-        heights[mouseX] += 1;
-        update(pieceHeight, mouseX);
-        return checkWinner(player, pieceHeight, mouseX);
+        int x = mouseX / squareSize;
+        int pieceHeight = height - heights[x] - 1;
+        board[pieceHeight ][x] = player;
+        heights[x] += 1;
+        update(pieceHeight, x);
+        return checkWinner(player, pieceHeight, x);
     }
 
     void update(int pieceHeight, int mouseX) {
         double yPos = pieceHeight * squareSize + squareSize / 2.0;
-        double xPos = (mouseX - 1) * squareSize + squareSize / 2.0;
+        double xPos = (mouseX) * squareSize + squareSize / 2.0;
         switch (board[pieceHeight][mouseX]) {
             case 1 -> myDrawObject.setColor(Color.YELLOW);
             case 2 -> myDrawObject.setColor(Color.RED);
@@ -74,9 +73,11 @@ public class Board {
         int rightHorizontal = 0;
         int down = 0;
         int rightDiagonal = 0;
+        int rightDiagonalUp = 0;
+        int leftDiagonalUp = 0;
 
         // Check left horizontal
-        for (int i = 0; i < 4; i++) {
+        for (int i = 1; i < 4; i++) {
             if (mouseX - 1 - i >= 0 && board[pieceHeight][mouseX - i] == player) {
                 leftHorizontal++;
             } else {
@@ -85,8 +86,8 @@ public class Board {
         }
 
         // Check left diagonal
-        for (int i = 0; i < 4; i++) {
-            if (pieceHeight - i >= 0 && mouseX - i >= 0 && board[pieceHeight - i][mouseX - i] == player) {
+        for (int i = 1; i < 4; i++) {
+            if (pieceHeight + i < height && mouseX - i > 0 && board[pieceHeight + i][mouseX - i] == player) {
                 leftDiagonal++;
             } else {
                 break; // Break the loop if consecutive pieces are not the same
@@ -94,7 +95,7 @@ public class Board {
         }
 
         // Check right horizontal
-        for (int i = 0; i < 4; i++) {
+        for (int i = 1; i < 4; i++) {
             if (mouseX + i < width && board[pieceHeight][mouseX + i] == player) {
                 rightHorizontal++;
             } else {
@@ -103,7 +104,7 @@ public class Board {
         }
 
         // Check down
-        for (int i = 0; i < 4; i++) {
+        for (int i = 1; i < 4; i++) {
             if (pieceHeight + i < height && board[pieceHeight + i][mouseX] == player) {
                 down++;
             } else {
@@ -112,15 +113,33 @@ public class Board {
         }
 
         // Check right diagonal
-        for (int i = 0; i < 4; i++) {
-            if (pieceHeight - i >= 0 && mouseX + i < width && board[pieceHeight - i][mouseX + i] == player) {
+        for (int i = 1; i < 4; i++) {
+            if (pieceHeight + i < height && mouseX + i < width && board[pieceHeight + i][mouseX + i] == player) {
                 rightDiagonal++;
             } else {
                 break; // Break the loop if consecutive pieces are not the same
             }
         }
 
+        for (int i = 1; i < 4; i++) {
+            if (pieceHeight - i > 0 && mouseX + i < width && board[pieceHeight - i][mouseX + i] == player) {
+                rightDiagonalUp++;
+            } else {
+                break; // Break the loop if consecutive pieces are not the same
+            }
+        }
+
+        for (int i = 1; i < 4; i++) {
+            if (pieceHeight - i > 0 && mouseX - i > 0 && board[pieceHeight - i][mouseX - i] == player) {
+                leftDiagonalUp++;
+            } else {
+                break; // Break the loop if consecutive pieces are not the same
+            }
+        }
+
+
         // Check if any of the counts reach 4 (Connect Four)
-        return leftHorizontal >= 4 || leftDiagonal >= 4 || rightHorizontal >= 4 || down >= 4 || rightDiagonal >= 4;
+        return leftHorizontal >= 3 || leftDiagonal >= 3 || rightHorizontal >= 3 ||
+               down >= 3 || rightDiagonal >= 3 || rightDiagonalUp >= 3 || leftDiagonalUp >= 3;
     }
 }

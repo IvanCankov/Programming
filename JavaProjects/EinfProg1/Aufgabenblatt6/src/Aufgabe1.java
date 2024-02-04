@@ -129,7 +129,7 @@ public class Aufgabe1 {
 
         //initial draw of the game board
         drawGameBoard(myDrawObj, myGameBoard, oneSquareSize);
-        System.out.println("Player " + player + (player == 1 ? " (RED)" : " (YELLOW)") + " has to make a move!");
+        System.out.println("Player " + player + " (RED)" + " has to make a move!");
 
         // gameplay starts
         while (!myDrawObj.isClosed() && gameActive){
@@ -154,6 +154,7 @@ public class Aufgabe1 {
                     fieldsUsed++;
                     System.out.println("Player " + (player % 2 == 1 ? "1" : "2") + (player % 2 == 1 ? " (RED)" : " (YELLOW)") + " has to make a move!");
                 }
+
                 if (fieldsUsed >= rowsGameBoard * colsGameBoard){
                     myDrawObj.drawText(width / 2.0, height / 2.0, "BOARD FULL");
                     myEventSC.hasMouseClickEvent();
