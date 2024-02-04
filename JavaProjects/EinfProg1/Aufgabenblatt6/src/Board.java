@@ -46,13 +46,16 @@ public class Board {
         return myEventScanner;
     }
 
-    boolean addPiece(int player, int mouseX) {
+    int addPiece(int player, int mouseX) {
         int x = mouseX / squareSize;
+        if (heights[x] - height == 0) {
+            return -1;
+        }
         int pieceHeight = height - heights[x] - 1;
         board[pieceHeight ][x] = player;
         heights[x] += 1;
         update(pieceHeight, x);
-        return checkWinner(player, pieceHeight, x);
+        return checkWinner(player, pieceHeight, x) ? 1 : 0;
     }
 
     void update(int pieceHeight, int mouseX) {

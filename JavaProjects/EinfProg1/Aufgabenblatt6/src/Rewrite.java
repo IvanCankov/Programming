@@ -11,8 +11,13 @@ public class Rewrite {
             if (myEventSC.hasMouseClickEvent()) {
                 MouseClickEvent currentClick = myEventSC.nextMouseClickEvent();
                 int mouseX = currentClick.getX();
-                System.out.println("Winner exists: " + board.addPiece(player % 2 + 1, mouseX));
-                player += 1;
+                int status = board.addPiece(player % 2 + 1, mouseX);
+                if (status == 0) {
+                    player += 1;
+                } else if (status == 1) {
+                    System.out.println("Player " + player % 2 + 1 + " wins.");
+                    System.exit(0);
+                }
             } else {
                 myEventSC.nextEvent();
             }
