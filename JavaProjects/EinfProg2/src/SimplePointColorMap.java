@@ -80,3 +80,4 @@ public class SimplePointColorMap {
             valuesArray = Arrays.copyOf(valuesArray, newCapacity);
         }
     }
+}
