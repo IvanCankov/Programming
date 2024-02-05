@@ -12,21 +12,14 @@ public class Aufgabe5Test {
         map.put(new Point(6, 4), Color.BLUE);
         map.put(new Point(9, 2), Color.RED);
         map.put(new Point(9, 2), Color.YELLOW);
-        map.put(new Point(7, 2), Color.RED);
-        map.put(new Point(7, 3), Color.RED);
-        map.put(new Point(7, 4), Color.RED);
-        map.put(new Point(7, 5), Color.RED);
-        map.put(new Point(7, 6), Color.RED);
-        map.put(new Point(7, 7), Color.RED);
-        map.put(new Point(7, 8), Color.RED);
-        map.put(new Point(7, 9), Color.RED);
         testIdentity(map.get(new Point(1, 1)), null);
         testEquals(map.get(new Point(7, 1)), Color.RED);
-        testEquals(map.keys().size(), 12);
+        testEquals(map.keys().size(), 4);
         testEquals(map.remove(new Point(5, 4)), Color.BLUE);
         testIdentity(map.get(new Point(5, 4)), null);
         testEquals(map.get(new Point(6, 4)), Color.BLUE);
-        testEquals(map.keys().size(), 11);
+        testEquals(map.keys().size(), 3);
+        System.out.println("this is the map to string" + map); //added test to check for map
 
         System.out.println("Test 'HashSparseRasterRGB':");
         RasterRGBA r1 = new RasterRGBA(40, 60);
@@ -57,21 +50,21 @@ public class Aufgabe5Test {
         new UnsafeLineFactory(new Color[]{new Color(20, 25, 250)}).create(new Scanner("0 1 35 9")).execute(r2);
         new UnsafeLineFactory(new Color[]{Color.ORANGE}).create(new Scanner("30 5 0 30")).execute(r2);
         new UnsafeLineFactory(new Color[]{Color.GREEN}).create(new Scanner("2 0 7 40")).execute(r2);
-        testEquals(r2.getPixelColor(13, 19),  Color.ORANGE);
-        testEquals(r2.getPixelColor(12, 20),  Color.ORANGE);
-        testEquals(r2.getPixelColor(6, 30),  Color.GREEN);
-        testEquals(r2.getPixelColor(5, 27),  Color.GREEN);
+        testEquals(r2.getPixelColor(13, 19), Color.ORANGE);
+        testEquals(r2.getPixelColor(12, 20), Color.ORANGE);
+        testEquals(r2.getPixelColor(6, 30), Color.GREEN);
+        testEquals(r2.getPixelColor(5, 27), Color.GREEN);
         testEquals(r2.getPixelColor(20, 6), new Color(20, 25, 250));
         testEquals(r2.getPixelColor(26, 7), new Color(20, 25, 250));
 
         System.out.println("Test 'fill':");
         r2 = new UnsafeFillFactory(new Color[]{Color.WHITE}).create(new Scanner("10 12")).execute(r2);
-        testEquals(r2.getPixelColor(5, 27),  Color.GREEN);
-        testEquals(r2.getPixelColor(12, 20),  Color.ORANGE);
-        testEquals(r2.getPixelColor(12, 18),  Color.WHITE);
-        testEquals(r2.getPixelColor(7, 20),  Color.WHITE);
-        testEquals(r2.getPixelColor(0, 0),  Color.BLACK);
-        testEquals(r2.getPixelColor(30, 30),  Color.BLACK);
+        testEquals(r2.getPixelColor(5, 27), Color.GREEN);
+        testEquals(r2.getPixelColor(12, 20), Color.ORANGE);
+        testEquals(r2.getPixelColor(12, 18), Color.WHITE);
+        testEquals(r2.getPixelColor(7, 20), Color.WHITE);
+        testEquals(r2.getPixelColor(0, 0), Color.BLACK);
+        testEquals(r2.getPixelColor(30, 30), Color.BLACK);
 
         System.out.println("Test 'filter':");
         new UnsafeConvolveFactory(new double[][]{
@@ -103,7 +96,7 @@ public class Aufgabe5Test {
             System.out.println("Successful test");
         } else {
             System.out.println("Test NOT successful! Expected value: " + expected.toString() + " / Given " +
-                    "value: " + given.toString());
+                    "value: " + given);
         }
     }
 

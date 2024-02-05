@@ -18,17 +18,22 @@ public class HashSparseRasterRGB implements RasterizedRGB {
     // raster (all pixels being black, i.e. (R,G,B) = (0,0,0)).
     // Preconditions: height > 0, width > 0
     public HashSparseRasterRGB(int width, int height) {
+
         this.width = width;
         this.height = height;
-        map = new HashPointColorMap();
+        this.map = new HashPointColorMap();
     }
 
     // Returns the color of the specified pixel.
     // Preconditions: (x,y) is a valid coordinate of the raster
     public Color getPixelColor(int x, int y) {
 
-        Point point = new Point(x, y);
-        return map.get(point) == null ? Color.BLACK : map.get(point);
+        Point coordinates = new Point(x, y);
+
+        if (map.get(coordinates) == null) {
+            return Color.BLACK;
+        }
+        return map.get(coordinates);
     }
 
     // Sets the color of the specified pixel. (If 'color' is 'Color.BLACK', the method
@@ -36,7 +41,11 @@ public class HashSparseRasterRGB implements RasterizedRGB {
     // Preconditions: (x,y) is a valid coordinate of the raster, color != null
     public void setPixelColor(int x, int y, Color color) {
 
-            map.put(new Point(x, y), color);
+        if (color.equals(Color.BLACK)) {
+            return;
+        }
+        Point coordinates = new Point(x, y);
+        this.map.put(coordinates, color);
     }
 
     // Returns the width of this raster.
@@ -63,26 +72,57 @@ public class HashSparseRasterRGB implements RasterizedRGB {
     // filterKernel.length < this.getHeight().
     public void convolve(double[][] filterKernel) {
 
-        HashPointColorMap returnedSimpleRasterRGB = new HashPointColorMap();
+        HashPointColorMap result = new HashPointColorMap();
 
         double[] temp_result;
 
         int filterSideLength = filterKernel.length / 2;
-        for (int x = filterSideLength; x < width - filterSideLength; x++) {
-            for (int y = filterSideLength; y < height - filterSideLength; y++) {
-                temp_result = new double[3];
+        for (int x = filterSideLength; x < this.width - filterSideLength; x++) {
+            for (int y = filterSideLength; y < this.height - filterSideLength; y++) {
+
+                // looking if the adjacent colours are not black
+                boolean adjacentAreNotBlack = false;
+
                 for (int xx = -filterSideLength; xx <= filterSideLength; xx++) {
                     for (int yy = -filterSideLength; yy <= filterSideLength; yy++) {
-                        temp_result[0] += this.getPixelColor(x - xx, y - yy).getRed() * filterKernel[xx + filterSideLength][yy + filterSideLength];
-                        temp_result[1] += this.getPixelColor(x - xx, y - yy).getGreen() * filterKernel[xx + filterSideLength][yy + filterSideLength];
-                        temp_result[2] += this.getPixelColor(x - xx, y - yy).getBlue() * filterKernel[xx + filterSideLength][yy + filterSideLength];
+
+                        Color adjacdntColour = this.getPixelColor(x - xx, y - yy);
+
+                        if (adjacdntColour != null) {
+                            adjacentAreNotBlack = true;
+                            break;
+                        }
                     }
-                    Color result = new Color((int) temp_result[0], (int)temp_result[1], (int)temp_result[2]);
-                    returnedSimpleRasterRGB.put(new Point(x, y),result);
+                    if (adjacentAreNotBlack) {
+                        break;
+                    }
+                }
+
+                if (adjacentAreNotBlack) {
+                    // Apply the convolution to the current pixel
+                    temp_result = new double[3];
+                    for (int xx = -filterSideLength; xx <= filterSideLength; xx++) {
+                        for (int yy = -filterSideLength; yy <= filterSideLength; yy++) {
+                            Color neighborColor = this.getPixelColor(x - xx, y - yy);
+                            if (neighborColor != null) {
+                                temp_result[0] += neighborColor.getRed() * filterKernel[xx + filterSideLength][yy + filterSideLength];
+                                temp_result[1] += neighborColor.getGreen() * filterKernel[xx + filterSideLength][yy + filterSideLength];
+                                temp_result[2] += neighborColor.getBlue() * filterKernel[xx + filterSideLength][yy + filterSideLength];
+                            }
+                        }
+                    }
+                    Color newColour = new Color(
+                            (int) temp_result[0],
+                            (int) temp_result[1],
+                            (int) temp_result[2]);
+
+                    result.put(new Point(x, y), newColour);
                 }
             }
         }
-        this.map = returnedSimpleRasterRGB;
+
+        this.map = result;
+
     }
 
     // Crops 'this' to the rectangular region with upper left coordinates (0,0)
@@ -90,13 +130,16 @@ public class HashSparseRasterRGB implements RasterizedRGB {
     // Precondition: width <= this.getWidth() && height <= this.getHeight().
     public void crop(int width, int height) {
 
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                Point point = new Point(i, j);
-                map.put(point, getPixelColor(i, j));
-            }
-        }
+        SimplePointQueue list = this.map.keys();
+        HashPointColorMap result = new HashPointColorMap();
         this.width = width;
         this.height = height;
+        for (Point currentPoint = list.peek(); currentPoint != null; currentPoint = list.poll()) {
+            if (currentPoint.x() <= this.width && currentPoint.y() <= this.height) {
+                result.put(currentPoint, this.map.get(currentPoint));
+            }
+        }
+        this.map = result;
     }
+
 }

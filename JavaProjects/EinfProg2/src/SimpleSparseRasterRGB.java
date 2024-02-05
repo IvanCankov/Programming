@@ -6,81 +6,136 @@ import java.awt.*;
 //
 // This class is efficient for representing images where only a small fraction of pixels is
 // non-empty, meaning they have a color different from (0,0,0) corresponding to Color.BLACK.
-// The class uses internally an object of 'Aufgabe2.SimplePointColorMap' to associate each non-empty
+// The class uses internally an object of 'SimplePointColorMap' to associate each non-empty
 // pixel position (x,y) to the corresponding color. Only pixels with non-zero values are stored.
 // Positions that are not in the set of keys of the map are considered to have value (0,0,0).
 //
 public class SimpleSparseRasterRGB {
 
-    private int width;
-    private int height;
-    private SimplePointColorMap map;
+    private final int width;
+    private final int height;
+    private final SimplePointColorMap map;
 
+
+    // Initialises this raster of the specified size as an empty
+    // raster (all pixels being black, i.e. (R,G,B) = (0,0,0)).
+    // Preconditions: height > 0, width > 0
     public SimpleSparseRasterRGB(int width, int height) {
 
         this.width = width;
         this.height = height;
-        this.map = new SimplePointColorMap(width*height);
+        this.map = new SimplePointColorMap(this.width * this.height);
     }
 
-    public int getWidth() {
 
-        return this.width;
-    }
-
-    public int getHeight() {
-
-        return this.height;
-    }
-
+    // Returns the color of the specified pixel.
+    // Preconditions: (x,y) is a valid coordinate of the raster
     public Color getPixelColor(int x, int y) {
 
-        Point point = new Point(x,y);
-        if (map.get(point) == null) {
+        Point coordinates = new Point(x, y);
+
+        if (map.get(coordinates) == null) {
+
             return Color.BLACK;
         }
-        return map.get(point);
+        return map.get(coordinates);
     }
 
+    // Sets the color of the specified pixel. (If 'color' is 'Color.BLACK', the method
+    // ensures that the pixel is not contained in the internal map.)
+    // Preconditions: (x,y) is a valid coordinate of the raster, color != null
     public void setPixelColor(int x, int y, Color color) {
-        if(color != Color.BLACK) {
-            Point point = new Point(x,y);
-            map.put(point, color);
-        }
+
+        Point coordinates = new Point(x, y);
+        this.map.put(coordinates, color);
     }
 
+    // Returns the result of convolution of 'this' with the specified filter kernel. 'this' is not
+    // changed by the method call.
+    // The implementation of this method exploits the sparse structure of the raster by
+    // calculating the convolution only at non-empty pixel positions.
+    // Preconditions:
+    // filterKernel != null && filterKernel.length > 0 &&
+    // filterKernel.length % 2 == 1 &&
+    // filterKernel.length == filterKernel[i].length (for valid i) &&
+    // filterKernel.length < this.getWidth() &&
+    // filterKernel.length < this.getHeight().
     public SimpleSparseRasterRGB convolve(double[][] filterKernel) {
-        SimpleSparseRasterRGB returnedSimpleRasterRGB = new SimpleSparseRasterRGB(width, height);
+
+        SimpleSparseRasterRGB result = new SimpleSparseRasterRGB(width, height);
 
         double[] temp_result;
 
         int filterSideLength = filterKernel.length / 2;
-        for (int x = filterSideLength; x < returnedSimpleRasterRGB.width - filterSideLength; x++) {
-            for (int y = filterSideLength; y < returnedSimpleRasterRGB.height - filterSideLength; y++) {
-                temp_result = new double[3];
+        for (int x = filterSideLength; x < result.width - filterSideLength; x++) {
+            for (int y = filterSideLength; y < result.height - filterSideLength; y++) {
+
+                // looking if the adjacent colours are not black
+                boolean adjacentAreNotBlack = false;
+
                 for (int xx = -filterSideLength; xx <= filterSideLength; xx++) {
                     for (int yy = -filterSideLength; yy <= filterSideLength; yy++) {
-                        temp_result[0] += this.getPixelColor(x - xx, y - yy).getRed() * filterKernel[xx + filterSideLength][yy + filterSideLength];
-                        temp_result[1] += this.getPixelColor(x - xx, y - yy).getGreen() * filterKernel[xx + filterSideLength][yy + filterSideLength];
-                        temp_result[2] += this.getPixelColor(x - xx, y - yy).getBlue() * filterKernel[xx + filterSideLength][yy + filterSideLength];
+
+                        Color adjacdntColour = this.getPixelColor(x - xx, y - yy);
+
+                        if (adjacdntColour != null) {
+                            adjacentAreNotBlack = true;
+                            break;
+                        }
                     }
-                    Color result = new Color((int) temp_result[0], (int)temp_result[1], (int)temp_result[2]);
-                    returnedSimpleRasterRGB.setPixelColor(x,y,result);
+                    if (adjacentAreNotBlack) {
+                        break;
+                    }
+                }
+
+                if (adjacentAreNotBlack) {
+                    // Apply the convolution to the current pixel
+                    temp_result = new double[3];
+                    for (int xx = -filterSideLength; xx <= filterSideLength; xx++) {
+                        for (int yy = -filterSideLength; yy <= filterSideLength; yy++) {
+                            Color neighborColor = this.getPixelColor(x - xx, y - yy);
+                            if (neighborColor != null) {
+                                temp_result[0] += neighborColor.getRed() * filterKernel[xx + filterSideLength][yy + filterSideLength];
+                                temp_result[1] += neighborColor.getGreen() * filterKernel[xx + filterSideLength][yy + filterSideLength];
+                                temp_result[2] += neighborColor.getBlue() * filterKernel[xx + filterSideLength][yy + filterSideLength];
+                            }
+                        }
+                    }
+                    Color newColour = new Color(
+                            (int) temp_result[0],
+                            (int) temp_result[1],
+                            (int) temp_result[2]);
+
+                    result.setPixelColor(x, y, newColour);
                 }
             }
         }
+        return result;
+    }
 
-        return returnedSimpleRasterRGB;
+    // Returns the width of this raster.
+    public int getWidth() {
+
+        // TODO: implement method.
+        return this.width;
+    }
+
+    // Returns the height of this raster.
+    public int getHeight() {
+
+        // TODO: implement method.
+        return this.height;
     }
 
     // Sets the area of contiguous pixels of the same color to the specified color 'color', starting from
     // the initial pixel with position (x,y) and using 4-neighborhood. The method is not
-    // recursive, instead it internally uses an object of 'Aufgabe2.SimplePointQueue' to which unprocessed
+    // recursive, instead it internally uses an object of 'SimplePointQueue' to which unprocessed
     // neighboring positions of the current position are added (the queue stores positions
     // that are still waiting to be processed).
     // 'floodFill' does nothing if the pixel at position (x,y) already has color 'color'.
     // Preconditions: (x,y) are valid coordinates of the raster, color != null.
     public void floodFill(int x, int y, Color color) {
+
         Color startColor = getPixelColor(x, y);
         if (startColor.equals(color)) {
             return;
@@ -89,30 +144,35 @@ public class SimpleSparseRasterRGB {
         SimplePointQueue queue = new SimplePointQueue(2);
         queue.add(new Point(x, y));
 
-        while (queue.size() > 0) {
-            Point current = queue.poll();
-            int currentX = current.getX();
-            int currentY = current.getY();
+        while (queue.peek() != null) {
 
-            if (getPixelColor(currentX, currentY).equals(startColor)) {
-                setPixelColor(currentX, currentY, color);
+            Point toBeCompared = queue.poll();
+            int xValue = toBeCompared.x();
+            int yValue = toBeCompared.y();
 
-                if (currentX > 0) {
-                    queue.add(new Point(currentX - 1, currentY));
+            if (getPixelColor(xValue, yValue).equals(startColor)) {
+                setPixelColor(xValue, yValue, color);
+
+                if (xValue > 0) {
+                    queue.add(new Point(xValue - 1, yValue));
                 }
-                if (currentX < width - 1) {
-                    queue.add(new Point(currentX + 1, currentY));
+                if (xValue < width - 1) {
+                    queue.add(new Point(xValue + 1, yValue));
                 }
-                if (currentY > 0) {
-                    queue.add(new Point(currentX, currentY - 1));
+                if (yValue > 0) {
+                    queue.add(new Point(xValue, yValue - 1));
                 }
-                if (currentY < height - 1) {
-                    queue.add(new Point(currentX, currentY + 1));
+                if (yValue < height - 1) {
+                    queue.add(new Point(xValue, yValue + 1));
                 }
             }
+
         }
     }
 
+    // Draws a line from (x1,y1) to (x2,y2) in the raster using the Bresenham algorithm.
+    // Preconditions:
+    // (x1,y1) and (x2,y2) are valid coordinates of the raster, color != null.
     public void drawLine(int x1, int y1, int x2, int y2, Color color) {
 
         int dx = Math.abs(x2 - x1);
@@ -135,4 +195,5 @@ public class SimpleSparseRasterRGB {
             }
         }
     }
+
 }

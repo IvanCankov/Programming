@@ -5,20 +5,23 @@ import java.util.Scanner;
 //
 public class UnsafeFillFactory implements UnsafeFactory {
 
-    private Color color;
+    private final Color[] myColor;
 
-    // TODO: add constructor specification.
+    // Assigns the color Array to myColor
     public UnsafeFillFactory(Color[] c) {
 
-        this.color = c[0];
+        this.myColor = c;
     }
 
-    // TODO: add method specification.
+    public Color[] getMyColor() {
+        return myColor;
+    }
+
+    // executes the fill operation with the given values
     public UnsafeFillOperation create(Scanner sc) {
 
         int x = sc.nextInt();
         int y = sc.nextInt();
-        return new UnsafeFillOperation(x, y, color);
-
+        return new UnsafeFillOperation(x, y, this.getMyColor());
     }
 }

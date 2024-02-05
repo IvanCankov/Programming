@@ -13,7 +13,6 @@ public class UnsafeCropFactory implements UnsafeFactory {
 
         int width = sc.nextInt();
         int height = sc.nextInt();
-
         return new UnsafeCropOperation(width, height);
     }
 }

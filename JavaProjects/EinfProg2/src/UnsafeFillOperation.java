@@ -6,37 +6,76 @@ import java.awt.*;
 //
 public class UnsafeFillOperation implements UnsafeOperation {
 
-    private int x;
-    private int y;
-    private Color color;
 
-    public UnsafeFillOperation(int x, int y, Color color) {
-        this.x = x;
-        this.y = y;
-        this.color = color;
+    private final int myX;
+
+    private final int myY;
+
+    private final Color[] myColor;
+
+    public UnsafeFillOperation(int x, int y, Color[] color) {
+        this.myX = x;
+        this.myY = y;
+        this.myColor = color;
     }
 
-    // TODO: add method specification.
+    public int getMyX() {
+        return myX;
+    }
+
+    public int getMyY() {
+        return myY;
+    }
+
+    public Color getMyColor() {
+        return myColor[0];
+    }
+
+    // Sets the area of contiguous pixels of the same color to the specified color 'color', starting from
+    // the initial pixel with position (x,y) and using 4-neighborhood. The method is not
+    // recursive, instead it internally uses an object of 'SimplePointQueue' to which unprocessed
+    // neighboring positions of the current position are added (the queue stores positions
+    // that are still waiting to be processed).
+    // 'floodFill' does nothing if the pixel at position (x,y) already has color 'color'.
+    // Preconditions: (x,y) are valid coordinates of the raster, color != null.
     public RasterizedRGB execute(RasterizedRGB raster) {
 
-        if (!raster.getPixelColor(x, y).equals(color)) {
-            SimplePointQueue queue = new SimplePointQueue(10);
-            queue.add(new Point(x, y));
-            Color oldColor = raster.getPixelColor(x, y);
-            while (queue.size() > 0) {
-                Point p = queue.poll();
-                x = p.getX();
-                y = p.getY();
-                if (raster.getPixelColor(x, y).equals(oldColor)) {
-                    raster.setPixelColor(x, y, color);
-                    if (x < raster.getWidth() - 1 && raster.getPixelColor(x + 1, y).equals(oldColor)) queue.add(new Point(x + 1, y));
-                    if (x > 0 && raster.getPixelColor(x - 1, y).equals(oldColor)) queue.add(new Point(x - 1, y));
-                    if (y < raster.getHeight() - 1 && raster.getPixelColor(x, y + 1).equals(oldColor))
-                        queue.add(new Point(x, y + 1));
-                    if (y > 0 && raster.getPixelColor(x, y - 1).equals(oldColor)) queue.add(new Point(x, y - 1));
+        // alternatively you can implement the floodfill method in RasterizedRGB
+        // and then just write raster.floodfill(myX,myY, myColor);
+        Point starPoint = new Point(this.getMyX(), this.getMyY());
+        Color startColor = raster.getPixelColor(this.getMyX(), this.getMyY());
+        if (startColor.equals(this.myColor)) {
+            return raster;
+        }
+
+        SimplePointQueue queue = new SimplePointQueue(2);
+        queue.add(starPoint);
+
+        while (queue.peek() != null) {
+
+            Point toBeCompared = queue.poll();
+            int xValue = toBeCompared.x();
+            int yValue = toBeCompared.y();
+
+            if (raster.getPixelColor(xValue, yValue).equals(startColor)) {
+                raster.setPixelColor(xValue, yValue, this.getMyColor());
+
+                if (xValue > 0) {
+                    queue.add(new Point(xValue - 1, yValue));
+                }
+                if (xValue < raster.getWidth() - 1) {
+                    queue.add(new Point(xValue + 1, yValue));
+                }
+                if (yValue > 0) {
+                    queue.add(new Point(xValue, yValue - 1));
+                }
+                if (yValue < raster.getHeight() - 1) {
+                    queue.add(new Point(xValue, yValue + 1));
                 }
             }
+
         }
+
         return raster;
     }
 }

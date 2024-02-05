@@ -10,48 +10,18 @@ import java.awt.*;
 //
 public class TreePointColorMap {
 
+    MyTreeNode root;
+
     // Adds a new key-value association to this map. If the key already exists in this map,
     // the value is replaced and the old value is returned. Otherwise, 'null' is returned.
     // Precondition: key != null.
-    BranchNode root;
     public Color put(Point key, Color value) {
 
-        BranchNode newNode = new BranchNode(key, value, null, null);
-
-        if(root == null){
-
-            root = newNode;
-        } else {
-
-            BranchNode focusNode = root;
-            BranchNode parent;
-
-            while (true) {
-                parent = focusNode;
-
-                if (key.compareTo(focusNode.getKey()) == -1) {
-                    focusNode = focusNode.getLeft();
-
-                    if(focusNode == null) {
-                        parent.setLeft(newNode);
-                        return null;
-                    }
-                } else if (key.compareTo(focusNode.getKey()) == 1) {
-                    focusNode = focusNode.getRight();
-
-                    if(focusNode == null) {
-                        parent.setRight(newNode);
-                        return null;
-                    }
-                } else {
-                    Color returned = focusNode.getValue();
-                    focusNode.setValue(value);
-                    return returned;
-                }
-            }
+        if (root == null) {
+            root = new MyTreeNode(key, value, null, null);
+            return value;
         }
-
-        return null;
+        return root.add(key, value);
     }
 
     // Returns the value associated with the specified key, i.e. the method returns the color
@@ -60,24 +30,10 @@ public class TreePointColorMap {
     // Precondition: key != null.
     public Color get(Point key) {
 
-        if(root== null){
+        if (root == null) {
             return null;
-        } else {
-            BranchNode focusNode = root;
-
-            while (true) {
-                if (focusNode == null) {
-                    return null;
-                }
-                if (key.compareTo(focusNode.getKey()) == -1) {
-                    focusNode = focusNode.getLeft();
-                } else if (key.compareTo(focusNode.getKey()) == 1) {
-                    focusNode = focusNode.getRight();
-                } else {
-                    return focusNode.getValue();
-                }
-            }
         }
+        return root.search(key);
     }
 
     // Returns 'true' if this map contains a mapping for the specified key, this means
@@ -85,37 +41,21 @@ public class TreePointColorMap {
     // Precondition: key != null.
     public boolean containsKey(Point key) {
 
-        return containsHelper(this.root, key);
-    }
-
-    private boolean containsHelper(BranchNode node, Point key) {
-
-        if (node == null) {
+        if (root == null) {
             return false;
         }
-        if (node.getKey() == key) {
-            return true;
-        }
-
-        boolean leftContains = containsHelper(node.getLeft(), key);
-        boolean rightContains = containsHelper(node.getRight(), key);
-        return leftContains || rightContains;
+        return root.searchKey(key);
     }
 
     // Returns a list with all keys of this map ordered ascending according to the
     // key order relation.
     public PointLinkedList keys() {
-        return traverse(root, new PointLinkedList());
-    }
 
-    private PointLinkedList traverse(BranchNode node, PointLinkedList list){
-        if (node == null) {return null;}
+        if (root == null) {
+            return new PointLinkedList();
+        }
+        return root.returnList(new PointLinkedList());
 
-        traverse(node.getRight(), list);
-        list.addFirst(node.getKey());
-        traverse(node.getLeft(), list);
-
-        return list;
     }
 
     // Returns a new raster representing a region with the specified size from this
@@ -124,19 +64,20 @@ public class TreePointColorMap {
     // Preconditions: width > 0 && height > 0
     public SimpleRasterRGB asRasterRGB(int width, int height) {
 
-        SimpleRasterRGB raster = new SimpleRasterRGB(width, height);
-        Point maximum = new Point(width, height);
-        PointLinkedList elements = keys();
-        for (int i = 0; i < elements.size(); i++) {
-            if (maximum.compareTo(elements.get(i)) == 1) {
-                int x = elements.get(i).getX();
-                int y = elements.get(i).getY();
-                Color color = get(elements.get(i));
-                raster.setPixelColor(x, y, color);
+        //TODO: implement method.
+        SimpleRasterRGB result = new SimpleRasterRGB(width, height);
+        PointLinkedList coordinates = root.returnList(new PointLinkedList());
+
+
+        for (MyListNode n = coordinates.head; n != null; n = n.getNext()) {
+            if (n.getValue().x() < width && n.getValue().y() < height) {
+                result.setPixelColor(n.getValue().x(), n.getValue().y(), root.search(n.getValue()));
             }
+
+
         }
 
-        return raster;
+        return result;
     }
 }
 

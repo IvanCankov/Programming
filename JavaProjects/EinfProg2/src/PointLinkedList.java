@@ -5,35 +5,57 @@
 //  if needed.
 //
 public class PointLinkedList {
-    private Node head;
-    private PointLinkedList pointLinkedList;
+
+    MyListNode head;
+    MyListNode last;
+
     // Initializes 'this' as an empty list.
     public PointLinkedList() {
 
+        this.head = this.last = null;
     }
 
     // Inserts the specified element 'point' at the beginning of this list.
     // Precondition: point != null.
     public void addFirst(Point point) {
 
-        Node oldHead = this.head;
-        this.head = new Node(point, oldHead);
+        if (head == null) {
+            head = new MyListNode(point, null);
+            last = head;
+
+        } else if (head == last) {
+            MyListNode buffer = last;
+            MyListNode toBeAdded = new MyListNode(point, last);
+            head = toBeAdded;
+            last = buffer;
+
+
+        } else {
+            MyListNode toBeAdded = new MyListNode(point, head);
+            head = toBeAdded;
+        }
     }
 
     // Appends the specified element 'point' to the end of this list.
     // Precondition: point != null.
     public void addLast(Point point) {
 
-        if(this.head == null){
-            this.head = new Node(point, null);
-        } else {
-            Node last = this.head;
+        if (head == null) {
+            head = new MyListNode(point, null);
+            last = head;
 
-            while(last.next() != null) {
-                last = last.next();
-            }
-            //we set the pointer of our previous last element to our new last element
-            last.setNext(new Node(point, null));
+        } else if (head == last) {
+            MyListNode buffer = head;
+            MyListNode toBeAdded = new MyListNode(point, null);
+            last = toBeAdded;
+            head = buffer;
+            head.setNext(last);
+
+
+        } else {
+            MyListNode toBeAdded = new MyListNode(point, null);
+            last.setNext(toBeAdded);
+            last = toBeAdded;
         }
     }
 
@@ -41,80 +63,112 @@ public class PointLinkedList {
     // Returns 'null' if the list is empty.
     public Point getLast() {
 
-        if (this.head == null) {
-            return null;
-        } else {
-            Node last = this.head;
-
-            while (last.next() != null) {
-                last = last.next();
-            }
-            return last.value();
+        if (head != null) {
+            return last.getValue();
         }
+
+        return null;
+
     }
 
     // Returns the first element in this list.
     // Returns 'null' if the list is empty.
     public Point getFirst() {
 
-        if(size() == 0) return null;
-        return this.head.value();
+        if (head != null) {
+            return head.getValue();
+        }
+
+        return null;
     }
 
     // Retrieves and removes the first element in this list.
     // Returns 'null' if the list is empty.
     public Point pollFirst() {
 
-        Node first = this.head;
+        if (head == null) {
+            return null;
 
-        this.head = first.next();
-        return first.value();
+        } else if (head == last) {
+            Point result = head.getValue();
+            head = last = null;
+            return result;
+
+        } else {
+            Point result = head.getValue();
+            head = head.getNext();
+            return result;
+        }
     }
 
     // Retrieves and removes the last element in this list.
     // Returns 'null' if the list is empty.
     public Point pollLast() {
-
-        if (this.head == null) {
+        if (head == null) {
             return null;
-        }
 
-        // NOTE: we got through the list until we hit the second to last element then retrieve the value of the last
-        // by using .next() on last, then we set the pointer of last to null.
+        } else if (head == last) {
+            Point result = head.getValue();
+            head = last = null;
+            return result;
 
-        Node last = this.head;
-        for (int i = 0; i < size() - 2; i++) {
-            last = last.next();
+        } else {
+            Point result = last.getValue();
+            MyListNode current = this.head;
+            while (current.getNext() != last) {
+                current.getNext();
+            }
+
+            last = current;
+            last.setNext(null);
+            return result;
         }
-        Point returned = last.next().value();
-        last.setNext(null);
-        return returned;
     }
 
     // Inserts the specified element 'point' at the specified position in this list.
     // Precondition: i >= 0 && i <= size() && point != null.
     public void add(int i, Point point) {
 
-        Node nodeBeforeInsertion = this.head;
+        if (i > 0) {
+            for (MyListNode n = this.head; n != null; n = n.getNext()) {
+                if (--i == 0) {
+                    MyListNode toBeAdded = new MyListNode(point, null);
 
-        for (int j = 0; j < i - 1; j++) {
-            nodeBeforeInsertion = nodeBeforeInsertion.next();
+                    if (n == last) {
+                        n.setNext(toBeAdded);
+                        last = toBeAdded;
+                    } else {
+                        toBeAdded.setNext(n.getNext());
+                        n.setNext(toBeAdded);
+                    }
+
+
+                }
+            }
+        } else if (i == 0) {
+            this.addFirst(point);
         }
-        Node nodeAfterInsertion = nodeBeforeInsertion.next();
-        nodeBeforeInsertion.setNext(new Node(point, nodeAfterInsertion));
     }
 
     // Returns the element at the specified position in this list.
     // Precondition: i >= 0 && i < size().
     public Point get(int i) {
 
-        if(this.head == null) return null;
-
-        Node last = this.head;
-        for (int j = 0; j < i; j++) {
-            last = last.next();
+        if (head == null) {
+            return null;
         }
-        return last.value();
+        if (i > 0) {
+            for (MyListNode n = this.head; n != null; n = n.getNext()) {
+                if (i == 0) {
+                    return n.getValue();
+                }
+                --i;
+            }
+        } else if (i == 0) {
+            return this.getFirst();
+        }
+
+        return null;
     }
 
     // Returns the index of the first occurrence (element with equal coordinates to 'point') of the
@@ -122,32 +176,35 @@ public class PointLinkedList {
     // Precondition: point != null.
     public int indexOf(Point point) {
 
-        if (this.head == null) {
-            return -1; // NOTE: returns -1 if list is not initialised
-        } else {
-            Node last = this.head;
 
-            for (int index = 0; index < size(); index++) {
-                if(last.value() == point) return index;
-                last = last.next();
-            }
-            return -1; // NOTE: returns -1 if element is not int the LinkedList
+        if (head == null) {
+            return -1;
         }
+        int i = 0;
+        for (MyListNode n = this.head; n != null; n = n.getNext()) {
+            if (n.getValue().compareTo(point) == 0) {
+                return i;
+            }
+            ++i;
+        }
+
+        return i;
     }
 
     // Returns the number of elements in this list.
     public int size() {
 
-        if(this.head == null) return 0;
-
-        Node last = this.head;
-        int size = 1;
-        while (last.next() != null) {
-            size += 1;
-            last = last.next();
+        if (head == null) {
+            return 0;
         }
-        return size;
+        int i = 0;
+        for (MyListNode n = this.head; n != null; n = n.getNext()) {
+            ++i;
+        }
+
+        return i;
+
     }
 }
 
-// TODO: define further classes, if needed (either here or in a separate file). <3
+// TODO: define further classes, if needed (either here or in a separate file).

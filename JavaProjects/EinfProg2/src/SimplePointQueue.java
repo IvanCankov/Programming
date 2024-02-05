@@ -1,60 +1,118 @@
 public class SimplePointQueue {
-    Point[] queue;
 
-    public SimplePointQueue(int initialCapacity) {
+    private PointQueueNode head;
+    private PointQueueNode tail;
+    private int size;
 
-        this.queue = new Point[initialCapacity];
+    public SimplePointQueue(int capacity) {
+        this.head = null;
+        this.tail = null;
+        this.size = 0;
     }
 
     public void add(Point p) {
+        PointQueueNode newNode = new PointQueueNode(p);
 
-        if(size() >= queue.length) {
-            enlargeArray();
+        if (head == null) {
+            head = newNode;
+        } else {
+            tail.setNext(newNode);
         }
-        queue[size()] = p;
+        tail = newNode;
+
+        size++;
     }
 
-    private void enlargeArray() {
-
-        Point[] queue2 = new Point[this.queue.length * 2];
-        for (int i = 0; i < this.queue.length; i++) {
-            queue2[i] = this.queue[i];
-        }
-        this.queue = queue2;
-    }
-
-    // Retrieves and removes the head of this queue, or returns 'null'
-    // if this queue is empty.
     public Point poll() {
-
-        if (queue.length == 0){
+        if (head == null) {
             return null;
         }
 
-        Point p = queue[0];
-        Point[] queue2 = new Point[size()];
-        System.arraycopy(queue, 1, queue2, 0, size() - 1);
-        queue = queue2; // just to delete that last element wow
+        Point p = head.getValue();
+        head = head.getNext();
+        size--;
+
+        if (head == null) {
+            tail = null;
+        }
+
         return p;
     }
 
     public Point peek() {
-
-        if (size() == 0){
-            return null;
-        }
-        return queue[0]; //literal peak human evolution
+        return (head != null) ? head.getValue() : null;
     }
 
-    // Returns the number of entries in this queue.
     public int size() {
-        int size = 0;
-
-        for (Point point : queue) { //eqv. of for point in point .py aaaaaaaaaaaaaaaaaaaa
-            if (point != null) {
-                size++;
-            }
-        }
         return size;
+    }
+
+    public Point delete(int i) {
+        if (i < 0 || i >= size || head == null) {
+            throw new IndexOutOfBoundsException("Invalid index: " + i);
+        }
+
+        Point result;
+        if (i == 0) {
+            result = head.getValue();
+            head = head.getNext();
+            size--;
+
+            if (head == null) {
+                tail = null;
+            }
+        } else {
+            PointQueueNode current = head;
+            for (int j = 0; j < i - 1; j++) {
+                current = current.getNext();
+            }
+
+            result = current.getNext().getValue();
+            current.setNext(current.getNext().getNext());
+
+            if (current.getNext() == null) {
+                tail = current;
+            }
+
+            size--;
+        }
+
+        return result;
+    }
+
+    public boolean removeAll(Point p) {
+        boolean flag = false;
+
+        while (head != null && p.compareTo(head.getValue()) == 0) {
+            head = head.getNext();
+            size--;
+            flag = true;
+        }
+
+        PointQueueNode current = head;
+        PointQueueNode previous = null;
+
+        while (current != null) {
+            if (p.compareTo(current.getValue()) == 0) {
+                if (previous != null) {
+                    previous.setNext(current.getNext());
+                } else {
+                    head = current.getNext();
+                }
+
+                if (current.getNext() == null) {
+                    tail = previous;
+                }
+
+                size--;
+                flag = true;
+            } else {
+                previous = current;
+            }
+
+            current = current.getNext();
+        }
+
+        return flag;
     }
 }

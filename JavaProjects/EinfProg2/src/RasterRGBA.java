@@ -3,7 +3,7 @@ import java.awt.*;
 // This class represents a 2D raster of RGBA color entries (RGB values and additional alpha
 // values controlling transparency of pixels). The class uses the class 'DataBufferInt' to store
 // the entries.
-public class RasterRGBA {
+public class RasterRGBA implements RasterizedRGB {
 
     private int width;
     private int height;

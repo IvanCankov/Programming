@@ -1,7 +1,7 @@
 // This class represents a convolution operation.
 public class UnsafeConvolveOperation implements UnsafeOperation {
 
-    private double[][] filterKernel;
+    private final double[][] filterkernel;
 
     // Initializes this convolution operation with the specified filter kernel.
     // Precondition:
@@ -10,13 +10,13 @@ public class UnsafeConvolveOperation implements UnsafeOperation {
     // filterKernel.length == filterKernel[i].length (for valid i).
     public UnsafeConvolveOperation(double[][] filterKernel) {
 
-        this.filterKernel = filterKernel;
+        this.filterkernel = filterKernel;
     }
 
     // Returns the filter kernel of this convolution operation.
     public double[][] getKernel() {
 
-        return this.filterKernel;
+        return this.filterkernel;
     }
 
     @Override
@@ -28,7 +28,7 @@ public class UnsafeConvolveOperation implements UnsafeOperation {
     // filterKernel.length < raster.getHeight().
     public RasterizedRGB execute(RasterizedRGB raster) {
 
-        raster.convolve(this.filterKernel);
+        raster.convolve(this.getKernel());
         return raster;
     }
 }

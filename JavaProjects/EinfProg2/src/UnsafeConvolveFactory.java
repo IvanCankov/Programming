@@ -3,7 +3,7 @@ import java.util.Scanner;
 // A factory that creates a 'UnsafeConvolveOperation' object.
 public class UnsafeConvolveFactory implements UnsafeFactory {
 
-    private double[][] filterKernel;
+    private final double[][] filterKernel;
 
     // Initialises 'this' with the specified 'filterKernel' used in the convolution object
     // to be created by 'create'.

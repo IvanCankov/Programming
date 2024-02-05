@@ -130,6 +130,22 @@ public class HashPointColorMap {
     // by commas (order is not specified).
     // Example: {([9, 2], java.awt.Color[r=255,g=255,b=0]), ([7, 1], java.awt.Color[r=255,g=0,b=0])}
     public String toString() {
+
+        int capacity = hashPointArray.length - 1;
+        int actualAmount = 0;
+        boolean hasCollision = false;
+
+        for (int i = 0; i < capacity + 1; i++){
+            if (hashPointArray[i] != null) {
+                actualAmount++;
+
+                int hash = hashPointArray[i].hashCode() % capacity + 1;
+                if (!hashPointArray[i].equals(hashPointArray[hash])) {
+                    hasCollision = true;
+                    break;
+                }
+            }
+        }
         StringBuilder outString = new StringBuilder("{");
         SimplePointQueue keys = keys();
         for (int i = 0; i < keys.size(); i++) {
@@ -144,7 +160,9 @@ public class HashPointColorMap {
             }
         }
         outString.append("}");
-        return outString.toString();
+        return outString.toString() + " Kapazität:" + capacity +
+                ", tatsächliche Einträge: " + actualAmount +
+                ", enthält Kollisionen: " + hasCollision;
     }
 
     // Returns 'true' if 'this' and 'o' are equal, meaning 'o' is of class 'HashPointColorMap'

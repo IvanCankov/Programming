@@ -1,25 +1,38 @@
 import codedraw.CodeDraw;
+
 import java.awt.*;
 
 public class PhotoApp2 {
 
     public static void main(String[] args) {
 
-        SimpleSparseRasterRGB simpleSparseRasterRGB = new SimpleSparseRasterRGB(40, 60);
-        simpleSparseRasterRGB.drawLine(0, 1, 35, 9, new Color(20, 25, 250));
-        simpleSparseRasterRGB.drawLine(30, 5, 0, 30, Color.ORANGE);
-        simpleSparseRasterRGB.drawLine(2, 0, 7, 40, Color.GREEN);
-        simpleSparseRasterRGB.floodFill(4, 3, Color.CYAN);
-        draw(simpleSparseRasterRGB);
-        SimpleSparseRasterRGB simpleSparseRasterRGBFilledConvolved =
-                simpleSparseRasterRGB.convolve(new double[][]{
+        SimpleSparseRasterRGB mySparseRasterRGB =
+                new SimpleSparseRasterRGB(40, 60);
+        mySparseRasterRGB.drawLine(0, 1, 35, 9, new Color(20, 25, 250));
+        mySparseRasterRGB.drawLine(30, 5, 0, 30, Color.ORANGE);
+        mySparseRasterRGB.drawLine(2, 0, 7, 40, Color.GREEN);
+
+        SimpleSparseRasterRGB RasterRGBToBeChanged = mySparseRasterRGB.convolve(new double[][]{
+                {0.077847, 0.123317, 0.077847},
+                {0.123317, 0.195346, 0.123317},
+                {0.077847, 0.123317, 0.077847}
+        });
+
+        draw(mySparseRasterRGB);
+        draw(RasterRGBToBeChanged);
+
+        mySparseRasterRGB.floodFill(4, 3, Color.CYAN);
+        draw(mySparseRasterRGB);
+
+        SimpleSparseRasterRGB RasterRGBtoBeFilledAndConvolved =
+                mySparseRasterRGB.convolve(new double[][]{
                         {0.077847, 0.123317, 0.077847},
                         {0.123317, 0.195346, 0.123317},
                         {0.077847, 0.123317, 0.077847}
                 });
-        draw(simpleSparseRasterRGBFilledConvolved);
-        simpleSparseRasterRGBFilledConvolved.floodFill(7, 7, null);
-        draw(simpleSparseRasterRGBFilledConvolved);
+
+        draw(RasterRGBtoBeFilledAndConvolved);
+
     }
 
     // Draws the image (specified by a sparse raster) with fixed pixel size in a new window.

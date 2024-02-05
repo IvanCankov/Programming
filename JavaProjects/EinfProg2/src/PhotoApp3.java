@@ -1,4 +1,5 @@
 import codedraw.CodeDraw;
+
 import java.awt.*;
 import java.util.Scanner;
 
@@ -26,35 +27,41 @@ public class PhotoApp3 {
         // loop for interactive drawing:
         // reads a command and its parameters from System.in and draws the resulting
         // raster in a canvas. Feel free to modify.
-        while(sc.hasNext()) {
+        while (sc.hasNext()) {
             String command = sc.next();
 
-            switch (command) {
-                case "line" -> {
+            if (command.equals("line")) {
 
-                    // draw a line in the raster.
-                    int x1 = sc.nextInt();
-                    int y1 = sc.nextInt();
-                    int x2 = sc.nextInt();
-                    int y2 = sc.nextInt();
-                    raster.drawLine(x1, y1, x2, y2, c);
-                }
-                case "filter" -> raster = raster.convolve(filterKernel);
-                case "crop" -> {
+                // draw a line in the raster.
+                int x1 = sc.nextInt();
+                int y1 = sc.nextInt();
+                int x2 = sc.nextInt();
+                int y2 = sc.nextInt();
+                raster.drawLine(x1, y1, x2, y2, c);
 
-                    // crop the raster to the rectangular region with upper left coordinates (0,0)
-                    // and lower right coordinates (width-1, height-1).
-                    int width = sc.nextInt();
-                    int height = sc.nextInt();
-                    TreePointColorMap map = raster.asMap();
-                    raster = map.asRasterRGB(width, height);
-                    cd.close();
-                    cd = new CodeDraw(raster.getWidth() * cellSize, raster.getHeight() * cellSize);
-                }
-                case "setcolor" ->
+            } else if (command.equals("filter")) {
 
-                    // set a new color for following drawing.
-                        c = new Color(sc.nextInt(), sc.nextInt(), sc.nextInt());
+                // filter the raster using the above kernel.
+
+
+                raster = raster.convolve(filterKernel);
+
+
+            } else if (command.equals("crop")) {
+
+                // crop the raster to the rectangular region with upper left coordinates (0,0)
+                // and lower right coordinates (width-1, height-1).
+                int width = sc.nextInt();
+                int height = sc.nextInt();
+
+                raster = raster.asMap().asRasterRGB(width, height);
+
+                cd.close();
+                cd = new CodeDraw(raster.getWidth() * cellSize, raster.getHeight() * cellSize);
+            } else if (command.equals("setcolor")) {
+
+                // set a new color for following drawing.
+                c = new Color(sc.nextInt(), sc.nextInt(), sc.nextInt());
             }
 
             // draw a square of size 'cellSize' for each pixel

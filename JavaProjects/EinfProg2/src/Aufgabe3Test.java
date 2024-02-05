@@ -4,6 +4,7 @@ public class Aufgabe3Test {
 
     public static void main(String[] args) {
 
+
         Point p1 = new Point(2, 3),
                 p2 = new Point(0, 0),
                 p3 = new Point(1, 2),
@@ -16,14 +17,14 @@ public class Aufgabe3Test {
         pl.addLast(p1);
         pl.addLast(p2);
         pl.addLast(p3);
-        testValue(pl.size(), 3);  //Passed
+        testValue(pl.size(), 3);
 
-        testEquals(pl.getFirst(), p1); //Passed
-        testEquals(pl.getLast(), p3); //Passed
+        testEquals(pl.getFirst(), p1);
+        testEquals(pl.getLast(), p3);
 
-        testEquals(pl.get(0), p1); //Passed
-        testEquals(pl.get(1), p2); //Passed
-        testEquals(pl.get(2), p3); //Passed
+        testEquals(pl.get(0), p1);
+        testEquals(pl.get(1), p2);
+        testEquals(pl.get(2), p3);
 
         System.out.println("Test2:");
         testValue(pl.indexOf(p1), 0);
@@ -63,33 +64,36 @@ public class Aufgabe3Test {
         pcm.put(p5, Color.CYAN);
         pcm.put(p1, Color.RED);
 
-        testEquals(pcm.get(p4),Color.WHITE);
-        testEquals(pcm.get(p2),Color.YELLOW);
-        testEquals(pcm.get(p5),Color.CYAN);
+        testEquals(pcm.get(p4), Color.WHITE);
+        testEquals(pcm.get(p2), Color.YELLOW);
+        testEquals(pcm.get(p5), Color.CYAN);
 
-        testEquals(pcm.put(p3, Color.GREEN),Color.BLUE);
-        testEquals(pcm.get(p3),Color.GREEN);
-        testEquals(pcm.get(p1),Color.RED);
+        testEquals(pcm.put(p3, Color.GREEN), Color.BLUE);
+        testEquals(pcm.get(p3), Color.GREEN);
+        testEquals(pcm.get(p1), Color.RED);
 
         System.out.println("Test6:");
         pl = pcm.keys();
         testValue(pl.size(), 5);
         Point p = pl.pollFirst();
-        while(pl.size() > 0) {
+        while (pl.size() > 0) {
             testValue(pl.getFirst().compareTo(p), 1);
             p = pl.pollFirst();
         }
 
         System.out.println("Test7:");
         SimpleRasterRGB raster = pcm.asRasterRGB(15, 17);
-        testEquals(raster.getPixelColor(10,1), Color.WHITE);
-        testEquals(raster.getPixelColor(p5.getX(),p5.getY()), Color.CYAN);
-        testEquals(raster.getPixelColor(3,3), Color.BLACK);
+        testEquals(raster.getPixelColor(10, 1), Color.WHITE);
+        testEquals(raster.getPixelColor(p5.x(), p5.y()), Color.CYAN);
+        testEquals(raster.getPixelColor(3, 3), Color.BLACK);
+
 
         System.out.println("Test8:");
         pcm = raster.asMap();
-        testEquals(pcm.get(p5),Color.CYAN);
-        testEquals(pcm.get(new Point(3,3)),Color.BLACK);
+        testEquals(pcm.get(p5), Color.CYAN);
+        testEquals(pcm.get(new Point(3, 3)), Color.BLACK);
+
+
     }
 
     public static void testIdentical(Object given, Object expected) {
@@ -127,8 +131,8 @@ public class Aufgabe3Test {
         if (given.equals(expected)) {
             System.out.println("Successful test");
         } else {
-            System.out.println("Test NOT successful! Expected value: " + expected.toString() + " / Given " +
-                    "value: " + given.toString());
+            System.out.println("Test NOT successful! Expected value: " + expected + " / Given " +
+                    "value: " + given);
         }
     }
 
@@ -138,13 +142,13 @@ public class Aufgabe3Test {
         } else {
             if (given == null) {
                 System.out.println("Test NOT successful! Expected value: " +
-                        "(" + expected.getX() + "," + expected.getY() + ")" +
+                        "(" + expected.x() + "," + expected.y() + ")" +
                         " / Given value: null");
                 return;
             }
             if (expected == null) {
                 System.out.println("Test NOT successful! Expected value: null / " +
-                        "Given value: " + "(" + given.getX() + "," + given.getY() + ")");
+                        "Given value: " + "(" + given.x() + "," + given.y() + ")");
                 return;
             }
         }
@@ -152,9 +156,9 @@ public class Aufgabe3Test {
         if (given.compareTo(expected) == 0) {
             System.out.println("Successful test");
         } else {
-            System.out.println("Test NOT successful! Expected value: (" + expected.getX() + "," + expected.getY() +
+            System.out.println("Test NOT successful! Expected value: (" + expected.x() + "," + expected.y() +
                     ") / " +
-                    "Given value: (" + given.getX() + "," + given.getY() + ")");
+                    "Given value: (" + given.x() + "," + given.y() + ")");
         }
     }
 

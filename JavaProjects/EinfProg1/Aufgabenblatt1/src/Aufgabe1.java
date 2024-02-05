@@ -10,7 +10,6 @@ public class Aufgabe1 {
       divisibleBy9And13();
       printASCII();
       countOfE();
-      countOfEAlternative();
     }
 
     static void isDivisibleby17() {
@@ -52,18 +51,10 @@ public class Aufgabe1 {
     static void countOfE() {
         String sentence = "Es ist kein echtes Edelmetall!";
         int counter = 0;
-        for (int i = 0; i < sentence.length(); i++) {
-            if (sentence.charAt(i) == 'e' || sentence.charAt(i) == 'E') counter++;
-        }
-        System.out.println("Ergebnis: " + counter);
-    }
-
-    static void countOfEAlternative() {
-        String sentence = "Es ist kein echtes Edelmetall!";
-        sentence = sentence.toLowerCase();
-        int counter = 0;
-        for (int i = 0; i < sentence.length(); i++) {
-            if (sentence.charAt(i) == 'e') counter++;
+        for (Character c : sentence.toCharArray()) {
+            switch (c) {
+                case 'e', 'E' -> counter++;
+            }
         }
         System.out.println("Ergebnis: " + counter);
     }
