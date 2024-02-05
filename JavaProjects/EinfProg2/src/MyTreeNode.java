@@ -18,14 +18,14 @@ public class MyTreeNode {
 
     public Color add(Point k, Color v) {
 
-        if (k.compareTo(this.key) == -1) {
+        if (k.compareTo(this.key) < 0) {
             if (this.left != null) {
                 this.left.add(k, v);
             } else {
                 this.left = new MyTreeNode(k, v, null, null);
                 return v;
             }
-        } else if (k.compareTo(this.key) == 1) {
+        } else if (k.compareTo(this.key) > 0) {
             if (this.right != null) {
                 this.right.add(k, v);
             } else {
@@ -46,11 +46,11 @@ public class MyTreeNode {
             return value;
         }
 
-        if (k.compareTo(this.key) == -1) {
+        if (k.compareTo(this.key) < 0) {
             if (this.left != null) {
                 return this.left.search(k);
             }
-        } else if (k.compareTo(this.key) == 1) {
+        } else if (k.compareTo(this.key) > 0) {
             if (this.right != null) {
                 return this.right.search(k);
             }
@@ -63,11 +63,11 @@ public class MyTreeNode {
         if (this.key == null) {
             return false;
         }
-        if (k.compareTo(this.key) == -1) {
+        if (k.compareTo(this.key) < 0) {
             if (this.left != null) {
                 this.left.searchKey(k);
             }
-        } else if (k.compareTo(this.key) == 1) {
+        } else if (k.compareTo(this.key) > 0) {
             if (this.right != null) {
                 this.right.searchKey(k);
             }
@@ -76,15 +76,14 @@ public class MyTreeNode {
     }
 
     public PointLinkedList returnList(PointLinkedList list) {
-
-        if (this.left != null) {
-            this.left.returnList(list);
+        if (left != null) {
+            left.returnList(list);
         }
-        list.addLast(this.key);
-
-        if (this.right != null) {
-            this.right.returnList(list);
+        list.addLast(key);
+        if (right != null) {
+            right.returnList(list);
         }
         return list;
     }
+
 }

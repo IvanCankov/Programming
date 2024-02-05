@@ -1,23 +1,23 @@
 import java.awt.*;
 
 public class pointValueNode {
-    private final Point key;
-    private Color value;
+    private final Point point;
+    private Color color;
 
-    public pointValueNode(Point key, Color value) {
-        this.key = key;
-        this.value = value;
+    public pointValueNode(Point point, Color color) {
+        this.point = point;
+        this.color = color;
     }
 
     public Point getPoint() {
-        return this.key;
+        return point;
     }
 
     public Color getColor() {
-        return this.value;
+        return color;
     }
 
-    public void setColor(Color c) {
-        this.value = c;
+    public void setColor(Color color) {
+        this.color = color;
     }
 }

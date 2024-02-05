@@ -64,19 +64,14 @@ public class TreePointColorMap {
     // Preconditions: width > 0 && height > 0
     public SimpleRasterRGB asRasterRGB(int width, int height) {
 
-        //TODO: implement method.
         SimpleRasterRGB result = new SimpleRasterRGB(width, height);
         PointLinkedList coordinates = root.returnList(new PointLinkedList());
 
-
-        for (MyListNode n = coordinates.head; n != null; n = n.getNext()) {
-            if (n.getValue().x() < width && n.getValue().y() < height) {
-                result.setPixelColor(n.getValue().x(), n.getValue().y(), root.search(n.getValue()));
+        for (Point n : coordinates) {
+            if (n.x() < width && n.y() < height) {
+                result.setPixelColor(n.x(), n.y(), root.search(n));
             }
-
-
         }
-
         return result;
     }
 }
