@@ -7,100 +7,76 @@ import java.util.Collection;
 // The map does not contain any keys or values being 'null'.
 //
 public class SimplePointColorMap {
-
-    private int top;
-
+    private int size;
     private Point[] keysArray;
     private Color[] valuesArray;
 
-
-    // Initializes this map with an initial capacity (length of internal array).
-    // Precondition: initialCapacity > 0.
     public SimplePointColorMap(int initialCapacity) {
+        this.size = 0;
         this.keysArray = new Point[initialCapacity];
         this.valuesArray = new Color[initialCapacity];
     }
 
-    private int find(Point p, Point[] queue) {
-
-
-        int i = 0;
-        while (i < top &&
-                !(p == null ? p == queue[i] : p.compareTo(queue[i]) == 0))
-            i++;
-        return i;
-
-    }
-
-    // Adds a new key-value association to this map. If the key already exists in this map,
-    // the value is replaced and the old value is returned. Otherwise, 'null' is returned.
-    // Precondition: key != null && value != null.
     public Color put(Point key, Color value) {
-        int i = find(key, this.keysArray);
-        if (i == top && ++top == keysArray.length) {
-            Point[] nks = new Point[top << 1];
-            Color[] nvs = new Color[top << 1];
-            for (int j = 0; j < i; j++) {
-                nks[j] = this.keysArray[j];
-                nvs[j] = this.valuesArray[j];
-            }
-            this.keysArray = nks;
-            this.valuesArray = nvs;
+        int index = find(key, keysArray);
+        if (index == size) {
+            ensureCapacity();
         }
-        keysArray[i] = key;
-        Color old = valuesArray[i];
-        valuesArray[i] = value;
+        Color old = valuesArray[index];
+        keysArray[index] = key;
+        valuesArray[index] = value;
+        if (index == size) {
+            size++;
+        }
         return old;
     }
 
-    // Returns the value associated with the specified key, i.e. the method returns the color
-    // associated with the specified point.
-    // More formally, if this map contains a mapping from a key k to a value v such that
-    // key.compareTo(k) == 0, then this method returns v.
-    // (There can be at most one such mapping.)
-    // Returns 'null' if the key is not contained in this map.
-    // Precondition: key != null.
     public Color get(Point key) {
         return valuesArray[find(key, keysArray)];
-
     }
 
-    // Removes the mapping for a key from this map if it is present. More formally, if this map
-    // contains a mapping from key k to value v such that key.compareTo(k) == 0,
-    // that mapping is removed. (The map can contain at most one such mapping.)
-    // Returns the value to which this map previously associated the key, or 'null' if the map
-    // contained no mapping for the key.
-    // Precondition: key != null.
     public Color remove(Point key) {
-
-        int i = find(key, keysArray);
-        Color old = valuesArray[i];
-        if (i < top) {
-            keysArray[i] = keysArray[--top];
-            keysArray[top] = null;
-            valuesArray[i] = valuesArray[top];
-            valuesArray[top] = null;
+        int index = find(key, keysArray);
+        Color old = valuesArray[index];
+        if (index < size) {
+            keysArray[index] = keysArray[--size];
+            keysArray[size] = null;
+            valuesArray[index] = valuesArray[size];
+            valuesArray[size] = null;
         }
         return old;
     }
 
-    // Returns a queue with all keys of this map (ordering is not specified).
     public SimplePointQueue keys() {
-
-        SimplePointQueue result = new SimplePointQueue(1);
-        for (int i = 0; i < keysArray.length; i++) {
+        SimplePointQueue result = new SimplePointQueue(size);
+        for (int i = 0; i < size; i++) {
             result.add(keysArray[i]);
         }
-
         return result;
     }
 
     public boolean contains(Point p) {
-        for (Point point : keysArray) {
-            if (p == null ? p == point : p.equals(point)) {
+        for (int i = 0; i < size; i++) {
+            if (p == null ? p == keysArray[i] : p.equals(keysArray[i])) {
                 return true;
             }
         }
         return false;
     }
-}
+
+    private int find(Point p, Point[] array) {
+        for (int i = 0; i < size; i++) {
+            if (p == null ? p == array[i] : p.equals(array[i])) {
+                return i;
+            }
+        }
+        return size;
+    }
+
+    private void ensureCapacity() {
+        if (size == keysArray.length) {
+            int newCapacity = keysArray.length << 1;
+            keysArray = Arrays.copyOf(keysArray, newCapacity);
+            valuesArray = Arrays.copyOf(valuesArray, newCapacity);
+        }
+    }
