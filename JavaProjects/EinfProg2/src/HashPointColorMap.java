@@ -14,8 +14,7 @@ public class HashPointColorMap {
         pointValueNode[] newArray = new pointValueNode[newCapacity];
 
         // Rehash existing key-value pairs into the new array
-        for (int i = 0; i < hashPointArray.length; i++) {
-            pointValueNode entry = hashPointArray[i];
+        for (pointValueNode entry : hashPointArray) {
             if (entry != null) {
                 int newIndex = entry.getPoint().hashCode() % newCapacity;
                 while (newArray[newIndex] != null) {
@@ -87,9 +86,9 @@ public class HashPointColorMap {
     public SimplePointQueue keys() {
         SimplePointQueue queue = new SimplePointQueue(20);
 
-        for (int i = 0; i < hashPointArray.length; i++) {
-            if (hashPointArray[i] != null) {
-                queue.add(hashPointArray[i].getPoint());
+        for (pointValueNode pointValueNode : hashPointArray) {
+            if (pointValueNode != null) {
+                queue.add(pointValueNode.getPoint());
             }
         }
         return queue;
@@ -117,8 +116,7 @@ public class HashPointColorMap {
     // Returns 'true' if the specified value is contained at least once in this map.
     // Returns 'false' otherwise.
     public boolean containsValue(Color value) {
-        for (int i = 0; i < hashPointArray.length; i++) {
-            pointValueNode entry = hashPointArray[i];
+        for (pointValueNode entry : hashPointArray) {
             if (entry != null && entry.getColor().equals(value)) {
                 return true; // Matching value found
             }
@@ -160,7 +158,7 @@ public class HashPointColorMap {
             }
         }
         outString.append("}");
-        return outString.toString() + " Kapazität:" + capacity +
+        return outString + " Kapazität:" + capacity +
                 ", tatsächliche Einträge: " + actualAmount +
                 ", enthält Kollisionen: " + hasCollision;
     }
