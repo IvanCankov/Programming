@@ -42,36 +42,31 @@ public class PhotoApp4 {
         while (sc.hasNext()) {
             String command = sc.next();
 
-            if (command.equals("line")) {
+            switch (command) {
+                case "line" -> {
 
-                // draw a line in the raster.
-                int x1 = sc.nextInt();
-                int y1 = sc.nextInt();
-                int x2 = sc.nextInt();
-                int y2 = sc.nextInt();
-                lRaster.drawLine(x1, y1, x2, y2, c);
+                    // draw a line in the raster.
+                    int x1 = sc.nextInt();
+                    int y1 = sc.nextInt();
+                    int x2 = sc.nextInt();
+                    int y2 = sc.nextInt();
+                    lRaster.drawLine(x1, y1, x2, y2, c);
+                }
+                case "filter" ->
 
-            } else if (command.equals("filter")) {
+                    // filter the raster using the above kernel.
+                        lRaster.convolve(filterKernel);
+                case "crop" ->
 
-                // filter the raster using the above kernel.
-                lRaster.convolve(filterKernel);
+                    // crop the raster to the rectangular region with upper left coordinates (0,0)
+                    // and lower right coordinates (width-1, height-1).
+                        lRaster.crop(sc.nextInt(), sc.nextInt());
+                case "setcolor" ->
 
-            } else if (command.equals("crop")) {
-
-                // crop the raster to the rectangular region with upper left coordinates (0,0)
-                // and lower right coordinates (width-1, height-1).
-                lRaster.crop(sc.nextInt(), sc.nextInt());
-
-            } else if (command.equals("setcolor")) {
-
-                // set a new color for following drawing.
-                c = new Color(sc.nextInt(), sc.nextInt(), sc.nextInt(), sc.nextInt());
-            } else if (command.equals("newlayer")) {
-
-                lRaster.newLayer();
-            } else if (command.equals("activelayer")) {
-
-                lRaster.setActiveLayer(sc.nextInt());
+                    // set a new color for following drawing.
+                        c = new Color(sc.nextInt(), sc.nextInt(), sc.nextInt(), sc.nextInt());
+                case "newlayer" -> lRaster.newLayer();
+                case "activelayer" -> lRaster.setActiveLayer(sc.nextInt());
             }
 
             RasterRGBA sRaster = lRaster.asRasterRGBA();

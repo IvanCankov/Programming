@@ -8,15 +8,10 @@ public class LinkedListRasterRGBA {
 
     private MyDoubleLinkedList head;
     private MyDoubleLinkedList tail;
-
     int size;
 
-
     // Initializes 'this' as an empty list.
-    public LinkedListRasterRGBA() {
-
-        this.head = this.tail = null;
-    }
+    public LinkedListRasterRGBA() {this.size = 0;}
 
     public MyDoubleLinkedList getHead() {
         return head;
@@ -28,102 +23,91 @@ public class LinkedListRasterRGBA {
 
     // Inserts the specified element 'raster' at the beginning of this list.
     public void addFirst(RasterRGBA raster) {
+        MyDoubleLinkedList newHead = new MyDoubleLinkedList(raster);
+        newHead.setNext(head);
 
         if (head == null) {
-            this.head = this.tail = new MyDoubleLinkedList(raster, null, null);
-            this.size++;
-        } else if (this.head == this.tail) {
-            MyDoubleLinkedList newHead = new MyDoubleLinkedList(raster, tail, null);
-            this.head = newHead;
-            this.tail.setPrevious(newHead);
-            this.size++;
+            this.head = this.tail = newHead;
         } else {
-            MyDoubleLinkedList newHead = new MyDoubleLinkedList(raster, head, null);
-            this.head.setPrevious(newHead);
+            head.setPrevious(newHead);
             this.head = newHead;
-            this.size++;
         }
+
+        this.size++;
     }
+
 
     // Appends the specified element 'raster' to the end of this list.
     public void addLast(RasterRGBA raster) {
+        MyDoubleLinkedList newTail = new MyDoubleLinkedList(raster);
+        newTail.setPrevious(tail);
 
         if (head == null) {
-            this.head = this.tail = new MyDoubleLinkedList(raster, null, null);
-            this.size++;
-        } else if (this.head == this.tail) {
-            MyDoubleLinkedList newTail = new MyDoubleLinkedList(raster, null, tail);
-            this.tail = newTail;
-            this.head.setNext(newTail);
-            this.size++;
+            this.head = this.tail = newTail;
         } else {
-            MyDoubleLinkedList newTail = new MyDoubleLinkedList(raster, null, tail);
-            this.tail.setNext(newTail);
+            tail.setNext(newTail);
             this.tail = newTail;
-            this.size++;
         }
+
+        this.size++;
     }
+
 
     // Returns the last element in this list.
     // Returns 'null' if the list is empty.
     public RasterRGBA getLast() {
 
-        if (this.head == null) {
-            return null;
-        }
-        return this.tail.getValue();
+        return (this.head == null) ? null : this.tail.getValue();
     }
 
     // Returns the first element in this list.
     // Returns 'null' if the list is empty.
     public RasterRGBA getFirst() {
 
-        if (this.head == null) {
-            return null;
-        }
-        return this.head.getValue();
+        return (this.head == null) ? null : this.head.getValue();
     }
 
     // Retrieves and removes the first element in this list.
     // Returns 'null' if the list is empty.
     public RasterRGBA pollFirst() {
-
-        if (this.head == null) {
+        if (head == null) {
             return null;
-        } else if (this.head == this.tail) {
-            RasterRGBA result = this.head.getValue();
-            this.head = this.tail = null;
-            this.size = 0;
-            return result;
-        } else {
-            RasterRGBA result = this.head.getValue();
-            this.head = this.head.getNext();
-            this.head.setPrevious(null);
-            this.size--;
-            return result;
-
         }
+
+        RasterRGBA result = head.getValue();
+        head = head.getNext();
+
+        if (head != null) {
+            head.setPrevious(null);
+        } else {
+            tail = null;
+        }
+
+        size--;
+        return result;
     }
+
 
     // Retrieves and removes the last element in this list.
     // Returns 'null' if the list is empty.
     public RasterRGBA pollLast() {
-
-        if (this.head == null) {
+        if (head == null) {
             return null;
-        } else if (this.head == this.tail) {
-            RasterRGBA result = this.head.getValue();
-            this.head = this.tail = null;
-            this.size = 0;
-            return result;
-        } else {
-            RasterRGBA result = this.tail.getValue();
-            this.tail = this.tail.getPrevious();
-            this.tail.setNext(null);
-            this.size--;
-            return result;
         }
+
+        RasterRGBA result = tail.getValue();
+        tail = tail.getPrevious();
+
+        if (tail != null) {
+            tail.setNext(null);
+        } else {
+            head = null;
+        }
+
+        size--;
+        return result;
     }
+
 
     // Inserts the specified element 'raster' at the specified position in this list.
     // More specifically, 'raster' is inserted as follows:
@@ -131,125 +115,151 @@ public class LinkedListRasterRGBA {
     // 'raster' is inserted immediately before the element with the given index 'i' (or as last
     // element if 'i == size()') such that 'raster' can be found at index 'i' after insertion.
     // Precondition: i >= 0 && i <= size().
-    public void add(int i, RasterRGBA raster) {
-
-        if (i == 0) {
-            this.addFirst(raster);
-        } else {
-            for (MyDoubleLinkedList n = this.head; n != null; n = n.getNext()) {
-                if (--i == 0) {
-                    if (n == this.tail) {
-                        addLast(raster);
-                    } else {
-                        MyDoubleLinkedList result = new MyDoubleLinkedList(raster, null, n);
-                        n.getNext().setPrevious(result);
-                        result.setNext(n.getNext());
-                        n.setNext(result);
-                        this.size++;
-
-                    }
-
-                }
-            }
+    public void add(int index, RasterRGBA raster) {
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
+
+        MyDoubleLinkedList newNode = new MyDoubleLinkedList(raster);
+
+        if (index == 0) {
+            newNode.setNext(head);
+            if (head != null) {
+                head.setPrevious(newNode);
+            }
+            head = newNode;
+            if (tail == null) {
+                tail = newNode;
+            }
+        } else {
+            MyDoubleLinkedList current = head;
+            for (int i = 0; i < index - 1; i++) {
+                current = current.getNext();
+            }
+
+            newNode.setNext(current.getNext());
+            newNode.setPrevious(current);
+
+            if (current.getNext() != null) {
+                current.getNext().setPrevious(newNode);
+            } else {
+                tail = newNode;
+            }
+
+            current.setNext(newNode);
+        }
+
+        size++;
     }
 
     // Returns the element at the specified position in this list.
     // Precondition: i >= 0 && i < size().
-    public RasterRGBA get(int i) {
-
-        if (i == 0) {
-            return this.getFirst();
-        } else {
-            MyDoubleLinkedList n = this.head;
-            while (n != null) {
-                if (i == 0) {
-                    return n.getValue();
-                }
-                i--;
-                n = n.getNext();
-            }
+    public RasterRGBA get(int index) {
+        if (index < 0 || index >= size) {
+            return null;  // Index out of bounds
         }
-        return null;
+
+        MyDoubleLinkedList current = head;
+
+        for (int i = 0; i < index; i++) {
+            current = current.getNext();
+        }
+
+        return current.getValue();
     }
+
 
     // Replaces the element at the specified position in this list with the specified element.
     // Returns the element that was replaced.
     // Precondition: i >= 0 && i < size().
-    public RasterRGBA set(int i, RasterRGBA raster) {
+    public RasterRGBA set(int index, RasterRGBA raster) {
+        MyDoubleLinkedList current = head;
 
-        MyDoubleLinkedList n = this.head;
-        while (n != null) {
-            if (i == 0) {
-                RasterRGBA result = n.getValue();
-                n.setValue(raster);
-                return result;
-            }
-            i--;
-            n = n.getNext();
+        for (int i = 0; i < index && current != null; i++) {
+            current = current.getNext();
+        }
+
+        if (current != null) {
+            RasterRGBA result = current.getValue();
+            current.setValue(raster);
+            return result;
         }
 
         return null;
     }
+
 
     // Removes the element at the specified position in this list. Shifts any subsequent
     // elements to the left (subtracts one from their indices). Returns the element that was
     // removed from the list.
     // Precondition: i >= 0 && i < size().
-    public RasterRGBA remove(int i) {
-
-        if (i == 0) {
-            RasterRGBA result = this.head.getValue();
-            this.pollFirst();
-            // size is changed in pollFirst();
-            return result;
-        } else {
-            MyDoubleLinkedList n = this.head;
-            while (n != null) {
-                if (--i == 0) {
-                    if (n.getNext() == this.tail) {
-                        return pollLast();
-                    } else {
-                        RasterRGBA result = n.getNext().getValue();
-                        n.setNext(n.getNext().getNext());
-                        n.getNext().setPrevious(n);
-                        this.size--;
-                        return result;
-                    }
-                }
-                n = n.getNext();
-            }
+    public RasterRGBA remove(int index) {
+        if (index < 0 || index >= size) {
+            return null;  // Index out of bounds
         }
 
-        return null;
+        if (index == 0) {
+            RasterRGBA result = head.getValue();
+            pollFirst();
+            return result;
+        }
+
+        MyDoubleLinkedList current = head;
+
+        for (int i = 0; i < index - 1; i++) {
+            current = current.getNext();
+        }
+
+        RasterRGBA result;
+        if (current.getNext() == tail) {
+            result = pollLast();
+        } else {
+            result = current.getNext().getValue();
+            current.setNext(current.getNext().getNext());
+            if (current.getNext() != null) {
+                current.getNext().setPrevious(current);
+            }
+            size--;
+        }
+
+        return result;
     }
 
     // Returns the index of the last occurrence of 'raster' in this list (the highest index with an
     // element equal to 'raster'), or -1 if this list does not contain the element.
     // Equality of elements is determined by object identity (== operator).
     public int lastIndexOf(RasterRGBA raster) {
+        MyDoubleLinkedList current = tail;
+        int index = size - 1;
 
-        MyDoubleLinkedList n = this.head;
-        int i = -1;
-        int helper = 0;
-        while (n != null) {
-            if (n.getValue().equals(raster)) {
-                i = helper;
+        while (current != null) {
+            if (current.getValue().equals(raster)) {
+                return index;
             }
-            n = n.getNext();
-            helper++;
-
+            current = current.getPrevious();
+            index--;
         }
 
-        return i;
+        return -1;
     }
+
+    public RasterRGBA getFromEnd(int indexFromEnd) {
+        if (indexFromEnd < 0 || indexFromEnd >= size) {
+            return null;  // Index out of bounds
+        }
+
+        MyDoubleLinkedList current = tail;
+
+        for (int i = size - 1; i > indexFromEnd; i--) {
+            current = current.getPrevious();
+        }
+
+        return current.getValue();
+    }
+
 
     // Returns the number of elements in this list.
     public int size() {
-
-        if (head == null) {
-            return 0;
-        }
         return size;
     }
 

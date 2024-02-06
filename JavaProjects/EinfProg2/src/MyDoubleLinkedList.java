@@ -5,10 +5,8 @@ public class MyDoubleLinkedList {
 
     private MyDoubleLinkedList previous;
 
-    public MyDoubleLinkedList(RasterRGBA value, MyDoubleLinkedList next, MyDoubleLinkedList previous) {
+    public MyDoubleLinkedList(RasterRGBA value) {
         this.value = value;
-        this.next = next;
-        this.previous = previous;
     }
 
     public void setNext(MyDoubleLinkedList n) {

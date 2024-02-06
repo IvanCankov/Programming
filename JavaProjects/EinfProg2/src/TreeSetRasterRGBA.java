@@ -12,15 +12,8 @@ import java.awt.*;
 //  if needed.
 //
 public class TreeSetRasterRGBA {
-
-
-    // Initialises 'this' as an empty set.
     MyRasterRGBATreeNode root;
-
-    public TreeSetRasterRGBA() {
-
-        this.root = null;
-    }
+    public TreeSetRasterRGBA() {}
 
     // Ensures that the specified element is contained in this set. If the element already
     // existed in this set, the method does not change the set and returns 'false'. Returns
@@ -29,7 +22,7 @@ public class TreeSetRasterRGBA {
     public boolean add(RasterRGBA element) {
 
         if (root == null) {
-            root = new MyRasterRGBATreeNode(element.countPixels(new Color(0, 0, 0, 0)), element, null, null);
+            root = new MyRasterRGBATreeNode(element.countPixels(new Color(0, 0, 0, 0)), element);
             return true;
         }
         return root.add(element);
@@ -40,11 +33,7 @@ public class TreeSetRasterRGBA {
     // an object 'e' such that element == e.
     // Precondition: element != null.
     public boolean contains(RasterRGBA element) {
-
-        if (root == null) {
-            return false;
-        }
-        return root.contains(element);
+        return root != null && root.contains(element);
     }
 }
 

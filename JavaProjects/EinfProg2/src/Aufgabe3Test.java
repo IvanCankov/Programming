@@ -4,7 +4,6 @@ public class Aufgabe3Test {
 
     public static void main(String[] args) {
 
-
         Point p1 = new Point(2, 3),
                 p2 = new Point(0, 0),
                 p3 = new Point(1, 2),

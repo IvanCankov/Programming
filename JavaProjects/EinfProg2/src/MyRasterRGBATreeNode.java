@@ -10,11 +10,9 @@ public class MyRasterRGBATreeNode {
 
     private MyRasterRGBATreeNode right;
 
-    public MyRasterRGBATreeNode(int key, RasterRGBA value, MyRasterRGBATreeNode left, MyRasterRGBATreeNode right) {
+    public MyRasterRGBATreeNode(int key, RasterRGBA value) {
         this.key = key;
         this.value = value;
-        this.left = left;
-        this.right = right;
     }
 
 
@@ -23,26 +21,27 @@ public class MyRasterRGBATreeNode {
 
         if (this.value.equals(element)) {
             return false;
-
         }
+
+        MyRasterRGBATreeNode newNode = new MyRasterRGBATreeNode(current, element);
+
         if (current <= this.key) {
-            if (this.left != null) {
+            if (this.left == null) {
+                this.left = newNode;
+                return true;
+            } else {
                 return this.left.add(element);
-            } else {
-
-                this.left = new MyRasterRGBATreeNode(current, element, null, null);
-                return true;
             }
-
         } else {
-            if (this.right != null) {
-                return this.right.add(element);
-            } else {
-                this.right = new MyRasterRGBATreeNode(current, element, null, null);
+            if (this.right == null) {
+                this.right = newNode;
                 return true;
+            } else {
+                return this.right.add(element);
             }
         }
     }
+
 
     public boolean contains(RasterRGBA element) {
         int current = element.countPixels(new Color(0, 0, 0, 0));
@@ -51,14 +50,13 @@ public class MyRasterRGBATreeNode {
             return true;
 
         }
+
         if (current <= this.key) {
             if (this.left != null) {
                 return this.left.contains(element);
             } else {
-
                 return false;
             }
-
         } else {
             if (this.right != null) {
                 return this.right.contains(element);

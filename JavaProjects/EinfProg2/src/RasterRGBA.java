@@ -24,9 +24,9 @@ public class RasterRGBA implements RasterizedRGB {
     public Color getPixelColor(int x, int y) {
 
         return new Color(this.dataBufferInt.getElem(0, y * this.width + x),
-                this.dataBufferInt.getElem(1,
-                        y * this.width + x), this.dataBufferInt.getElem(2,
-                y * this.width + x), this.dataBufferInt.getElem(3, y * this.width + x));
+                         this.dataBufferInt.getElem(1, y * this.width + x),
+                         this.dataBufferInt.getElem(2, y * this.width + x),
+                         this.dataBufferInt.getElem(3, y * this.width + x));
     }
 
     // Sets the sRGB color of the specified pixel.
@@ -59,20 +59,16 @@ public class RasterRGBA implements RasterizedRGB {
                 for (int xx = -filterSideLength; xx <= filterSideLength; xx++) {
                     for (int yy = -filterSideLength; yy <= filterSideLength; yy++) {
                         Color c = this.getPixelColor(x - xx, y - yy);
-                        redSum += (c.getRed() * c.getAlpha() / 255d) * filterKernel[xx +
-                                filterSideLength][yy + filterSideLength];
+                        redSum += (c.getRed() * c.getAlpha() / 255d) * filterKernel[xx + filterSideLength][yy + filterSideLength];
                         greenSum += (c.getGreen() * c.getAlpha() / 255d) * filterKernel[xx + filterSideLength][yy + filterSideLength];
                         blueSum += (c.getBlue() * c.getAlpha() / 255d) * filterKernel[xx + filterSideLength][yy + filterSideLength];
                         alphaSum += c.getAlpha() * filterKernel[xx + filterSideLength][yy + filterSideLength];
                     }
                 }
 
-                result.setElem(0, y * this.width + x,
-                        (int) (redSum / alphaSum * 255));
-                result.setElem(1, y * this.width + x,
-                        (int) (greenSum / alphaSum * 255));
-                result.setElem(2, y * this.width + x,
-                        (int) (blueSum / alphaSum * 255));
+                result.setElem(0, y * this.width + x, (int) (redSum / alphaSum * 255));
+                result.setElem(1, y * this.width + x, (int) (greenSum / alphaSum * 255));
+                result.setElem(2, y * this.width + x, (int) (blueSum / alphaSum * 255));
                 result.setElem(3, y * this.width + x, (int) alphaSum);
             }
         }

@@ -30,38 +30,32 @@ public class PhotoApp3 {
         while (sc.hasNext()) {
             String command = sc.next();
 
-            if (command.equals("line")) {
+            switch (command) {
+                case "line" -> {
+                    // draw a line in the raster.
+                    int x1 = sc.nextInt();
+                    int y1 = sc.nextInt();
+                    int x2 = sc.nextInt();
+                    int y2 = sc.nextInt();
+                    raster.drawLine(x1, y1, x2, y2, c);
+                }
+                case "filter" ->
+                    // filter the raster using the above kernel.
+                    raster = raster.convolve(filterKernel);
+                case "crop" -> {
+                    // crop the raster to the rectangular region with upper left coordinates (0,0)
+                    // and lower right coordinates (width-1, height-1).
+                    int width = sc.nextInt();
+                    int height = sc.nextInt();
 
-                // draw a line in the raster.
-                int x1 = sc.nextInt();
-                int y1 = sc.nextInt();
-                int x2 = sc.nextInt();
-                int y2 = sc.nextInt();
-                raster.drawLine(x1, y1, x2, y2, c);
+                    raster = raster.asMap().asRasterRGB(width, height);
 
-            } else if (command.equals("filter")) {
-
-                // filter the raster using the above kernel.
-
-
-                raster = raster.convolve(filterKernel);
-
-
-            } else if (command.equals("crop")) {
-
-                // crop the raster to the rectangular region with upper left coordinates (0,0)
-                // and lower right coordinates (width-1, height-1).
-                int width = sc.nextInt();
-                int height = sc.nextInt();
-
-                raster = raster.asMap().asRasterRGB(width, height);
-
-                cd.close();
-                cd = new CodeDraw(raster.getWidth() * cellSize, raster.getHeight() * cellSize);
-            } else if (command.equals("setcolor")) {
-
-                // set a new color for following drawing.
-                c = new Color(sc.nextInt(), sc.nextInt(), sc.nextInt());
+                    cd.close();
+                    cd = new CodeDraw(raster.getWidth() * cellSize, raster.getHeight() * cellSize);
+                }
+                case "setcolor" ->
+                    // set a new color for following drawing.
+                    c = new Color(sc.nextInt(), sc.nextInt(), sc.nextInt());
             }
 
             // draw a square of size 'cellSize' for each pixel
