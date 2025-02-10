@@ -114,19 +114,13 @@ def filter_image(img:np.ndarray) -> np.ndarray:
     """
         filters the image with the gaussian kernel given below. 
     """
-    gaussian = utils.gauss_filter(5, 2)
+    gaussian = utils.gauss_filter(10, 10)  # 5x5 kernel, sigma=2
 
-    ### STUDENT CODE
-    # TODO: Implement this function.
-
-	# NOTE: The following lines can be removed. They prevent the framework
-    #       from crashing.
-
-    out = np.zeros(img.shape)
-
-    ### END STUDENT CODE
-
-    return out
+    if img.ndim == 2:  # Grayscale image
+        return convolve(img, gaussian)
+    elif img.ndim == 3:  # RGB image
+        # Apply the Gaussian filter to each channel independently
+        return np.stack([convolve(img[:, :, i], gaussian) for i in range(3)], axis=2)
 
 def horizontal_edges(img:np.ndarray) -> np.ndarray:
     """
@@ -143,3 +137,42 @@ def horizontal_edges(img:np.ndarray) -> np.ndarray:
     ### END STUDENT CODE
 
     return out
+
+
+import numpy as np
+from scipy.ndimage import convolve
+
+def edge_detection(img: np.ndarray) -> np.ndarray:
+    """
+    Applies Sobel edge detection to a grayscale image represented as a 2D numpy array.
+    """
+    # If the image is RGB (3D), convert it to grayscale by averaging the color channels
+    if img.ndim == 3:
+        img = img.mean(axis=2)
+
+    # Define Sobel kernels for edge detection
+    sobel_x = np.array([
+        [-1, 0, 1],
+        [-2, 0, 2],
+        [-1, 0, 1]
+    ])
+
+    sobel_y = np.array([
+        [-1, -2, -1],
+        [ 0,  0,  0],
+        [ 1,  2,  1]
+    ])
+    
+    # Apply convolution with Sobel kernels
+    # Gx = convolve(img, sobel_x)
+    Gy = convolve(img, sobel_y)
+    
+    # Compute the edge magnitude
+    edges = np.sqrt(Gy**2) # + Gy**2)
+    
+    # Normalize the output to fit in the range [0, 255] for visualization
+    edges = (edges / edges.max()) * 255
+    edges = edges.astype(np.uint8)
+    
+    return edges
+
